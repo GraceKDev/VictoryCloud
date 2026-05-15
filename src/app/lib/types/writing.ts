@@ -12,20 +12,20 @@ export interface WritingInterface {
     comments: ComicCommentInterface[] | null;
 }
 
-interface WritingChapterInterface {
+export interface WritingChapterInterface {
     chapterTitle:string;
     content: WritingContentInterface[];
 }
-interface WritingContentInterface {
+export interface WritingContentInterface {
     contentPosition: number;
     contentType: "Text" | "Image";
     content: WritingContentWritingBlockInterface | WritingContentImageBlockInterface;
 }
 
-interface WritingContentWritingBlockInterface {
+export interface WritingContentWritingBlockInterface {
     content: string;
 }
-interface WritingContentImageBlockInterface {
+export interface WritingContentImageBlockInterface {
     imageUrl: string;
     altText: string;
 }

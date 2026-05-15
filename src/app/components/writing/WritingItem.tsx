@@ -6,8 +6,9 @@ import router from "next/router";
 export default function WritingItem(props:WritingInterface) {
     const { id,title, description, tags, coverUrl, links, uploadedAt, chapters, comments } = props;
 
+
     return (
-        <div onClick={() => router.push(`/comics/${id}`)}
+        <div onClick={() => router.push(`/writing/${id}`)}
             className="bg-white shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 cursor-pointer flex flex-col">
             <img
                 src={coverUrl}

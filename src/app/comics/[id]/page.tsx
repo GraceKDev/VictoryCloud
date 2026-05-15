@@ -2,9 +2,8 @@
 import Tab from "@/app/components/comics/Tab";
 import { comics } from "@/app/lib/comics";
 import Image from "next/image";
-
+import Link from "next/link";
 import { ComicInterface } from "@/app/lib/types/comic";
-
 import ComicChapterTab  from "@/app/components/comics/ComicChapterTab";
 import ComicCommentsTab from "@/app/components/comics/ComicCommentsTab";
 import ComicDetailsTab from "@/app/components/comics/ComicDetailsTab";
@@ -27,6 +26,7 @@ export default async function ComicPage({ params }: ComicPageParams) {
     return (
         <section className="bg-white flex-1">
             <div className="p-8 w-full ">
+                <Link href="/comics" className="text-sm text-gray-500 hover:text-gray-800 mb-6 inline-block">← Back to Comics</Link>
                 <div className="flex flex-col justify-center items-center">
                     <Image
                         src={coverImageUrl}
@@ -59,11 +59,7 @@ export default async function ComicPage({ params }: ComicPageParams) {
                         ]} />
                     </div>
                 </div>
-
-
-
             </div>
-
         </section>
     );
 }
