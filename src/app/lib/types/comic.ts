@@ -28,5 +28,6 @@ export interface ComicCommentInterface {
     comment: string;
     author: string;
     date: string;
+    likes: number;
     thread: ComicCommentInterface[] | null; 
 }
