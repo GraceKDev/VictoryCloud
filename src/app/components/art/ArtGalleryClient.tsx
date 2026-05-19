@@ -1,20 +1,29 @@
 "use client"
 
-import { useState } from "react"
+import { use, useState } from "react"
 import ArtItem, { ArtItemProps } from "./ArtItem"
 import ArtModal from "./ArtModal"
 import { ArtInterface } from "@/app/lib/types/art"
+import { useFilter } from "@/app/lib/filters/FilterContext"
 
 interface ArtGalleryClientProps {
     art: ArtInterface[]
 }
 
 export default function ArtGalleryClient({ art }: ArtGalleryClientProps) {
+    const {state} = useFilter() 
     const [selectedArt, setSelectedArt] = useState<ArtInterface | null>(null)
-
+    const filtered = art.filter((artItem) => {
+        const term = state.search.toLowerCase();
+        return (
+            artItem.title.toLowerCase().includes(term) ||
+            artItem.description.toLowerCase().includes(term) ||
+            artItem.tags.some((tag) => tag.toLowerCase().includes(term))
+        );
+    });
     return (
         <>
-            {art.map((artItem) => (
+            {filtered.map((artItem) => (
                 <ArtItem
                     key={artItem.id}
                     {...artItem}

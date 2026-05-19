@@ -19,6 +19,7 @@ export const comics: ComicInterface[] = [
                 comment: "I really enjoyed this comic!",
                 author: "User1",
                 date: "2023-01-01",
+                likes: 10,
                 thread: null
             },
             {
@@ -27,6 +28,7 @@ export const comics: ComicInterface[] = [
                 comment: "Can't wait for the next chapter!",
                 author: "User2",
                 date: "2023-01-02",
+                likes: 10,
                 thread: null
 
             }
