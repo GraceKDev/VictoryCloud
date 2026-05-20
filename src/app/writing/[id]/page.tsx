@@ -26,7 +26,7 @@ export default async function WritingPage({ params }: WritingPageParams) {
 
     return (
         <section className="bg-white flex-1">
-            <div className="p-8 w-full  ">
+            <div className="p-8 w-full max-w-5xl mx-auto">
                 <Link href="/writing" className="text-sm text-gray-500 hover:text-gray-800 mb-6 inline-block">← Back to Writing</Link>
                 <div className="flex h-full flex-row w-full ">
                     <div className="shrink-0">

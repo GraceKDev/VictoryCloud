@@ -30,7 +30,7 @@ export default function Navigation() {
                 </div>
 
                 {/* Desktop links */}
-                <ul className="hidden md:flex text-black font-medium text-sm space-x-8 px-1">
+                <ul className="hidden md:flex text-black font-medium text-xl space-x-8 px-1">
                     {navItems.map((item) => (
                         <li key={item.name}>
                             <a onClick={() => navigate(item.path)} className="cursor-pointer hover:text-gray-500 transition-colors">

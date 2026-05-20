@@ -14,31 +14,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: #171717;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   h1 {
-    @apply text-3xl font-bold;
+    @apply text-4xl font-bold text-black;
   }
   h2 {
-    @apply text-2xl font-semibold;
+    @apply text-3xl font-semibold text-black;
   }
   h3 {
-    @apply text-xl font-medium;
+    @apply text-2xl font-medium text-black;
   }
   p {
-    @apply text-base leading-relaxed;
+    @apply text-lg leading-relaxed;
   }
 }
 
