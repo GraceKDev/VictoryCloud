@@ -8,15 +8,20 @@ export default function DisplayGrid() {
 
     const filtered = comics.filter((comic) => {
         const term = state.search.toLowerCase();
-        return (
+        const matchesSearch =
             comic.title.toLowerCase().includes(term) ||
             comic.description.toLowerCase().includes(term) ||
-            comic.tags.some((tag) => tag.toLowerCase().includes(term))
-        );
+            comic.tags.some((tag) => tag.toLowerCase().includes(term));
+        const matchesCategory =
+            !state.comicCategory ||
+            comic.tags.some((tag) => tag.toLowerCase() === state.comicCategory.toLowerCase());
+        return matchesSearch && matchesCategory;
     });
 
     return (
-        <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[540px] justify-center">
+        <>
+            <p className="text-sm text-gray-500 mb-4">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
+            <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[540px] justify-center">
             {filtered.map((comic) => (
                 <ComicItem
                     key={comic.id}
@@ -28,5 +33,6 @@ export default function DisplayGrid() {
                 />
             ))}
         </section>
+        </>
     );
 }

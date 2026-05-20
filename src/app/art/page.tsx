@@ -1,8 +1,8 @@
 import ArtDisplayGrid from "../components/art/ArtDisplayGrid";
 import Filters from "../components/global/Filters";
 
-export default function Art() {'
-    const 
+export default function Art() {
+  
     return (
         <main className="flex-1 bg-white">
             <div className="w-full p-8">
