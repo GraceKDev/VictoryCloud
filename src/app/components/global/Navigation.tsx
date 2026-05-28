@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navigation() {
     const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const pathname = usePathname();
     const navItems = [
         { name: "Home", path: "/" },
         { name: "Comics", path: "/comics" },
@@ -13,15 +13,26 @@ export default function Navigation() {
         { name: "Writing", path: "/writing" },
         { name: "Commissions", path: "/commissions" },
     ];
-
+    const adminPaths = ["/admindashboard", "/adminlogin"];
+    const isAdmin = adminPaths.some((p) => pathname.startsWith(p));
     const navigate = (path: string) => {
         router.push(path);
         setMenuOpen(false);
     };
-
+    const handleLogout = async () => {
+        const res = await fetch("http://localhost:5266/Api/Auth/Logout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        });
+        if (!res.ok) {
+            console.error("Logout failed:", res.statusText);
+            return;
+        }
+        router.push("/");
+    };
     return (
         <nav className="w-full bg-white shadow-md">
-            {/* Top bar */}
             <div className="px-8 flex justify-between items-center py-4 h-full">
                 <div>
                     <a onClick={() => navigate("/")}>
@@ -29,7 +40,6 @@ export default function Navigation() {
                     </a>
                 </div>
 
-                {/* Desktop links */}
                 <ul className="hidden md:flex text-black font-medium text-xl space-x-8 px-1">
                     {navItems.map((item) => (
                         <li key={item.name}>
@@ -38,9 +48,15 @@ export default function Navigation() {
                             </a>
                         </li>
                     ))}
+                    {isAdmin && (
+                        <li>
+                            <button onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-800 transition-colors font-medium">
+                                Logout
+                            </button>
+                        </li>
+                    )}
                 </ul>
 
-                {/* Hamburger button — mobile only */}
                 <button
                     onClick={() => setMenuOpen((o) => !o)}
                     aria-label="Toggle menu"
@@ -52,7 +68,6 @@ export default function Navigation() {
                 </button>
             </div>
 
-            {/* Mobile dropdown */}
             {menuOpen && (
                 <div className="md:hidden border-t border-gray-100">
                     <ul className="flex flex-col px-8 py-4 space-y-4 text-black font-medium text-sm">
@@ -63,6 +78,13 @@ export default function Navigation() {
                                 </a>
                             </li>
                         ))}
+                        {isAdmin && (
+                            <li className="border-t border-gray-100 pt-4">
+                                <button onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-800 transition-colors w-full text-left">
+                                    Logout
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </div>
             )}

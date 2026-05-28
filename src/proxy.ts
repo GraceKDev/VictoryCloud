@@ -2,22 +2,42 @@ import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const COOKIE_NAME = process.env.AUTH_COOKIE_NAME ?? "auth_token";
+const COOKIE_NAME = process.env.AUTH_COOKIE_NAME ?? "auth";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function proxy(request: NextRequest) {
+    const { pathname } = request.nextUrl;
     const cookie = request.cookies.get(COOKIE_NAME);
-    if (!cookie?.value) {
+
+    const isAuthenticated = async () => {
+        if (!cookie?.value) return false;
+        try {
+            await jwtVerify(cookie.value, JWT_SECRET, {
+                issuer: "VictoryCloudApi",
+                audience: "VictoryCloudApiUsers",
+            });
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+
+    if (pathname.startsWith("/adminlogin")) {
+        if (await isAuthenticated()) {
+            return NextResponse.redirect(new URL("/admindashboard", request.url));
+        }
+        return NextResponse.next();
+    }
+
+
+    if (!await isAuthenticated()) {
         return NextResponse.redirect(new URL("/", request.url));
     }
-    try {
-        await jwtVerify(cookie.value, JWT_SECRET);
-    } catch {
-        return NextResponse.redirect(new URL("/", request.url));
-    }
+
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/adminDashboard/:path*"],
+    matcher: ["/admindashboard/:path*", "/adminlogin"],
 };

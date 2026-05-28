@@ -54,7 +54,7 @@ export default function AdminLogin() {
             }
             console.log(res);
             dispatch({ type: "SUCCESS" });
-            router.push("/adminDashboard");
+            router.push("/admindashboard");
         } catch (e) {
             console.error("Login error:", e);
             dispatch({ type: "ERROR", message: "Could not reach the server. Please try again." });
