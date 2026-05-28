@@ -29,7 +29,7 @@ const pages: { value: Page; label: string }[] = [
 
 const defaultConfig: Config = {
     home: {
-        aboutHeading: "About Victory Cloud",
+        aboutBackground: "",
         aboutBody: "",
         cards: [
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
@@ -126,10 +126,8 @@ export default function AdminDashboard() {
     return (
         <main className="flex flex-1 overflow-hidden bg-gray-50" style={{ height: "calc(100vh - 64px)" }}>
 
-            {/* Left Panel — Selector + Editor */}
             <aside className="w-96 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
 
-                {/* Page Selector */}
                 <div className="p-6 border-b border-gray-100 shrink-0">
                     <h2 className="text-lg font-bold text-gray-800 mb-4">Control Panel</h2>
                     <label className="block text-sm font-medium text-gray-500 mb-2">Edit Page</label>
@@ -144,7 +142,6 @@ export default function AdminDashboard() {
                     </select>
                 </div>
 
-                {/* Editor Fields — scrollable */}
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
                     {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} />}
@@ -153,7 +150,6 @@ export default function AdminDashboard() {
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
                 </div>
 
-                {/* Save — pinned to bottom */}
                 <div className="p-6 border-t border-gray-100 shrink-0 flex flex-col gap-2">
                     {saveStatus === "success" && <p className="text-sm text-green-600 text-center">Saved. Preview refreshed.</p>}
                     {saveStatus === "error" && <p className="text-sm text-red-600 text-center">Save failed. Try again.</p>}
@@ -167,7 +163,6 @@ export default function AdminDashboard() {
                 </div>
             </aside>
 
-            {/* Right Panel — Live Page Preview */}
             <section className="flex-1 flex flex-col overflow-hidden">
                 <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shrink-0">
                     <p className="text-sm text-gray-500">

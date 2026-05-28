@@ -1,24 +1,34 @@
 export type HomeConfig = {
-    aboutHeading: string;
-    aboutBody: string;
-    cards: { title: string; description: string; imageUrl: string }[];
-    newsHeading: string;
-    newsBody: string;
-    socialsHeading: string;
-    socialsBody: string;
+    aboutHeadingTextColour: string;
+    aboutBackgroundColour: string;
+    latestNewsBackgroundColour: string;
+    latestNewsHeadingTextColour: string;
+    connectWithUsTextColour: string;
+    connectWithUsBackgroundColour: string;
+    aboutCards: { title: string; description: string; imageUrl: string }[];
+    latestNewsCards: { title: string; description: string; imageUrl: string }[];
 };
 
 export type ArtConfig = {
-    heading: string;
+    headingTextColour: string;
+    headingBackgroundColour: string;
+};
+
+export type ArtUploadConfig  = {
+    artTitle: string;
+    artDescription: string;
+    tags:string[];
+    
 };
 
 export type ComicsConfig = {
-    heading: string;
+    headingTextColour: string;
+    headingBackgroundColour: string;
 };
 
 export type WritingConfig = {
-    heading: string;
-    subheading: string;
+    headingTextColour: string;
+    headingBackgroundColour: string;
 };
 
 export type CommissionsConfig = {

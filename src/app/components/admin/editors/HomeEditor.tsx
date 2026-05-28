@@ -9,13 +9,11 @@ type Props = {
 export default function HomeEditor({ config, dispatch }: Props) {
     return (
         <div className="flex flex-col gap-10">
-
-            {/* About */}
             <section>
                 <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">About Section</h3>
                 <div className="flex flex-col gap-4">
                     <FieldGroup
-                        label="Heading"
+                        label="Background"
                         value={config.aboutHeading}
                         onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutHeading", value: v })}
                     />
