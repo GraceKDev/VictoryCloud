@@ -27,14 +27,20 @@ const pages: { value: Page; label: string }[] = [
     { value: "commissions", label: "Commissions" },
 ];
 
+export interface CardConfig {
+    title: string;
+    description: string;
+    imageUrl: string;
+}
+
 const defaultConfig: Config = {
     home: {
-        aboutHeadingTextColour: "",
-        aboutBackgroundColour: "",
-        latestNewsBackgroundColour: "",
-        latestNewsHeadingTextColour: "",
-        connectWithUsTextColour: "",
-        connectWithUsBackgroundColour: "",
+        aboutHeadingTextColour: "#000000",
+        aboutBackgroundColour: "#ffffff",
+        latestNewsBackgroundColour: "#ffffff",
+        latestNewsHeadingTextColour: "#000000",
+        connectWithUsTextColour: "#000000",
+        connectWithUsBackgroundColour: "#ffffff",
         aboutCards: [
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
@@ -46,17 +52,17 @@ const defaultConfig: Config = {
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
         ],
     },
-    art: { 
-        headingTextColour: "Art", 
-        headingBackgroundColour: "" 
+    art: {
+        headingTextColour: "#000000",
+        headingBackgroundColour: "#ffffff"
     },
-    comics: { 
-        headingTextColour: "Comics", 
-        headingBackgroundColour: "" 
+    comics: {
+        headingTextColour: "#000000",
+        headingBackgroundColour: "#ffffff"
     },
-    writing: { 
-        headingTextColour: "Writing", 
-        headingBackgroundColour: "" 
+    writing: {
+        headingTextColour: "#000000",
+        headingBackgroundColour: "#ffffff"
     },
     commissions: {
         formHeading: "Commission Request Form",
@@ -71,8 +77,16 @@ const defaultConfig: Config = {
 
 function reducer(state: Config, action: Action): Config {
     switch (action.type) {
-        case "LOAD_CONFIG":
-            return action.payload;
+        case "LOAD_CONFIG": {
+            const loaded = action.payload;
+            return {
+                home: { ...defaultConfig.home, ...loaded.home },
+                art: { ...defaultConfig.art, ...loaded.art },
+                comics: { ...defaultConfig.comics, ...loaded.comics },
+                writing: { ...defaultConfig.writing, ...loaded.writing },
+                commissions: { ...defaultConfig.commissions, ...loaded.commissions },
+            };
+        }
         case "UPDATE_HOME":
             return { ...state, home: { ...state.home, [action.field]: action.value } };
         case "UPDATE_HOME_ABOUT_CARD": {
@@ -116,29 +130,45 @@ export default function AdminDashboard() {
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
-        fetch("http://localhost:5266/Api/Admin/Config", { credentials: "include" })
+        fetch("http://localhost:5266/Api/Config/GetConfig", { credentials: "include" })
             .then((res) => (res.ok ? res.json() : null))
-            .then((data) => { if (data) dispatch({ type: "LOAD_CONFIG", payload: data }); })
-            .catch(() => {});
+            .then((data) => {
+                if (data) {
+                    dispatch({ type: "LOAD_CONFIG", payload: data });
+                    console.log("Config loaded:", data);
+                }
+            })
+            .catch(() => { console.log("Failed to load config, using defaults."); });
+
     }, []);
 
     const handleSave = async () => {
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Admin/Config", {
-                method: "POST",
+            const flatConfig: Record<string, string> = {
+                home: JSON.stringify(config.home),
+                art: JSON.stringify(config.art),
+                comics: JSON.stringify(config.comics),
+                writing: JSON.stringify(config.writing),
+                commissions: JSON.stringify(config.commissions),
+            };
+            const res = await fetch("http://localhost:5266/Api/Config/UpdateConfig", {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify(config),
+                body: JSON.stringify(flatConfig),
             });
             if (res.ok) {
                 setSaveStatus("success");
                 iframeRef.current?.contentWindow?.location.reload();
             } else {
+                const errorData = await res.json().catch(() => null);
+                console.error("Save failed:", errorData);
                 setSaveStatus("error");
             }
-        } catch {
+        } catch (e) {
+            console.error("Save error:", e);
             setSaveStatus("error");
         } finally {
             setSaving(false);

@@ -38,7 +38,6 @@ export default function AdminLogin() {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         dispatch({ type: "SUBMIT" });
-
         try {
             const res = await fetch("http://localhost:5266/Api/Auth/Login", {
                 method: "POST",
