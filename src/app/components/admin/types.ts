@@ -17,8 +17,8 @@ export type ArtConfig = {
 export type ArtUploadConfig  = {
     artTitle: string;
     artDescription: string;
-    tags:string[];
-    
+    artTags:string[];
+    artFiles: File[] | null;
 };
 
 export type ComicsConfig = {
@@ -47,9 +47,11 @@ export type Config = {
 
 export type Action =
     | { type: "LOAD_CONFIG"; payload: Config }
-    | { type: "UPDATE_HOME"; field: keyof Omit<HomeConfig, "cards">; value: string }
-    | { type: "UPDATE_HOME_CARD"; index: number; field: keyof HomeConfig["cards"][0]; value: string }
+    | { type: "UPDATE_HOME"; field: keyof Omit<HomeConfig, "aboutCards" | "latestNewsCards">; value: string }
+    | { type: "UPDATE_HOME_ABOUT_CARD"; index: number; field: keyof HomeConfig["aboutCards"][0]; value: string }
+    | { type: "UPDATE_HOME_LATEST_NEWS_CARD"; index: number; field: keyof HomeConfig["latestNewsCards"][0]; value: string }
     | { type: "UPDATE_ART"; field: keyof ArtConfig; value: string }
+    | { type: "UPDATE_ART_UPLOAD"; field: keyof ArtUploadConfig; value: string | File[] | null }
     | { type: "UPDATE_COMICS"; field: keyof ComicsConfig; value: string }
     | { type: "UPDATE_WRITING"; field: keyof WritingConfig; value: string }
     | { type: "UPDATE_COMMISSIONS"; field: keyof Omit<CommissionsConfig, "socials">; value: string }

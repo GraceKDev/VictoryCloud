@@ -29,21 +29,35 @@ const pages: { value: Page; label: string }[] = [
 
 const defaultConfig: Config = {
     home: {
-        aboutBackground: "",
-        aboutBody: "",
-        cards: [
+        aboutHeadingTextColour: "",
+        aboutBackgroundColour: "",
+        latestNewsBackgroundColour: "",
+        latestNewsHeadingTextColour: "",
+        connectWithUsTextColour: "",
+        connectWithUsBackgroundColour: "",
+        aboutCards: [
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
         ],
-        newsHeading: "Latest News",
-        newsBody: "",
-        socialsHeading: "Connect with Us",
-        socialsBody: "",
+        latestNewsCards: [
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
+        ],
     },
-    art: { heading: "Art" },
-    comics: { heading: "Comics" },
-    writing: { heading: "Writing", subheading: "" },
+    art: { 
+        headingTextColour: "Art", 
+        headingBackgroundColour: "" 
+    },
+    comics: { 
+        headingTextColour: "Comics", 
+        headingBackgroundColour: "" 
+    },
+    writing: { 
+        headingTextColour: "Writing", 
+        headingBackgroundColour: "" 
+    },
     commissions: {
         formHeading: "Commission Request Form",
         buttonColor: "#3b82f6",
@@ -61,12 +75,20 @@ function reducer(state: Config, action: Action): Config {
             return action.payload;
         case "UPDATE_HOME":
             return { ...state, home: { ...state.home, [action.field]: action.value } };
-        case "UPDATE_HOME_CARD": {
-            const cards = state.home.cards.map((c, i) =>
+        case "UPDATE_HOME_ABOUT_CARD": {
+            const aboutCards = state.home.aboutCards.map((c, i) =>
                 i === action.index ? { ...c, [action.field]: action.value } : c
             );
-            return { ...state, home: { ...state.home, cards } };
+            return { ...state, home: { ...state.home, aboutCards } };
         }
+        case "UPDATE_HOME_LATEST_NEWS_CARD": {
+            const latestNewsCards = state.home.latestNewsCards.map((c, i) =>
+                i === action.index ? { ...c, [action.field]: action.value } : c
+            );
+            return { ...state, home: { ...state.home, latestNewsCards } };
+        }
+        case "UPDATE_ART_UPLOAD":
+            return { ...state, art: { ...state.art, [action.field]: action.value } };
         case "UPDATE_ART":
             return { ...state, art: { ...state.art, [action.field]: action.value } };
         case "UPDATE_COMICS":

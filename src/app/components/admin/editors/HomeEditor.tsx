@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Action, HomeConfig } from "../types";
 import FieldGroup from "../FieldGroup";
 
@@ -6,91 +7,98 @@ type Props = {
     dispatch: (action: Action) => void;
 };
 
+function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <section className="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+                type="button"
+                onClick={() => setOpen((o) => !o)}
+                className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+            >
+                <span className="text-base font-semibold text-gray-800">{title}</span>
+                <span className="text-gray-500 text-lg">{open ? "▲" : "▼"}</span>
+            </button>
+            {open && <div className="p-4 flex flex-col gap-4">{children}</div>}
+        </section>
+    );
+}
+
 export default function HomeEditor({ config, dispatch }: Props) {
     return (
-        <div className="flex flex-col gap-10">
-            <section>
-                <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">About Section</h3>
-                <div className="flex flex-col gap-4">
-                    <FieldGroup
-                        label="Background"
-                        value={config.aboutHeading}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutHeading", value: v })}
-                    />
-                    <FieldGroup
-                        label="Body Text"
-                        type="textarea"
-                        value={config.aboutBody}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutBody", value: v })}
-                    />
+        <div className="flex flex-col gap-4">
+            <Accordion title="About Section">
+                <FieldGroup
+                    label="Section Background Colour"
+                    type="color"
+                    value={config.aboutBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Heading Text Colour"
+                    type="color"
+                    value={config.aboutHeadingTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutHeadingTextColour", value: v })}
+                />
+                <hr className="border-gray-300" />
+                <div>
+                    <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Cards</h2>
                 </div>
-            </section>
+                {config.aboutCards.map((card, i) => (
+                    <div key={i} className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3 bg-gray-50">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Card {i + 1}</p>
+                        <FieldGroup
+                            label="Title"
+                            value={card.title}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_ABOUT_CARD", index: i, field: "title", value: v })}
+                        />
+                        <FieldGroup
+                            label="Description"
+                            type="textarea"
+                            value={card.description}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_ABOUT_CARD", index: i, field: "description", value: v })}
+                        />
+                        <FieldGroup
+                            label="Image URL"
+                            type="url"
+                            value={card.imageUrl}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_ABOUT_CARD", index: i, field: "imageUrl", value: v })}
+                        />
+                    </div>
+                ))}
+            </Accordion>
 
-            {/* About Cards */}
-            <section>
-                <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">About Cards</h3>
-                <div className="flex flex-col gap-6">
-                    {config.cards.map((card, i) => (
-                        <div key={i} className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3 bg-gray-50">
-                            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Card {i + 1}</p>
-                            <FieldGroup
-                                label="Title"
-                                value={card.title}
-                                onChange={(v) => dispatch({ type: "UPDATE_HOME_CARD", index: i, field: "title", value: v })}
-                            />
-                            <FieldGroup
-                                label="Description"
-                                type="textarea"
-                                value={card.description}
-                                onChange={(v) => dispatch({ type: "UPDATE_HOME_CARD", index: i, field: "description", value: v })}
-                            />
-                            <FieldGroup
-                                label="Image URL"
-                                type="url"
-                                value={card.imageUrl}
-                                onChange={(v) => dispatch({ type: "UPDATE_HOME_CARD", index: i, field: "imageUrl", value: v })}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </section>
 
-            {/* News */}
-            <section>
-                <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">News Section</h3>
-                <div className="flex flex-col gap-4">
-                    <FieldGroup
-                        label="Heading"
-                        value={config.newsHeading}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "newsHeading", value: v })}
-                    />
-                    <FieldGroup
-                        label="Body Text"
-                        type="textarea"
-                        value={config.newsBody}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "newsBody", value: v })}
-                    />
-                </div>
-            </section>
 
-            {/* Socials */}
-            <section>
-                <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Socials Section</h3>
-                <div className="flex flex-col gap-4">
-                    <FieldGroup
-                        label="Heading"
-                        value={config.socialsHeading}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "socialsHeading", value: v })}
-                    />
-                    <FieldGroup
-                        label="Body Text"
-                        type="textarea"
-                        value={config.socialsBody}
-                        onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "socialsBody", value: v })}
-                    />
-                </div>
-            </section>
+            <Accordion title="News Section">
+                <FieldGroup
+                    label="Heading"
+                    type="color"
+                    value={config.latestNewsHeadingTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsHeadingTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Body Text"
+                    type="color"
+                    value={config.latestNewsBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsBackgroundColour", value: v })}
+                />
+            </Accordion>
 
+            <Accordion title="Socials Section">
+                <FieldGroup
+                    label="Heading"
+                    type="color"
+                    value={config.connectWithUsTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Body Text"
+                    type="color"
+                    value={config.connectWithUsBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsBackgroundColour", value: v })}
+                />
+            </Accordion>
         </div>
     );
 }

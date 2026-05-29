@@ -13,8 +13,15 @@ export default function ArtEditor({ config, dispatch }: Props) {
                 <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Page</h3>
                 <FieldGroup
                     label="Heading"
-                    value={config.heading}
-                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "heading", value: v })}
+                    type="color"
+                    value={config.headingTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "headingTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Background"
+                    type="color"
+                    value={config.headingBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "headingBackgroundColour", value: v })}
                 />
             </section>
         </div>
