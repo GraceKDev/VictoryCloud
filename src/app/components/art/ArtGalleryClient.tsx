@@ -11,7 +11,7 @@ interface ArtGalleryClientProps {
 }
 
 export default function ArtGalleryClient({ art }: ArtGalleryClientProps) {
-    const {state} = useFilter() 
+    const { state } = useFilter()
     const [selectedArt, setSelectedArt] = useState<ArtInterface | null>(null)
     const filtered = art.filter((artItem) => {
         const term = state.search.toLowerCase();
@@ -26,14 +26,20 @@ export default function ArtGalleryClient({ art }: ArtGalleryClientProps) {
     });
     return (
         <>
-            <p className="text-sm text-gray-500 mb-4">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
-            {filtered.map((artItem) => (
-                <ArtItem
-                    key={artItem.id}
-                    {...artItem}
-                    onClick={() => setSelectedArt(artItem)}
-                />
-            ))}
+            <div className="relative">
+                <p className=" z-10 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-2 py-4  rounded">
+                    {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+                </p>
+                <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[280px] justify-center">
+                    {filtered.map((artItem) => (
+                        <ArtItem
+                            key={artItem.id}
+                            {...artItem}
+                            onClick={() => setSelectedArt(artItem)}
+                        />
+                    ))}
+                </section>
+            </div>
             {selectedArt && (
                 <ArtModal onClose={() => setSelectedArt(null)} {...selectedArt} />
             )}

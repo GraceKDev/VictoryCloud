@@ -37,11 +37,22 @@ export const comics: ComicInterface[] = [
         chapters: [
             {
                 chapterTitle: "Chapter 1 - Mega Awesome Chapter",
-                images: ["/images/HomeCarousel/placeholder1.jpg", "/images/HomeCarousel/placeholder2.jpg"]
+                images: [
+                    "/images/HomeCarousel/placeholder1.jpg",
+                    "/images/HomeCarousel/placeholder2.jpg",
+                    "/images/HomeCarousel/placeholder3.jpg",
+                    "/images/HomeCarousel/placeholder4.webp",
+                    "/images/Art/abstract-dreams.jpg",
+                ]
             },
             {
                 chapterTitle: "Chapter 2 - Another Exciting Chapter",
-                images: ["/images/HomeCarousel/placeholder3.jpg", "/images/HomeCarousel/placeholder4.webp"]
+                images: [
+                    "/images/Art/serene-forest.webp",
+                    "/images/Art/sunset-overdrive.jpg",
+                    "/images/HomeCarousel/placeholder1.jpg",
+                    "/images/HomeCarousel/placeholder2.jpg",
+                ]
             }
         ]
     },
@@ -78,11 +89,20 @@ export const comics: ComicInterface[] = [
         chapters: [
             {
                 chapterTitle: "Chapter 1 - Mega Awesome Chapter",
-                images: ["/images/HomeCarousel/placeholder1.jpg", "/images/HomeCarousel/placeholder2.jpg"]
+                images: [
+                    "/images/Art/sunset-overdrive.jpg",
+                    "/images/HomeCarousel/placeholder3.jpg",
+                    "/images/HomeCarousel/placeholder4.webp",
+                ]
             },
             {
                 chapterTitle: "Chapter 2 - Another Exciting Chapter",
-                images: ["/images/HomeCarousel/placeholder3.jpg", "/images/HomeCarousel/placeholder4.webp"]
+                images: [
+                    "/images/Art/abstract-dreams.jpg",
+                    "/images/Art/serene-forest.webp",
+                    "/images/HomeCarousel/placeholder1.jpg",
+                    "/images/HomeCarousel/placeholder2.jpg",
+                ]
             }
         ]
     },
@@ -120,11 +140,20 @@ export const comics: ComicInterface[] = [
         chapters: [
             {
                 chapterTitle: "Chapter 1 - Mega Awesome Chapter",
-                images: ["/images/HomeCarousel/placeholder1.jpg", "/images/HomeCarousel/placeholder2.jpg"]
+                images: [
+                    "/images/HomeCarousel/placeholder2.jpg",
+                    "/images/Art/abstract-dreams.jpg",
+                    "/images/Art/serene-forest.webp",
+                    "/images/HomeCarousel/placeholder4.webp",
+                ]
             },
             {
                 chapterTitle: "Chapter 2 - Another Exciting Chapter",
-                images: ["/images/HomeCarousel/placeholder3.jpg", "/images/HomeCarousel/placeholder4.webp"]
+                images: [
+                    "/images/HomeCarousel/placeholder1.jpg",
+                    "/images/Art/sunset-overdrive.jpg",
+                    "/images/HomeCarousel/placeholder3.jpg",
+                ]
             }
         ]
     },
@@ -163,11 +192,22 @@ export const comics: ComicInterface[] = [
         chapters: [
             {
                 chapterTitle: "Chapter 1 - Mega Awesome Chapter",
-                images: ["/images/HomeCarousel/placeholder1.jpg", "/images/HomeCarousel/placeholder2.jpg"]
+                images: [
+                    "/images/Art/serene-forest.webp",
+                    "/images/HomeCarousel/placeholder1.jpg",
+                    "/images/HomeCarousel/placeholder2.jpg",
+                    "/images/Art/abstract-dreams.jpg",
+                    "/images/HomeCarousel/placeholder3.jpg",
+                    "/images/Art/sunset-overdrive.jpg",
+                ]
             },
             {
                 chapterTitle: "Chapter 2 - Another Exciting Chapter",
-                images: ["/images/HomeCarousel/placeholder3.jpg", "/images/HomeCarousel/placeholder4.webp"]
+                images: [
+                    "/images/HomeCarousel/placeholder4.webp",
+                    "/images/Art/serene-forest.webp",
+                    "/images/HomeCarousel/placeholder1.jpg",
+                ]
             }
         ]
     },

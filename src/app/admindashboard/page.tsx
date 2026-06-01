@@ -8,6 +8,7 @@ import ArtEditor from "../components/admin/editors/ArtEditor";
 import ComicsEditor from "../components/admin/editors/ComicsEditor";
 import WritingEditor from "../components/admin/editors/WritingEditor";
 import CommissionsEditor from "../components/admin/editors/CommissionsEditor";
+import ComicBuilder from "../components/admin/ComicBuilder";
 
 type Page = "home" | "art" | "comics" | "writing" | "commissions";
 
@@ -37,10 +38,13 @@ const defaultConfig: Config = {
     home: {
         aboutHeadingTextColour: "#000000",
         aboutBackgroundColour: "#ffffff",
-        latestNewsBackgroundColour: "#ffffff",
-        latestNewsHeadingTextColour: "#000000",
+        aboutParagraphTextColour: "#000000",
+        latestNewsBackgroundColour: "#000000",
+        latestNewsHeadingTextColour: "#ffffff",
+        latestNewsParagraphTextColour: "#000000",
         connectWithUsTextColour: "#000000",
         connectWithUsBackgroundColour: "#ffffff",
+        connectWithUsParagraphTextColour: "#000000",
         aboutCards: [
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
@@ -51,18 +55,23 @@ const defaultConfig: Config = {
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
         ],
+        aboutCardsBackgroundColour: "#ffffff",
     },
     art: {
         headingTextColour: "#000000",
-        headingBackgroundColour: "#ffffff"
+        headingBackgroundColour: "#ffffff",
+        paragraphTextColour: "#000000",
+
     },
     comics: {
         headingTextColour: "#000000",
-        headingBackgroundColour: "#ffffff"
+        headingBackgroundColour: "#ffffff",
+        paragraphTextColour: "#000000",
     },
     writing: {
         headingTextColour: "#000000",
-        headingBackgroundColour: "#ffffff"
+        headingBackgroundColour: "#ffffff",
+        paragraphTextColour: "#000000",
     },
     commissions: {
         formHeading: "Commission Request Form",
@@ -124,10 +133,37 @@ function reducer(state: Config, action: Action): Config {
 
 export default function AdminDashboard() {
     const [selectedPage, setSelectedPage] = useState<Page>("home");
+    const [comicBuilderMode, setComicBuilderMode] = useState(false);
     const [config, dispatch] = useReducer(reducer, defaultConfig);
     const [saving, setSaving] = useState(false);
     const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">("idle");
     const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    // Push live colour changes into the iframe without requiring a save
+    useEffect(() => {
+        const vars: Record<string, string> = {
+            "--cms-about-bg": config.home.aboutBackgroundColour,
+            "--cms-about-heading": config.home.aboutHeadingTextColour,
+            "--cms-about-body": config.home.aboutParagraphTextColour,
+            "--cms-news-bg": config.home.latestNewsBackgroundColour,
+            "--cms-news-heading": config.home.latestNewsHeadingTextColour,
+            "--cms-news-body": config.home.latestNewsParagraphTextColour,
+            "--cms-socials-bg": config.home.connectWithUsBackgroundColour,
+            "--cms-socials-heading": config.home.connectWithUsTextColour,
+            "--cms-socials-body": config.home.connectWithUsParagraphTextColour,
+            "--cms-art-bg": config.art.headingBackgroundColour,
+            "--cms-art-heading": config.art.headingTextColour,
+            "--cms-art-body": config.art.paragraphTextColour,
+            "--cms-comics-bg": config.comics.headingBackgroundColour,
+            "--cms-comics-heading": config.comics.headingTextColour,
+            "--cms-comics-body": config.comics.paragraphTextColour,
+            "--cms-writing-bg": config.writing.headingBackgroundColour,
+            "--cms-writing-heading": config.writing.headingTextColour,
+            "--cms-writing-body": config.writing.paragraphTextColour,
+            "--cms-commissions-button": config.commissions.buttonColor,
+        };
+        iframeRef.current?.contentWindow?.postMessage({ type: "CMS_VARS", vars }, window.location.origin);
+    }, [config]);
 
     useEffect(() => {
         fetch("http://localhost:5266/Api/Config/GetConfig", { credentials: "include" })
@@ -185,7 +221,10 @@ export default function AdminDashboard() {
                     <label className="block text-sm font-medium text-gray-500 mb-2">Edit Page</label>
                     <select
                         value={selectedPage}
-                        onChange={(e) => setSelectedPage(e.target.value as Page)}
+                        onChange={(e) => {
+                            setSelectedPage(e.target.value as Page);
+                            setComicBuilderMode(false);
+                        }}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         {pages.map((p) => (
@@ -197,7 +236,7 @@ export default function AdminDashboard() {
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
                     {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} />}
-                    {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} />}
+                    {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} />}
                     {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
                 </div>
@@ -216,24 +255,30 @@ export default function AdminDashboard() {
             </aside>
 
             <section className="flex-1 flex flex-col overflow-hidden">
-                <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shrink-0">
-                    <p className="text-sm text-gray-500">
-                        Previewing: <span className="font-semibold text-gray-800">{pages.find((p) => p.value === selectedPage)?.label}</span>
-                    </p>
-                    <button
-                        onClick={() => iframeRef.current?.contentWindow?.location.reload()}
-                        className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                        Refresh Preview
-                    </button>
-                </div>
-                <iframe
-                    ref={iframeRef}
-                    src={PAGE_URLS[selectedPage]}
-                    key={selectedPage}
-                    title="Page Preview"
-                    className="flex-1 w-full border-none bg-white"
-                />
+                {selectedPage === "comics" && comicBuilderMode ? (
+                    <ComicBuilder onBack={() => setComicBuilderMode(false)} />
+                ) : (
+                    <>
+                        <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shrink-0">
+                            <p className="text-sm text-gray-500">
+                                Previewing: <span className="font-semibold text-gray-800">{pages.find((p) => p.value === selectedPage)?.label}</span>
+                            </p>
+                            <button
+                                onClick={() => iframeRef.current?.contentWindow?.location.reload()}
+                                className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                            >
+                                Refresh Preview
+                            </button>
+                        </div>
+                        <iframe
+                            ref={iframeRef}
+                            src={PAGE_URLS[selectedPage]}
+                            key={selectedPage}
+                            title="Page Preview"
+                            className="flex-1 w-full border-none bg-white"
+                        />
+                    </>
+                )}
             </section>
 
         </main>

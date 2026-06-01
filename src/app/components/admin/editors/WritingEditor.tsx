@@ -13,15 +13,22 @@ export default function WritingEditor({ config, dispatch }: Props) {
                 <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Page</h3>
                 <div className="flex flex-col gap-4">
                     <FieldGroup
-                        label="Heading"
-                        value={config.heading}
-                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "heading", value: v })}
+                        label="Section Background Colour"
+                        type="color"
+                        value={config.headingBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "headingBackgroundColour", value: v })}
                     />
                     <FieldGroup
-                        label="Subheading"
-                        type="textarea"
-                        value={config.subheading}
-                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "subheading", value: v })}
+                        label="Heading Text Colour"
+                        type="color"
+                        value={config.headingTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "headingTextColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Paragraph Text Colour"
+                        type="color"
+                        value={config.paragraphTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "paragraphTextColour", value: v })}
                     />
                 </div>
             </section>

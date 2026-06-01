@@ -3,6 +3,28 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* CMS-controlled colour variables — defaults match current site design.
+     Overwritten at runtime by ConfigVarSetter when a saved config loads. */
+  --cms-about-bg: #ffffff;
+  --cms-about-heading: #000000;
+  --cms-about-body: #000000;
+  --cms-news-bg: #000000;
+  --cms-news-heading: #ffffff;
+  --cms-news-body: #ffffff;
+  --cms-socials-bg: #ffffff;
+  --cms-socials-heading: #000000;
+  --cms-socials-body: #000000;
+  --cms-art-bg: #ffffff;
+  --cms-art-heading: #000000;
+  --cms-art-body: #000000;
+  --cms-comics-bg: #ffffff;
+  --cms-comics-heading: #000000;
+  --cms-comics-body: #000000;
+  --cms-writing-bg: #ffffff;
+  --cms-writing-heading: #000000;
+  --cms-writing-body: #374151;
+  --cms-commissions-button: #3b82f6;
 }
 
 @theme inline {

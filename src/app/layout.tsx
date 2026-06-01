@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/global/Navigation";
 import Footer from "./components/global/Footer";
+import ConfigVarSetter from "./components/global/ConfigVarSetter";
 import { FilterProvider } from "./lib/filters/FilterContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <body className="min-h-full flex flex-col">
+        <ConfigVarSetter />
         <Navigation/> 
         {children}
         <Footer/>

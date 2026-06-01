@@ -40,6 +40,12 @@ export default function HomeEditor({ config, dispatch }: Props) {
                     value={config.aboutHeadingTextColour}
                     onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutHeadingTextColour", value: v })}
                 />
+                <FieldGroup
+                    label="Paragraph Text Colour"
+                    type="color"
+                    value={config.aboutParagraphTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutParagraphTextColour", value: v })}
+                />
                 <hr className="border-gray-300" />
                 <div>
                     <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Cards</h2>
@@ -66,38 +72,55 @@ export default function HomeEditor({ config, dispatch }: Props) {
                         />
                     </div>
                 ))}
+                <FieldGroup
+                    label="About Card Background Colour"
+                    type="color"
+                    value={config.aboutBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "aboutCardsBackgroundColour", value: v })}
+                />
             </Accordion>
-
-
 
             <Accordion title="News Section">
                 <FieldGroup
-                    label="Heading"
+                    label="Section Background Colour"
+                    type="color"
+                    value={config.latestNewsBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Heading Text Colour"
                     type="color"
                     value={config.latestNewsHeadingTextColour}
                     onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsHeadingTextColour", value: v })}
                 />
                 <FieldGroup
-                    label="Body Text"
+                    label="Paragraph Text Colour"
                     type="color"
-                    value={config.latestNewsBackgroundColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsBackgroundColour", value: v })}
+                    value={config.latestNewsParagraphTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsParagraphTextColour", value: v })}
                 />
             </Accordion>
 
             <Accordion title="Socials Section">
                 <FieldGroup
-                    label="Heading"
-                    type="color"
-                    value={config.connectWithUsTextColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsTextColour", value: v })}
-                />
-                <FieldGroup
-                    label="Body Text"
+                    label="Section Background Colour"
                     type="color"
                     value={config.connectWithUsBackgroundColour}
                     onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsBackgroundColour", value: v })}
                 />
+                <FieldGroup
+                    label="Heading Text Colour"
+                    type="color"
+                    value={config.connectWithUsTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsTextColour", value: v })}
+                />
+                  <FieldGroup
+                    label="Paragraph Text Colour"
+                    type="color"
+                    value={config.connectWithUsParagraphTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "connectWithUsParagraphTextColour", value: v })}
+                />
+                
             </Accordion>
         </div>
     );

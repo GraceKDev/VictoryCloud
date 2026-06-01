@@ -1,9 +1,13 @@
 export type HomeConfig = {
     aboutHeadingTextColour: string;
+    aboutParagraphTextColour: string;
     aboutBackgroundColour: string;
+    aboutCardsBackgroundColour: string;
     latestNewsBackgroundColour: string;
+    latestNewsParagraphTextColour: string;
     latestNewsHeadingTextColour: string;
     connectWithUsTextColour: string;
+    connectWithUsParagraphTextColour: string;
     connectWithUsBackgroundColour: string;
     aboutCards: { title: string; description: string; imageUrl: string }[];
     latestNewsCards: { title: string; description: string; imageUrl: string }[];
@@ -12,6 +16,7 @@ export type HomeConfig = {
 export type ArtConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
+    paragraphTextColour: string;
 };
 
 export type ArtUploadConfig  = {
@@ -24,11 +29,13 @@ export type ArtUploadConfig  = {
 export type ComicsConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
+    paragraphTextColour: string;
 };
 
 export type WritingConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
+    paragraphTextColour: string;
 };
 
 export type CommissionsConfig = {

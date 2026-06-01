@@ -23,7 +23,7 @@ export default function CommissionsForm() {
                             <textarea id="details" name="details" rows={5} className="w-full p-2 border border-gray-300 rounded"></textarea>
                         </div>
                         <div className="mb-4">
-                            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors">Submit Request</button>
+                            <button type="submit" style={{ backgroundColor: 'var(--cms-commissions-button)' }} className="w-full text-white p-2 rounded hover:opacity-90 transition-opacity">Submit Request</button>
                         </div>
                     </form>
                 </div>
