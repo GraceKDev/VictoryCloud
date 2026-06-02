@@ -3,6 +3,7 @@ export type HomeConfig = {
     aboutParagraphTextColour: string;
     aboutBackgroundColour: string;
     aboutCardsBackgroundColour: string;
+    latestNewsCardsBackgroundColour: string;
     latestNewsBackgroundColour: string;
     latestNewsParagraphTextColour: string;
     latestNewsHeadingTextColour: string;

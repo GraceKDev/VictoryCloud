@@ -33,6 +33,7 @@ export default function ConfigVarSetter() {
                     "--cms-news-bg": home?.latestNewsBackgroundColour,
                     "--cms-news-heading": home?.latestNewsHeadingTextColour,
                     "--cms-news-body": home?.latestNewsParagraphTextColour,
+                    "--cms-news-card-bg": home?.latestNewsCardsBackgroundColour,
                     "--cms-socials-bg": home?.connectWithUsBackgroundColour,
                     "--cms-socials-heading": home?.connectWithUsTextColour,
                     "--cms-socials-body": home?.connectWithUsParagraphTextColour,

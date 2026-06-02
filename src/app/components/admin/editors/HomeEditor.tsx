@@ -99,6 +99,38 @@ export default function HomeEditor({ config, dispatch }: Props) {
                     value={config.latestNewsParagraphTextColour}
                     onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsParagraphTextColour", value: v })}
                 />
+                <hr className="border-gray-300" />
+                <div>
+                    <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Cards</h2>
+                </div>
+                {config.latestNewsCards.map((card, i) => (
+                    <div key={i} className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3 bg-gray-50">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Card {i + 1}</p>
+                        <FieldGroup
+                            label="Title"
+                            value={card.title}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_LATEST_NEWS_CARD", index: i, field: "title", value: v })}
+                        />
+                        <FieldGroup
+                            label="Description"
+                            type="textarea"
+                            value={card.description}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_LATEST_NEWS_CARD", index: i, field: "description", value: v })}
+                        />
+                        <FieldGroup
+                            label="Image URL"
+                            type="url"
+                            value={card.imageUrl}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_LATEST_NEWS_CARD", index: i, field: "imageUrl", value: v })}
+                        />
+                    </div>
+                ))}
+                <FieldGroup
+                    label="News Card Background Colour"
+                    type="color"
+                    value={config.latestNewsCardsBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsCardsBackgroundColour", value: v })}
+                />
             </Accordion>
 
             <Accordion title="Socials Section">

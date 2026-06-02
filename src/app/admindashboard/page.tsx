@@ -56,6 +56,7 @@ const defaultConfig: Config = {
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
         ],
         aboutCardsBackgroundColour: "#ffffff",
+        latestNewsCardsBackgroundColour: "#ffffff",
     },
     art: {
         headingTextColour: "#000000",
@@ -148,6 +149,7 @@ export default function AdminDashboard() {
             "--cms-news-bg": config.home.latestNewsBackgroundColour,
             "--cms-news-heading": config.home.latestNewsHeadingTextColour,
             "--cms-news-body": config.home.latestNewsParagraphTextColour,
+            "--cms-news-card-bg": config.home.latestNewsCardsBackgroundColour,
             "--cms-socials-bg": config.home.connectWithUsBackgroundColour,
             "--cms-socials-heading": config.home.connectWithUsTextColour,
             "--cms-socials-body": config.home.connectWithUsParagraphTextColour,

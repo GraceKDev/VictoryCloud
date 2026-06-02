@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function AboutCard() {
     return (
-        <div className="w-full aspect-square p-4 bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+        <div className="w-full aspect-square p-4 bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl">
             <div className="relative w-full h-1/2 shrink-0">
                 <Image src="/images/HomeCarousel/placeholder1.jpg" alt="Placeholder Image" fill className="object-cover" />
             </div>
