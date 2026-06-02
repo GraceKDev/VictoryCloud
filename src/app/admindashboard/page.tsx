@@ -9,6 +9,7 @@ import ComicsEditor from "../components/admin/editors/ComicsEditor";
 import WritingEditor from "../components/admin/editors/WritingEditor";
 import CommissionsEditor from "../components/admin/editors/CommissionsEditor";
 import ComicBuilder from "../components/admin/ComicBuilder";
+import ImageManager from "../components/image/ImageManager";
 
 type Page = "home" | "art" | "comics" | "writing" | "commissions";
 
@@ -137,15 +138,17 @@ export default function AdminDashboard() {
     const [comicBuilderMode, setComicBuilderMode] = useState(false);
     const [config, dispatch] = useReducer(reducer, defaultConfig);
     const [saving, setSaving] = useState(false);
+    const [manageImagesMode, setManageImagesMode] = useState(false);
     const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">("idle");
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
-    // Push live colour changes into the iframe without requiring a save
+
     useEffect(() => {
         const vars: Record<string, string> = {
             "--cms-about-bg": config.home.aboutBackgroundColour,
             "--cms-about-heading": config.home.aboutHeadingTextColour,
             "--cms-about-body": config.home.aboutParagraphTextColour,
+            "--cms-about-card-bg": config.home.aboutCardsBackgroundColour,
             "--cms-news-bg": config.home.latestNewsBackgroundColour,
             "--cms-news-heading": config.home.latestNewsHeadingTextColour,
             "--cms-news-body": config.home.latestNewsParagraphTextColour,
@@ -173,13 +176,16 @@ export default function AdminDashboard() {
             .then((data) => {
                 if (data) {
                     dispatch({ type: "LOAD_CONFIG", payload: data });
-                    console.log("Config loaded:", data);
                 }
             })
             .catch(() => { console.log("Failed to load config, using defaults."); });
 
     }, []);
 
+
+    const manageImageButtonHandler = () => {
+        setManageImagesMode(true);
+    }
     const handleSave = async () => {
         setSaving(true);
         setSaveStatus("idle");
@@ -212,12 +218,41 @@ export default function AdminDashboard() {
             setSaving(false);
         }
     };
-
+    const rightPanelContent = () => {
+        if (manageImagesMode) {
+            return <ImageManager onBack={() => setManageImagesMode(false)} />;
+        }
+        if (comicBuilderMode) {
+            return <ComicBuilder onBack={() => setComicBuilderMode(false)} />;
+        }
+        else {
+            return (
+                <>
+                    <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shrink-0">
+                        <p className="text-sm text-gray-500">
+                            Previewing: <span className="font-semibold text-gray-800">{pages.find((p) => p.value === selectedPage)?.label}</span>
+                        </p>
+                        <button
+                        onClick={() => iframeRef.current?.contentWindow?.location.reload()}
+                        className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                        Refresh Preview
+                    </button>
+                </div>
+                <iframe
+                    ref={iframeRef}
+                    src={PAGE_URLS[selectedPage]}
+                    key={selectedPage}
+                    title="Page Preview"
+                    className="flex-1 w-full border-none bg-white"
+                />
+            </>
+            )
+        }
+    }
     return (
         <main className="flex flex-1 overflow-hidden bg-gray-50" style={{ height: "calc(100vh - 64px)" }}>
-
             <aside className="w-96 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
-
                 <div className="p-6 border-b border-gray-100 shrink-0">
                     <h2 className="text-lg font-bold text-gray-800 mb-4">Control Panel</h2>
                     <label className="block text-sm font-medium text-gray-500 mb-2">Edit Page</label>
@@ -234,15 +269,22 @@ export default function AdminDashboard() {
                         ))}
                     </select>
                 </div>
-
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
                     {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} />}
                     {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} />}
                     {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
-                </div>
 
+                </div>
+                <div className="p-6 border-t border-gray-100 shrink-0 flex flex-col gap-2">
+                    <button
+                        onClick={manageImageButtonHandler}
+                        className="w-full py-2 px-4 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors"
+                    >
+                        Manage Images
+                    </button>
+                </div>
                 <div className="p-6 border-t border-gray-100 shrink-0 flex flex-col gap-2">
                     {saveStatus === "success" && <p className="text-sm text-green-600 text-center">Saved. Preview refreshed.</p>}
                     {saveStatus === "error" && <p className="text-sm text-red-600 text-center">Save failed. Try again.</p>}
@@ -257,30 +299,7 @@ export default function AdminDashboard() {
             </aside>
 
             <section className="flex-1 flex flex-col overflow-hidden">
-                {selectedPage === "comics" && comicBuilderMode ? (
-                    <ComicBuilder onBack={() => setComicBuilderMode(false)} />
-                ) : (
-                    <>
-                        <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shrink-0">
-                            <p className="text-sm text-gray-500">
-                                Previewing: <span className="font-semibold text-gray-800">{pages.find((p) => p.value === selectedPage)?.label}</span>
-                            </p>
-                            <button
-                                onClick={() => iframeRef.current?.contentWindow?.location.reload()}
-                                className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
-                            >
-                                Refresh Preview
-                            </button>
-                        </div>
-                        <iframe
-                            ref={iframeRef}
-                            src={PAGE_URLS[selectedPage]}
-                            key={selectedPage}
-                            title="Page Preview"
-                            className="flex-1 w-full border-none bg-white"
-                        />
-                    </>
-                )}
+                {rightPanelContent()}
             </section>
 
         </main>

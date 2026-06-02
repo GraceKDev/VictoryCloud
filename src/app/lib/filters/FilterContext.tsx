@@ -27,6 +27,7 @@ const initialState: FilterState = {
 };
 
 function filterReducer(state: FilterState, action: FilterAction): FilterState {
+    console.log("Dispatching action:", action);
     switch (action.type) {
         case "SET_SEARCH":
             return { ...state, search: action.payload };
@@ -55,6 +56,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
     const pathname = usePathname();
 
     useEffect(() => {
+        console.log("Path changed, resetting filters");
         dispatch({ type: "RESET" });
     }, [pathname]);
 

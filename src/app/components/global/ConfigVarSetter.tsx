@@ -30,6 +30,7 @@ export default function ConfigVarSetter() {
                     "--cms-about-bg": home?.aboutBackgroundColour,
                     "--cms-about-heading": home?.aboutHeadingTextColour,
                     "--cms-about-body": home?.aboutParagraphTextColour,
+                    "--cms-about-card-bg": home?.aboutCardsBackgroundColour,
                     "--cms-news-bg": home?.latestNewsBackgroundColour,
                     "--cms-news-heading": home?.latestNewsHeadingTextColour,
                     "--cms-news-body": home?.latestNewsParagraphTextColour,

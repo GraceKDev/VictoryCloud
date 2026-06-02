@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+
 
 type ImageDraft = {
     id: string;
@@ -47,7 +47,7 @@ const emptyDraft = (): ComicDraft => ({
     chapters: [],
 });
 
-// ─── Upload helper ─────────────────────────────────────────────────────────────
+
 
 async function uploadImage(file: File): Promise<string> {
     console.log(file.type);
@@ -70,7 +70,7 @@ async function uploadImage(file: File): Promise<string> {
     return objectUrl as string;
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+
 
 function TagChips({ tags, onRemove }: { tags: string[]; onRemove: (i: number) => void }) {
     return (
@@ -111,7 +111,7 @@ function ImageThumb({
         >
             <img src={img.previewUrl} alt={img.file.name} className="w-full h-full object-cover" />
 
-            {/* uploading spinner */}
+           
             {img.uploading && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                     <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
@@ -121,19 +121,19 @@ function ImageThumb({
                 </div>
             )}
 
-            {/* error state */}
+           
             {img.error && !img.uploading && (
                 <div className="absolute inset-0 bg-red-500/70 flex items-center justify-center" title={img.error}>
                     <span className="text-white text-lg font-bold">!</span>
                 </div>
             )}
 
-            {/* page number badge */}
+         
             {!img.uploading && !img.error && (
                 <span className="absolute bottom-0 left-0 bg-black/60 text-white text-[10px] px-1">{index + 1}</span>
             )}
 
-            {/* remove button */}
+         
             <button
                 type="button"
                 onClick={onRemove}
@@ -247,7 +247,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 const inputCls = "border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white";
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 
 type Props = {
     onBack: () => void;
@@ -260,7 +259,6 @@ export default function ComicBuilder({ onBack }: Props) {
     const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">("idle");
     const [saveError, setSaveError] = useState("");
 
-    // ── Draft helpers ──────────────────────────────────────────────────────────
 
     function updateField(field: keyof Omit<ComicDraft, "details" | "chapters" | "tags">, value: string) {
         setDraft((d) => ({ ...d, [field]: value }));
@@ -270,7 +268,6 @@ export default function ComicBuilder({ onBack }: Props) {
         setDraft((d) => ({ ...d, details: { ...d.details, [field]: value } }));
     }
 
-    // ── Tag helpers ────────────────────────────────────────────────────────────
 
     const parsedTags = draft.tags.split(",").map((t) => t.trim()).filter(Boolean);
 
@@ -286,8 +283,6 @@ export default function ComicBuilder({ onBack }: Props) {
         const next = parsedTags.filter((_, idx) => idx !== i).join(", ");
         setDraft((d) => ({ ...d, tags: next }));
     }
-
-    // ── Chapter helpers ────────────────────────────────────────────────────────
 
     function addChapter() {
         setDraft((d) => ({
@@ -306,8 +301,6 @@ export default function ComicBuilder({ onBack }: Props) {
             return { ...d, chapters };
         });
     }
-
-    // ── Image helpers ──────────────────────────────────────────────────────────
 
     function addImages(ci: number, files: FileList) {
         const newDrafts: ImageDraft[] = Array.from(files).map((file) => ({
@@ -385,7 +378,6 @@ export default function ComicBuilder({ onBack }: Props) {
         });
     }
 
-    // ── Validation & Save ──────────────────────────────────────────────────────
 
     const anyUploading = draft.chapters.some((c) => c.images.some((img) => img.uploading));
     const anyErrors = draft.chapters.some((c) => c.images.some((img) => img.error));
@@ -440,7 +432,6 @@ export default function ComicBuilder({ onBack }: Props) {
         }
     }
 
-    // ── Render ─────────────────────────────────────────────────────────────────
 
     return (
         <div className="flex flex-col h-full bg-gray-50">
@@ -480,10 +471,10 @@ export default function ComicBuilder({ onBack }: Props) {
                 </div>
             </div>
 
-            {/* Body */}
+
             <div className="flex flex-1 overflow-hidden">
 
-                {/* Left column — Basic Info + Details */}
+     
                 <div className="w-1/3 border-r border-gray-200 bg-white overflow-y-auto p-6 flex flex-col gap-8 shrink-0">
 
                     <section>
@@ -599,7 +590,7 @@ export default function ComicBuilder({ onBack }: Props) {
                     </section>
                 </div>
 
-                {/* Right column — Chapters */}
+    
                 <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
                     <div className="flex items-center justify-between shrink-0">
                         <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">

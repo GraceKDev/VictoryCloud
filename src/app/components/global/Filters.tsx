@@ -5,7 +5,7 @@ import { art } from "@/app/lib/art";
 import { comics } from "@/app/lib/comics";
 import { writing } from "@/app/lib/writing";
 
-export default function Filters() {
+export default function Filters({ numResults }: { numResults: number }) {
     const { state, dispatch } = useFilter();
     const pathname = usePathname();
 
@@ -61,15 +61,22 @@ export default function Filters() {
 
     return (
         <section className="flex w-full mb-4">
-            <div className="flex justify-end w-full gap-4">
-                {category()}
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={state.search}
-                    onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
-                    className="p-2 border border-gray-300 rounded"
-                />
+            <div className="flex justify-between w-full gap-4">
+                <div className="">
+                    <p className="z-10 text-lg text-gray-500  bg-white/80 backdrop-blur-sm px-2 py-4  rounded">
+                        {numResults} result{numResults !== 1 ? "s" : ""}
+                    </p>
+                </div>
+                <div className="flex gap-4">
+                    {category()}
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={state.search}
+                        onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
+                        className="p-2 border border-gray-300 rounded"
+                    />
+                </div>
             </div>
         </section>
     );

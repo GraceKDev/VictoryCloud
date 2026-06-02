@@ -2,6 +2,7 @@
 import { comics } from "@/app/lib/comics";
 import { useFilter } from "@/app/lib/filters/FilterContext";
 import ComicItem from "./ComicItem";
+import Filters from "../global/Filters";
 
 export default function DisplayGrid() {
     const { state } = useFilter();
@@ -19,8 +20,10 @@ export default function DisplayGrid() {
     });
 
     return (
+
         <>
-            <p className="text-sm text-gray-500 mb-4">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
+            <Filters numResults={filtered.length}/>
+            
             <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[540px] justify-center">
             {filtered.map((comic) => (
                 <ComicItem

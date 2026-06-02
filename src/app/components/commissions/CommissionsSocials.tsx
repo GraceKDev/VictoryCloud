@@ -8,28 +8,28 @@ export default function CommissionsSocials() {
                 <p className="text-gray-700 mb-8">Follow me on social media to stay updated on my latest projects, behind-the-scenes content, and more!</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-4 justify-items-center">
                     <SocialsBubble
-                        href="https://twitter.com/yourhandle"
+                        href="https://youtube.com/@victorytoclouds"
                         bgColor="#493DAF"
-                        label="X / Twitter"
-                        icon={<Image src="/svg/socials/xTwitter.svg" alt="X / Twitter Logo" width={64} height={64} />}
+                        label="YouTube"
+                        icon={<Image src="/svg/socials/youtube.svg" alt="YouTube Logo" width={64} height={64} />}
                     />
                     <SocialsBubble
-                        href="https://twitter.com/yourhandle"
+                        href="https://bsky.app/profile/lkellow.bsky.social"
                         bgColor="#1DA1F2"
-                        label="Twitter"
-                        icon={<Image src="/svg/socials/twitter.svg" alt="Twitter Logo" width={64} height={64} />}
+                        label="Bluesky"
+                        icon={<Image src="/svg/socials/bluesky.svg" alt="Bluesky Logo" width={64} height={64} />}
                     />
                     <SocialsBubble
-                        href="https://instagram.com/yourhandle"
+                        href="https://www.instagram.com/victorycloudy?igsh=MTE4MGticWVhenh0cA=="
                         bgColor="#E1306C"
                         label="Instagram"
                         icon={<Image src="/svg/socials/instagram.svg" alt="Instagram Logo" width={64} height={64} />}
                     />
                     <SocialsBubble
-                        href="https://linkedin.com/in/yourhandle"
+                        href="https://namicomi.com/en/org/victory-cloud"
                         bgColor="#0077B5"
-                        label="LinkedIn"
-                        icon={<Image src="/svg/socials/linkedin.svg" alt="LinkedIn Logo" width={64} height={64} />}
+                        label="Namicomi"
+                        icon={<Image src="/svg/socials/namicomi.svg" alt="Namicomi Logo" width={64} height={64} />}
                     />
                 </div>
             </div>

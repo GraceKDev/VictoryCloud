@@ -5,6 +5,7 @@ import ArtItem, { ArtItemProps } from "./ArtItem"
 import ArtModal from "./ArtModal"
 import { ArtInterface } from "@/app/lib/types/art"
 import { useFilter } from "@/app/lib/filters/FilterContext"
+import Filters from "../global/Filters"
 
 interface ArtGalleryClientProps {
     art: ArtInterface[]
@@ -27,9 +28,7 @@ export default function ArtGalleryClient({ art }: ArtGalleryClientProps) {
     return (
         <>
             <div className="relative">
-                <p className=" z-10 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-2 py-4  rounded">
-                    {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-                </p>
+                <Filters numResults={filtered.length} />
                 <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[280px] justify-center">
                     {filtered.map((artItem) => (
                         <ArtItem
