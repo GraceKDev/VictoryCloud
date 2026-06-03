@@ -9,6 +9,7 @@ import ComicsEditor from "../components/admin/editors/ComicsEditor";
 import WritingEditor from "../components/admin/editors/WritingEditor";
 import CommissionsEditor from "../components/admin/editors/CommissionsEditor";
 import ComicBuilder from "../components/admin/ComicBuilder";
+import ComicEditBuilder from "../components/admin/ComicEditBuilder";
 import ImageManager from "../components/image/ImageManager";
 
 type Page = "home" | "art" | "comics" | "writing" | "commissions";
@@ -136,6 +137,7 @@ function reducer(state: Config, action: Action): Config {
 export default function AdminDashboard() {
     const [selectedPage, setSelectedPage] = useState<Page>("home");
     const [comicBuilderMode, setComicBuilderMode] = useState(false);
+    const [comicEditMode, setComicEditMode] = useState(false);
     const [config, dispatch] = useReducer(reducer, defaultConfig);
     const [saving, setSaving] = useState(false);
     const [manageImagesMode, setManageImagesMode] = useState(false);
@@ -225,6 +227,9 @@ export default function AdminDashboard() {
         if (comicBuilderMode) {
             return <ComicBuilder onBack={() => setComicBuilderMode(false)} />;
         }
+        if (comicEditMode) {
+            return <ComicEditBuilder onBack={() => setComicEditMode(false)} />;
+        }
         else {
             return (
                 <>
@@ -272,7 +277,7 @@ export default function AdminDashboard() {
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
                     {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} />}
-                    {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} />}
+                    {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} onEditComic={() => setComicEditMode(true)} />}
                     {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
 

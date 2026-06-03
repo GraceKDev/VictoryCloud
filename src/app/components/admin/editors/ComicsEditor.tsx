@@ -5,9 +5,10 @@ type Props = {
     config: ComicsConfig;
     dispatch: (action: Action) => void;
     onNewComic: () => void;
+    onEditComic: () => void;
 };
 
-export default function ComicsEditor({ config, dispatch, onNewComic }: Props) {
+export default function ComicsEditor({ config, dispatch, onNewComic, onEditComic }: Props) {
     return (
         <div className="flex flex-col gap-6">
             <section>
@@ -34,13 +35,22 @@ export default function ComicsEditor({ config, dispatch, onNewComic }: Props) {
 
             <section>
                 <h3 className="text-base font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4">Content</h3>
-                <button
-                    type="button"
-                    onClick={onNewComic}
-                    className="w-full py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors"
-                >
-                    + New Comic
-                </button>
+                <div className="flex flex-col gap-2">
+                    <button
+                        type="button"
+                        onClick={onNewComic}
+                        className="w-full py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors"
+                    >
+                        + New Comic
+                    </button>
+                    <button
+                        type="button"
+                        onClick={onEditComic}
+                        className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md border border-gray-300 transition-colors"
+                    >
+                        Edit Comic
+                    </button>
+                </div>
             </section>
         </div>
     );
