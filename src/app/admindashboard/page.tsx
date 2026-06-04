@@ -10,6 +10,10 @@ import WritingEditor from "../components/admin/editors/WritingEditor";
 import CommissionsEditor from "../components/admin/editors/CommissionsEditor";
 import ComicBuilder from "../components/admin/ComicBuilder";
 import ComicEditBuilder from "../components/admin/ComicEditBuilder";
+import ArtBuilder from "../components/admin/ArtBuilder";
+import ArtEditBuilder from "../components/admin/ArtEditBuilder";
+import WritingBuilder from "../components/admin/WritingBuilder";
+import WritingEditBuilder from "../components/admin/WritingEditBuilder";
 import ImageManager from "../components/image/ImageManager";
 
 type Page = "home" | "art" | "comics" | "writing" | "commissions";
@@ -138,6 +142,10 @@ export default function AdminDashboard() {
     const [selectedPage, setSelectedPage] = useState<Page>("home");
     const [comicBuilderMode, setComicBuilderMode] = useState(false);
     const [comicEditMode, setComicEditMode] = useState(false);
+    const [artBuilderMode, setArtBuilderMode] = useState(false);
+    const [artEditMode, setArtEditMode] = useState(false);
+    const [writingBuilderMode, setWritingBuilderMode] = useState(false);
+    const [writingEditMode, setWritingEditMode] = useState(false);
     const [config, dispatch] = useReducer(reducer, defaultConfig);
     const [saving, setSaving] = useState(false);
     const [manageImagesMode, setManageImagesMode] = useState(false);
@@ -230,6 +238,18 @@ export default function AdminDashboard() {
         if (comicEditMode) {
             return <ComicEditBuilder onBack={() => setComicEditMode(false)} />;
         }
+        if (artBuilderMode) {
+            return <ArtBuilder onBack={() => setArtBuilderMode(false)} />;
+        }
+        if (artEditMode) {
+            return <ArtEditBuilder onBack={() => setArtEditMode(false)} />;
+        }
+        if (writingBuilderMode) {
+            return <WritingBuilder onBack={() => setWritingBuilderMode(false)} />;
+        }
+        if (writingEditMode) {
+            return <WritingEditBuilder onBack={() => setWritingEditMode(false)} />;
+        }
         else {
             return (
                 <>
@@ -266,6 +286,11 @@ export default function AdminDashboard() {
                         onChange={(e) => {
                             setSelectedPage(e.target.value as Page);
                             setComicBuilderMode(false);
+                            setComicEditMode(false);
+                            setArtBuilderMode(false);
+                            setArtEditMode(false);
+                            setWritingBuilderMode(false);
+                            setWritingEditMode(false);
                         }}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -276,9 +301,9 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
-                    {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} />}
+                    {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} onNewArt={() => setArtBuilderMode(true)} onEditArt={() => setArtEditMode(true)} />}
                     {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} onEditComic={() => setComicEditMode(true)} />}
-                    {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} />}
+                    {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} onNewWriting={() => setWritingBuilderMode(true)} onEditWriting={() => setWritingEditMode(true)} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
 
                 </div>

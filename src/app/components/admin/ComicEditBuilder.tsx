@@ -10,11 +10,8 @@ import {
     ComicChapterPanel,
 } from "./comicShared";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
-
-// Matches CreateComicDto / response shape from the API
 type ComicApiDto = {
-    id: number;
+    comicId: number;
     title: string;
     description: string;
     coverImageUrl: string;
@@ -43,7 +40,7 @@ type ComicEditDraft = {
 
 function apiDtoToDraft(dto: ComicApiDto): ComicEditDraft {
     return {
-        id: dto.id,
+        id: dto.comicId,
         title: dto.title ?? "",
         description: dto.description ?? "",
         coverImageUrl: dto.coverImageUrl ?? "",
@@ -73,6 +70,7 @@ function apiDtoToDraft(dto: ComicApiDto): ComicEditDraft {
 
 function ComicListView({
     comics,
+    setComics,
     loading,
     fetchError,
     selectingId,
@@ -81,6 +79,7 @@ function ComicListView({
     onBack,
 }: {
     comics: ComicApiDto[];
+    setComics: React.Dispatch<React.SetStateAction<ComicApiDto[]>>;
     loading: boolean;
     fetchError: string;
     selectingId: number | null;
@@ -88,7 +87,32 @@ function ComicListView({
     onSelect: (comic: ComicApiDto) => void;
     onBack: () => void;
 }) {
-    console.log(comics)
+    const [deletingId, setDeletingId] = useState<number | null>(null);
+
+    async function deleteComic(comic: ComicApiDto) {
+        if (!confirm(`Are you sure you want to delete "${comic.title}"? This action cannot be undone.`)) {
+            return;
+        }
+        setDeletingId(comic.comicId);
+
+        try {
+            const res = await fetch(`http://localhost:5266/Api/Comic/Delete/${comic.comicId}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => null);
+                
+                alert(`Failed to delete: ${err?.message ?? "Server error"}`);
+                return;
+            }
+            setComics((c) => c.filter((com) => com.comicId !== comic.comicId));
+        } catch {
+            alert("Network error — is the backend running?");
+        } finally {
+            setDeletingId(null);
+        }
+    }
     return (
         <div className="flex flex-col h-full bg-gray-50">
             <div className="flex items-center gap-3 px-6 py-3 bg-white border-b border-gray-200 shrink-0">
@@ -114,7 +138,7 @@ function ComicListView({
                     <div className="flex flex-col gap-3">
                         {comics.map((comic) => (
                             <div
-                                key={comic.id}
+                                key={comic.comicId}
                                 className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4"
                             >
                                 {comic.coverImageUrl ? (
@@ -134,14 +158,24 @@ function ComicListView({
                                         {comic.details?.status ?? "—"} · {comic.chapters?.length ?? 0} chapter{(comic.chapters?.length ?? 0) !== 1 ? "s" : ""}
                                     </p>
                                 </div>
-                                <button
-                                    type="button"
-                                    onClick={() => onSelect(comic)}
-                                    disabled={selectingId !== null}
-                                    className="shrink-0 py-1.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium rounded-md transition-colors"
-                                >
-                                    {selectingId === comic.id ? "Loading…" : "Edit"}
-                                </button>
+                                <div>
+                                    <button
+                                        type="button"
+                                        onClick={() => onSelect(comic)}
+                                        disabled={selectingId !== null}
+                                        className="shrink-0 py-1.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium rounded-md transition-colors"
+                                    >
+                                        {selectingId === comic.comicId ? "Loading…" : "Edit"}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => deleteComic(comic)}
+                                        disabled={selectingId !== null}
+                                        className="shrink-0 py-1.5 px-4 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-medium rounded-md transition-colors"
+                                    >
+                                        {selectingId === comic.comicId ? "Loading…" : "Delete"}
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -151,7 +185,6 @@ function ComicListView({
     );
 }
 
-// ── Comic Edit Form ───────────────────────────────────────────────────────────
 
 function ComicEditForm({
     draft,
@@ -385,7 +418,6 @@ function ComicEditForm({
     );
 }
 
-// ── Root export ───────────────────────────────────────────────────────────────
 
 type Props = {
     onBack: () => void;
@@ -408,15 +440,15 @@ export default function ComicEditBuilder({ onBack }: Props) {
             .then((data: ComicApiDto[]) => setComics(data))
             .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : "Failed to load comics."))
             .finally(() => setLoading(false));
-            console.log(comics)
+        console.log(comics)
     }, []);
 
     async function handleSelect(comic: ComicApiDto) {
-        setSelectingId(comic.id);
+        setSelectingId(comic.comicId);
         setSelectError("");
         try {
             const res = await fetch(
-                `http://localhost:5266/Api/Comic/GetById/${comic.id}`,
+                `http://localhost:5266/Api/Comic/GetById/${comic.comicId}`,
                 { credentials: "include" }
             );
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
@@ -449,6 +481,7 @@ export default function ComicEditBuilder({ onBack }: Props) {
             selectingId={selectingId}
             selectError={selectError}
             onSelect={handleSelect}
+            setComics={setComics}
             onBack={onBack}
         />
     );
