@@ -1,12 +1,16 @@
 "use client";
-import { comics } from "@/app/lib/comics";
 import { useFilter } from "@/app/lib/filters/FilterContext";
 import ComicItem from "./ComicItem";
 import Filters from "../global/Filters";
+import { ComicApiDto } from "@/app/lib/types/comic";
 
-export default function DisplayGrid() {
+
+interface DisplayGridProps {
+    comics: ComicApiDto[];
+}
+export default function DisplayGrid(props: DisplayGridProps) {
+    const { comics } = props;
     const { state } = useFilter();
-
     const filtered = comics.filter((comic) => {
         const term = state.search.toLowerCase();
         const matchesSearch =
@@ -20,22 +24,16 @@ export default function DisplayGrid() {
     });
 
     return (
-
-        <>
-            <Filters numResults={filtered.length}/>
-            
+        <div>
+            <Filters numResults={filtered.length} />
             <section className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(200px,280px))] auto-rows-[540px] justify-center">
-            {filtered.map((comic) => (
-                <ComicItem
-                    key={comic.id}
-                    id={comic.id}
-                    title={comic.title}
-                    description={comic.description}
-                    tags={comic.tags}
-                    imageUrl={comic.coverImageUrl}
-                />
-            ))}
-        </section>
-        </>
+                {filtered.map((comic) => (
+                    <ComicItem
+                        key={comic.comicId}
+                        comic={comic}
+                    />
+                ))}
+            </section>
+        </div>
     );
 }

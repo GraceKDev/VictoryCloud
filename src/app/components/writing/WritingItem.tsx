@@ -1,14 +1,14 @@
 "use client"
-import { WritingInterface } from "@/app/lib/types/writing";
+import { WritingApiDto } from "@/app/lib/types/writing";
 import router from "next/router";
 
 
-export default function WritingItem(props:WritingInterface) {
-    const { id,title, description, tags, coverUrl, links, uploadedAt, chapters, comments } = props;
+export default function WritingItem(props:WritingApiDto) {
+    const { writingId,title, description, tags, coverUrl, links, uploadedAt, chapters, comments } = props;
 
 
     return (
-        <div onClick={() => router.push(`/writing/${id}`)}
+        <div onClick={() => router.push(`/writing/${writingId}`)}
             className="bg-white shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 cursor-pointer flex flex-col">
             <img
                 src={coverUrl}

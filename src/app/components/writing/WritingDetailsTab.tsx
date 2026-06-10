@@ -1,6 +1,6 @@
-import { WritingInterface } from "@/app/lib/types/writing";
+import { WritingApiDto } from "@/app/lib/types/writing";
 
-export default function WritingDetailsTab({ writing }: { writing: WritingInterface }) {
+export default function WritingDetailsTab({ writing }: { writing: WritingApiDto }) {
     return (
         <section>
             <h2 className="text-2xl font-bold mb-4">Details</h2>

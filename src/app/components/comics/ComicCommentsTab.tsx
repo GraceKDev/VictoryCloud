@@ -1,7 +1,7 @@
 "use client"
 import { FormEvent, useRef, useState } from "react";
-import { ComicInterface } from "../../lib/types/comic";
-export default function ComicCommentsTab({ comic }: { comic: ComicInterface }) {
+import { ComicApiDto } from "../../lib/types/comic";
+export default function ComicCommentsTab({ comic }: { comic: ComicApiDto }) {
     const initialComments = comic.comments ?? [];
     const [comments, setComments] = useState(initialComments);
     const [name, setName] = useState("");

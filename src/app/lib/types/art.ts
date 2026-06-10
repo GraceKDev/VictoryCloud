@@ -1,9 +1,9 @@
-export interface ArtInterface {
-    id: number;
+export type ArtApiDto = {
+    artId: number;
     title: string;
     description: string;
-    tags: string[];
     imageUrl: string;
+    tags: string[];
     links: string[];
     uploadedAt: string;
-}
+};

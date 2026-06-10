@@ -9,22 +9,7 @@ import {
     ComicFormSidebar,
     ComicChapterPanel,
 } from "./comicShared";
-
-type ComicApiDto = {
-    comicId: number;
-    title: string;
-    description: string;
-    coverImageUrl: string;
-    tags: string[];
-    details: {
-        status: string;
-        year: number;
-        originalLanguage: string;
-        contentRating: string;
-    };
-    chapters: { chapterTitle: string; images: string[] }[];
-    comments: string | null;
-};
+import { type ComicApiDto } from "@/app/lib/types/comic";
 
 type ComicEditDraft = {
     id: number;
@@ -448,7 +433,7 @@ export default function ComicEditBuilder({ onBack }: Props) {
         setSelectError("");
         try {
             const res = await fetch(
-                `http://localhost:5266/Api/Comic/GetById/${comic.comicId}`,
+                `http://localhost:5266/Api/Comic/Get/${comic.comicId}`,
                 { credentials: "include" }
             );
             if (!res.ok) throw new Error(`Server returned ${res.status}`);

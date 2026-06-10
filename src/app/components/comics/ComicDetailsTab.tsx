@@ -1,6 +1,6 @@
-import { ComicInterface } from "@/app/lib/types/comic";
+import { ComicApiDto } from "@/app/lib/types/comic";
 
-export default function ComicDetailsTab({ comic }: { comic: ComicInterface }) {
+export default function ComicDetailsTab({ comic }: { comic: ComicApiDto }) {
     return (
         <section>
             <h2 className="text-2xl font-bold mb-4">Comic Details</h2>

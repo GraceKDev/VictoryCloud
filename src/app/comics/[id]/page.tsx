@@ -1,12 +1,29 @@
 
 import Tab from "@/app/components/comics/Tab";
-import { comics } from "@/app/lib/comics";
 import Image from "next/image";
 import Link from "next/link";
-import { ComicInterface } from "@/app/lib/types/comic";
+import { ComicApiDto } from "@/app/lib/types/comic";
 import ComicChapterTab  from "@/app/components/comics/ComicChapterTab";
 import ComicCommentsTab from "@/app/components/comics/ComicCommentsTab";
 import ComicDetailsTab from "@/app/components/comics/ComicDetailsTab";
+import { notFound } from "next/navigation";
+
+function getSafeImageSrc(src: string | null | undefined): string {
+    if (!src) return "/placeholder.png";
+    if (src.startsWith("/")) return src;
+
+    try {
+        const parsed = new URL(src);
+        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+            return src;
+        }
+    } catch {
+        // Invalid URL string; fall through to placeholder.
+    }
+
+    return "/placeholder.png";
+}
+
 interface ComicPageParams {
     params: {
         id: string;
@@ -15,13 +32,33 @@ interface ComicPageParams {
 
 export default async function ComicPage({ params }: ComicPageParams) {
     const { id } = await params;
-    const comic: ComicInterface | undefined = comics.find((c) => c.id === parseInt(id));
-
-    if (!comic) {
-        return <p>Comic not found</p>;
+    const comicId = Number(id);
+    if (!Number.isInteger(comicId) || comicId <= 0) {
+        notFound();
     }
 
+    let comic: ComicApiDto | null = null;
+
+    try {
+        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${comicId}`, {
+            cache: "no-store",
+        });
+
+        if (res.ok) {
+            
+            comic = await res.json();
+        }
+    } catch (error) {
+        console.error("Error fetching comic by id:", error);
+    }
+
+   
+    if (!comic) {
+        notFound();
+    }
+    
     const { title, description, coverImageUrl } = comic;
+    const safeCoverImageUrl = getSafeImageSrc(coverImageUrl);
 
     return (
         <section className="bg-white flex-1">
@@ -29,7 +66,7 @@ export default async function ComicPage({ params }: ComicPageParams) {
                 <Link href="/comics" className="text-sm text-gray-500 hover:text-gray-800 mb-6 inline-block">← Back to Comics</Link>
                 <div className="flex flex-col justify-center items-center">
                     <Image
-                        src={coverImageUrl}
+                        src={safeCoverImageUrl}
                         alt={title}
                         width={200}
                         height={200}

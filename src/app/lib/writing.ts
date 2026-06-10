@@ -1,8 +1,8 @@
-import { WritingInterface } from "./types/writing";
+import { WritingApiDto } from "./types/writing";
 
-export const writing: WritingInterface[] = [
+export const writing: WritingApiDto[] = [
     {
-        id: 1,
+        writingId: 1,
         title: "Sunset Overdrive",
         description: "A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset,A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes. A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.",
         tags: ["sunset", "cityscape", "vibrant"],
@@ -22,56 +22,94 @@ export const writing: WritingInterface[] = [
         ],
         chapters:[
             {
-                chapterTitle:"Chapter 1",
-                content:[
+                writingChapterId: 1,
+                writingId: 1,
+                writingChapterTitle:"Chapter 1",
+                writingChapterContent:[
                     {
-                        contentPosition:1,
-                        contentType:"Text",
-                        content:{
-                            content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        }
+                        writingChapterContentId: 1,
+                        writingChapterId: 1,
+                        writingContentPosition:1,
+                        writingContentType:"Text",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 1,
+                            writingChapterContentId: 1,
+                            writingContentBlockContent:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                            writingContentBlockImageUrl: null,
+                            writingContentBlockAltText: null,
+                        }]
                     },
                     {
-                        contentPosition:2,
-                        contentType:"Image",
-                        content:{
-                            imageUrl:"/images/Art/sunset-overdrive.jpg",
-                            altText:"Sunset Overdrive"
-                        }
+                        writingChapterContentId: 2,
+                        writingChapterId: 1,
+                        writingContentPosition:2,
+                        writingContentType:"Image",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 2,
+                            writingChapterContentId: 2,
+                            writingContentBlockContent: null,
+                            writingContentBlockImageUrl:"/images/Art/sunset-overdrive.jpg",
+                            writingContentBlockAltText:"Sunset Overdrive",
+                        }]
                     },
                     {
-                        contentPosition:3,
-                        contentType:"Text",
-                        content:{
-                            content:"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                        }
+                        writingChapterContentId: 3,
+                        writingChapterId: 1,
+                        writingContentPosition:3,
+                        writingContentType:"Text",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 3,
+                            writingChapterContentId: 3,
+                            writingContentBlockContent:"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                            writingContentBlockImageUrl: null,
+                            writingContentBlockAltText: null,
+                        }]
                     }
                 ]
             },
             {
-                chapterTitle:"Chapter 2",
-                content:[
+                writingChapterId: 2,
+                writingId: 1,
+                writingChapterTitle:"Chapter 2",
+                writingChapterContent:[
                     {
-                        contentPosition:1,
-                        contentType:"Text",
-                        content:{
-                            content:"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                        }
+                        writingChapterContentId: 4,
+                        writingChapterId: 2,
+                        writingContentPosition:1,
+                        writingContentType:"Text",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 4,
+                            writingChapterContentId: 4,
+                            writingContentBlockContent:"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                            writingContentBlockImageUrl: null,
+                            writingContentBlockAltText: null,
+                        }]
                     },
                     {
-                        contentPosition:2,
-                        contentType:"Image",
-                        content:{
-                            imageUrl:"/images/Art/sunset-overdrive.jpg",
-                            altText:"Sunset Overdrive"
-                        }
+                        writingChapterContentId: 5,
+                        writingChapterId: 2,
+                        writingContentPosition:2,
+                        writingContentType:"Image",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 5,
+                            writingChapterContentId: 5,
+                            writingContentBlockContent: null,
+                            writingContentBlockImageUrl:"/images/Art/sunset-overdrive.jpg",
+                            writingContentBlockAltText:"Sunset Overdrive",
+                        }]
                     },
                     {
-                        contentPosition:3,
-                        contentType:"Text",
-                        content:{
-                            content:"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                        }
+                        writingChapterContentId: 6,
+                        writingChapterId: 2,
+                        writingContentPosition:3,
+                        writingContentType:"Text",
+                        writingContentBlock:[{
+                            writingChapterContentBlockId: 6,
+                            writingChapterContentId: 6,
+                            writingContentBlockContent:"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            writingContentBlockImageUrl: null,
+                            writingContentBlockAltText: null,
+                        }]
                     }
                 ]
             }

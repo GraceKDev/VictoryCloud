@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { uploadImage, Field, TagChips, inputCls } from "./comicShared";
+import { WritingApiDto } from "@/app/lib/types/writing";
 
 // Re-export shared utilities so consumers only need one import
 export { uploadImage, Field, TagChips, inputCls };
+export type { WritingApiDto };
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -21,7 +23,7 @@ export type ContentBlockDraft = {
 export type WritingChapterDraft = {
     id: string;
     chapterTitle: string;
-    blocks: ContentBlockDraft[];
+    writingContentBlock: ContentBlockDraft[];
 };
 
 export type WritingDraft = {
@@ -33,25 +35,6 @@ export type WritingDraft = {
     chapters: WritingChapterDraft[];
     coverUploading: boolean;
     coverUploadError: string | null;
-};
-
-export type WritingApiDto = {
-    writingId: number;
-    title: string;
-    description: string;
-    coverUrl: string;
-    tags: string[];
-    links: string[];
-    uploadedAt: string;
-    chapters: {
-        chapterTitle: string;
-        content: {
-            contentPosition: number;
-            contentType: "Text" | "Image";
-            content: { content: string } | { imageUrl: string; altText: string };
-        }[];
-    }[];
-    comments: null;
 };
 
 export function writingDraftToEmpty(): WritingDraft {
@@ -68,7 +51,9 @@ export function writingDraftToEmpty(): WritingDraft {
 }
 
 export function apiDtoToWritingDraft(dto: WritingApiDto): WritingDraft {
-    return {
+    console.log("Converting API DTO to draft:", dto);
+    console.log(dto);
+    var value = {
         title: dto.title ?? "",
         description: dto.description ?? "",
         coverUrl: dto.coverUrl ?? "",
@@ -76,27 +61,26 @@ export function apiDtoToWritingDraft(dto: WritingApiDto): WritingDraft {
         links: dto.links ?? [],
         chapters: (dto.chapters ?? []).map((ch) => ({
             id: crypto.randomUUID(),
-            chapterTitle: ch.chapterTitle ?? "",
-            blocks: (ch.content ?? []).map((block) => {
-                if (block.contentType === "Text") {
-                    const b = block.content as { content: string };
+            chapterTitle: ch.writingChapterTitle ?? "",
+            writingContentBlock: (ch.writingChapterContent ?? []).map((block) => {
+                const b = block.writingContentBlock?.[0];
+                if (block.writingContentType === "Text") {
                     return {
                         id: crypto.randomUUID(),
                         contentType: "Text" as const,
-                        text: b.content ?? "",
+                        text: b?.writingContentBlockContent ?? "",
                         imageUrl: null,
                         altText: "",
                         uploading: false,
                         error: null,
                     };
                 } else {
-                    const b = block.content as { imageUrl: string; altText: string };
                     return {
                         id: crypto.randomUUID(),
                         contentType: "Image" as const,
                         text: "",
-                        imageUrl: b.imageUrl ?? "",
-                        altText: b.altText ?? "",
+                        imageUrl: b?.writingContentBlockImageUrl ?? "",
+                        altText: b?.writingContentBlockAltText ?? "",
                         uploading: false,
                         error: null,
                     };
@@ -106,6 +90,8 @@ export function apiDtoToWritingDraft(dto: WritingApiDto): WritingDraft {
         coverUploading: false,
         coverUploadError: null,
     };
+    console.log(value);
+    return value;
 }
 
 // ── ContentBlockCard ──────────────────────────────────────────────────────────
@@ -137,11 +123,10 @@ export function ContentBlockCard({
         <div className="border border-gray-200 rounded-lg bg-white p-3 flex flex-col gap-2">
             <div className="flex items-center gap-2">
                 <span
-                    className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${
-                        block.contentType === "Text"
+                    className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${block.contentType === "Text"
                             ? "bg-blue-100 text-blue-700"
                             : "bg-purple-100 text-purple-700"
-                    }`}
+                        }`}
                 >
                     {block.contentType}
                 </span>
@@ -276,12 +261,12 @@ export function WritingChapterCard({
             />
 
             <div className="flex flex-col gap-2">
-                {chapter.blocks.map((block, bi) => (
+                {chapter.writingContentBlock.map((block, bi) => (
                     <ContentBlockCard
                         key={block.id}
                         block={block}
                         index={bi}
-                        total={chapter.blocks.length}
+                        total={chapter.writingContentBlock.length}
                         onMoveUp={() => onMoveBlock(bi, "up")}
                         onMoveDown={() => onMoveBlock(bi, "down")}
                         onRemove={() => onRemoveBlock(bi)}

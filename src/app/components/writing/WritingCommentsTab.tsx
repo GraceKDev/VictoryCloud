@@ -1,9 +1,9 @@
 "use client"
 import { FormEvent, useRef, useState } from "react";
-import { WritingInterface } from "@/app/lib/types/writing";
+import { WritingApiDto } from "@/app/lib/types/writing";
 import { ComicCommentInterface } from "@/app/lib/types/comic";
 
-export default function WritingCommentsTab({ writing }: { writing: WritingInterface }) {
+export default function WritingCommentsTab({ writing }: { writing: WritingApiDto }) {
     const initialComments = writing.comments ?? [];
     const [comments, setComments] = useState<ComicCommentInterface[]>(initialComments);
     const [name, setName] = useState("");

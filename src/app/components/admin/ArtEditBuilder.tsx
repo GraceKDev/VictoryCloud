@@ -127,7 +127,6 @@ function ArtListView({
     );
 }
 
-// ── Edit form ─────────────────────────────────────────────────────────────────
 
 function ArtEditForm({
     draft,
@@ -185,7 +184,7 @@ function ArtEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Art/Update", {
+            const res = await fetch(`http://localhost:5266/Api/Art/Update/${payload.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -281,13 +280,14 @@ export default function ArtEditBuilder({ onBack }: Props) {
             .then((data: ArtApiDto[]) => setArts(data))
             .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : "Failed to load art."))
             .finally(() => setLoading(false));
+            console.log("Fetched art:", arts);
     }, []);
 
     async function handleSelect(art: ArtApiDto) {
         setSelectingId(art.artId);
         setSelectError("");
         try {
-            const res = await fetch(`http://localhost:5266/Api/Art/GetById/${art.artId}`, { credentials: "include" });
+            const res = await fetch(`http://localhost:5266/Api/Art/Get/${art.artId}`, { credentials: "include" });
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const dto: ArtApiDto = await res.json();
             setEditDraft({ ...apiDtoToArtDraft(dto), id: dto.artId });

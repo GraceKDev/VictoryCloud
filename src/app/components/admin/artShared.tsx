@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { uploadImage, Field, TagChips, inputCls } from "./comicShared";
+import { ArtApiDto } from "@/app/lib/types/art";
 
 // Re-export shared utilities so consumers only need one import
 export { uploadImage, Field, TagChips, inputCls };
+export type { ArtApiDto };
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -16,16 +18,6 @@ export type ArtDraft = {
     links: string[];
     uploading: boolean;
     uploadError: string | null;
-};
-
-export type ArtApiDto = {
-    artId: number;
-    title: string;
-    description: string;
-    imageUrl: string;
-    tags: string[];
-    links: string[];
-    uploadedAt: string;
 };
 
 export function artDraftToEmpty(): ArtDraft {

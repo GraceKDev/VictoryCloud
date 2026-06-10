@@ -1,11 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, FormEvent } from "react";
-import { ComicInterface, ComicDataChapterInterface, ComicCommentInterface } from "@/app/lib/types/comic";
+import { ComicApiDto, ComicCommentInterface } from "@/app/lib/types/comic";
 
 interface ComicReaderProps {
-    comic: ComicInterface;
-    chapter: ComicDataChapterInterface;
+    comic: ComicApiDto;
+    chapter: ComicApiDto["chapters"][0];
     chapterIndex: number;
 }
 
@@ -15,7 +15,7 @@ function ChapterEndComments({
     comic,
     chapterTitle,
 }: {
-    comic: ComicInterface;
+    comic: ComicApiDto;
     chapterTitle: string;
 }) {
     const initialComments = (comic.comments ?? []).filter(
@@ -184,8 +184,8 @@ function ChapterEndComments({
 // ─── End Page ─────────────────────────────────────────────────────────────────
 
 interface EndPageProps {
-    comic: ComicInterface;
-    chapter: ComicDataChapterInterface;
+    comic: ComicApiDto;
+    chapter: ComicApiDto["chapters"][0];
     chapterIndex: number;
     onPrevPage: () => void;
 }
@@ -220,7 +220,7 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
                     {/* Navigation buttons */}
                     <div className="flex flex-wrap gap-3 mb-12">
                         <button
-                            onClick={() => router.push(`/comics/${comic.id}`)}
+                            onClick={() => router.push(`/comics/${comic.comicId}`)}
                             className="flex items-center gap-2 px-4 py-2 rounded bg-gray-700 text-white hover:bg-gray-600 transition-colors text-sm"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,7 +230,7 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
                         </button>
                         {hasNextChapter && (
                             <button
-                                onClick={() => router.push(`/comics/${comic.id}/${chapterIndex + 1}`)}
+                                onClick={() => router.push(`/comics/${comic.comicId}/${chapterIndex + 1}`)}
                                 className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-500 transition-colors text-sm font-medium"
                             >
                                 Next Chapter
@@ -339,7 +339,7 @@ export default function ComicReader({ comic, chapter, chapterIndex }: ComicReade
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-gray-800 text-white shrink-0">
                 <button
-                    onClick={() => router.push(`/comics/${comic.id}`)}
+                    onClick={() => router.push(`/comics/${comic.comicId}`)}
                     className="flex items-center gap-2 text-sm hover:text-gray-300 transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

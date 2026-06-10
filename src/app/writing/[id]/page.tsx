@@ -1,7 +1,7 @@
 
 import Tab from "@/app/components/comics/Tab";
 import { writing } from "../../lib/writing";
-import { WritingInterface } from "@/app/lib/types/writing";
+import { WritingApiDto } from "@/app/lib/types/writing";
 import Image from "next/image";
 import Link from "next/link";
 import WritingChapterTab from "@/app/components/writing/WritingChapterTab";
@@ -16,7 +16,7 @@ interface WritingPageParams {
 
 export default async function WritingPage({ params }: WritingPageParams) {
     const { id } = await params;
-    const writingItem: WritingInterface | undefined = writing.find((c) => c.id === parseInt(id));
+    const writingItem: WritingApiDto | undefined = writing.find((c) => c.writingId === parseInt(id));
 
     if (!writingItem) {
         return <p>Writing not found</p>;

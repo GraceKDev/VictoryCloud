@@ -1,5 +1,4 @@
 import { writing } from "@/app/lib/writing";
-import { WritingContentImageBlockInterface, WritingContentWritingBlockInterface } from "@/app/lib/types/writing";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,7 +12,7 @@ interface ChapterPageParams {
 
 export default async function ChapterPage({ params }: ChapterPageParams) {
     const { id, chapter } = await params;
-    const writingItem = writing.find((w) => w.id === parseInt(id));
+    const writingItem = writing.find((w) => w.writingId === parseInt(id));
 
     if (!writingItem) notFound();
 
@@ -22,8 +21,8 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
 
     if (!chapterData) notFound();
 
-    const sortedContent = [...chapterData.content].sort(
-        (a, b) => a.contentPosition - b.contentPosition
+    const sortedContent = [...chapterData.writingChapterContent].sort(
+        (a, b) => a.writingContentPosition - b.writingContentPosition
     );
 
     const prevIndex = chapterIndex - 1;
@@ -42,26 +41,25 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
                     ← Back to {writingItem.title}
                 </Link>
 
-                <h1 className="text-3xl font-bold mb-8">{chapterData.chapterTitle}</h1>
+                <h1 className="text-3xl font-bold mb-8">{chapterData.writingChapterTitle}</h1>
 
                 <div className="flex flex-col gap-6">
                     {sortedContent.map((block, i) => {
-                        if (block.contentType === "Text") {
-                            const textBlock = block.content as WritingContentWritingBlockInterface;
+                        const contentBlock = block.writingContentBlock?.[0];
+                        if (block.writingContentType === "Text") {
                             return (
                                 <p key={i} className="leading-relaxed text-gray-800">
-                                    {textBlock.content}
+                                    {contentBlock?.writingContentBlockContent}
                                 </p>
                             );
                         }
 
-                        if (block.contentType === "Image") {
-                            const imageBlock = block.content as WritingContentImageBlockInterface;
+                        if (block.writingContentType === "Image") {
                             return (
                                 <div key={i} className="flex justify-center">
                                     <Image
-                                        src={imageBlock.imageUrl}
-                                        alt={imageBlock.altText}
+                                        src={contentBlock?.writingContentBlockImageUrl ?? ""}
+                                        alt={contentBlock?.writingContentBlockAltText ?? ""}
                                         width={300}
                                         height={200}
                                         className="object-contain rounded"

@@ -47,7 +47,7 @@ export default function WritingBuilder({ onBack }: Props) {
     function addChapter() {
         setDraft((d) => ({
             ...d,
-            chapters: [...d.chapters, { id: crypto.randomUUID(), chapterTitle: "", blocks: [] }],
+            chapters: [...d.chapters, { id: crypto.randomUUID(), chapterTitle: "", writingContentBlock: [] }],
         }));
     }
 
@@ -75,7 +75,7 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i === ci ? { ...c, blocks: [...c.blocks, newBlock] } : c
+                i === ci ? { ...c, writingContentBlock: [...c.writingContentBlock, newBlock] } : c
             ),
         }));
     }
@@ -84,7 +84,7 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i === ci ? { ...c, blocks: c.blocks.filter((_, j) => j !== bi) } : c
+                i === ci ? { ...c, writingContentBlock: c.writingContentBlock.filter((_, j) => j !== bi) } : c
             ),
         }));
     }
@@ -93,11 +93,11 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => {
             const chapters = d.chapters.map((c, i) => {
                 if (i !== ci) return c;
-                const blocks = [...c.blocks];
+                const blocks = [...c.writingContentBlock];
                 const target = dir === "up" ? bi - 1 : bi + 1;
                 if (target < 0 || target >= blocks.length) return c;
                 [blocks[bi], blocks[target]] = [blocks[target], blocks[bi]];
-                return { ...c, blocks };
+                return { ...c, writingContentBlock: blocks };
             });
             return { ...d, chapters };
         });
@@ -107,7 +107,7 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, text: v } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, text: v } : b)) }
             ),
         }));
     }
@@ -116,7 +116,7 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, altText: v } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, altText: v } : b)) }
             ),
         }));
     }
@@ -125,7 +125,7 @@ export default function WritingBuilder({ onBack }: Props) {
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, uploading: true, error: null } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, uploading: true, error: null } : b)) }
             ),
         }));
         uploadImage(file)
@@ -133,7 +133,7 @@ export default function WritingBuilder({ onBack }: Props) {
                 setDraft((d) => ({
                     ...d,
                     chapters: d.chapters.map((c, i) =>
-                        i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, imageUrl: url, uploading: false } : b)) }
+                        i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, imageUrl: url, uploading: false } : b)) }
                     ),
                 }));
             })
@@ -142,7 +142,7 @@ export default function WritingBuilder({ onBack }: Props) {
                 setDraft((d) => ({
                     ...d,
                     chapters: d.chapters.map((c, i) =>
-                        i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, uploading: false, error: msg } : b)) }
+                        i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, uploading: false, error: msg } : b)) }
                     ),
                 }));
             });
@@ -150,7 +150,7 @@ export default function WritingBuilder({ onBack }: Props) {
 
     const anyUploading =
         draft.coverUploading ||
-        draft.chapters.some((c) => c.blocks.some((b) => b.uploading));
+        draft.chapters.some((c) => c.writingContentBlock.some((b) => b.uploading));
 
     async function handleSave() {
         if (!draft.title.trim()) { setSaveStatus("error"); setSaveError("Title is required."); return; }
@@ -165,7 +165,7 @@ export default function WritingBuilder({ onBack }: Props) {
             links: draft.links.filter((l) => l.trim()),
             chapters: draft.chapters.map((ch) => ({
                 chapterTitle: ch.chapterTitle,
-                content: ch.blocks.map((b, idx) => ({
+                content: ch.writingContentBlock.map((b, idx) => ({
                     contentPosition: idx,
                     contentType: b.contentType,
                     content:
@@ -179,7 +179,9 @@ export default function WritingBuilder({ onBack }: Props) {
 
         setSaving(true);
         setSaveStatus("idle");
+        
         try {
+            console.log(payload);
             const res = await fetch("http://localhost:5266/Api/Writing/Create", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

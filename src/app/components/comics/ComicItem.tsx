@@ -1,23 +1,15 @@
 "use client"
 import { useRouter } from "next/navigation";
+import { ComicApiDto } from "@/app/lib/types/comic";
 
-
-export interface ComicItemProps {
-    id: number;
-    title: string;
-    description: string;
-    tags: string[];
-    imageUrl: string;
-}
-
-export default function ComicItem(props: ComicItemProps) {
+export default function ComicItem({ comic }: { comic: ComicApiDto }) {
     const router = useRouter();
-    const { id, title, description, tags, imageUrl } = props;
+    const { comicId, title, description, tags, coverImageUrl } = comic;
     return (
-        <div onClick={() => router.push(`/comics/${id}`)}
+        <div onClick={() => router.push(`/comics/${comicId}`)}
             className="bg-white shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 cursor-pointer flex flex-col">
             <img
-                src={imageUrl}
+                src={coverImageUrl}
                 alt={title}
                 className="w-full aspect-2/3 object-cover mb-2"
             />

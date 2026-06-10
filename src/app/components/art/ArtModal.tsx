@@ -1,19 +1,6 @@
+import { ArtApiDto } from "@/app/lib/types/art";
 
-
-interface ArtModelProps {
-    id: number;
-    title: string;
-    description: string;
-    tags: string[];
-    imageUrl: string;
-    links: string[];
-    uploadedAt: string;
-
-}
-
-interface ArtModalProps extends ArtModelProps {
-    onClose: () => void;
-}
+type ArtModalProps = ArtApiDto & { onClose: () => void };
 
 export default function ArtModal(props: ArtModalProps) {
     return (

@@ -1,8 +1,8 @@
-import { ComicInterface } from "./types/comic";
+import { ComicApiDto } from "./types/comic";
 
-export const comics: ComicInterface[] = [
+export const comics: ComicApiDto[] = [
     {
-        id: 1,
+        comicId: 1,
         title: "Comic Title 1",
         description: "This is a description for Comic Title 1.",
         tags: ["Action", "Adventure"],
@@ -57,7 +57,7 @@ export const comics: ComicInterface[] = [
         ]
     },
     {
-        id: 2,
+        comicId: 2,
         title: "Comic Title 2",
         description: "This is a description for Comic Title 2.",
         tags: ["Fantasy", "Drama"],
@@ -107,7 +107,7 @@ export const comics: ComicInterface[] = [
         ]
     },
     {
-        id: 3,
+        comicId: 3,
         title: "Comic Title 3",
         description: "This is a description for Comic Title 3.",
         tags: ["Sci-Fi", "Thriller"],
@@ -158,7 +158,7 @@ export const comics: ComicInterface[] = [
         ]
     },
     {
-        id: 4,
+        comicId: 4,
         title: "Comic Title 4",
         description: "This is a description for Comic Title 4.",
         tags: ["Mystery", "Horror"],

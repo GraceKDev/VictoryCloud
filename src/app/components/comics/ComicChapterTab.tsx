@@ -1,15 +1,15 @@
 "use client"
 import Link from "next/link";
-import { ComicInterface } from "@/app/lib/types/comic";
+import { ComicApiDto } from "@/app/lib/types/comic";
 
-export default function ComicChapterTab({ comic }: { comic: ComicInterface }) {
+export default function ComicChapterTab({ comic }: { comic: ComicApiDto }) {
     return (
         <section>
             <h2 className="text-2xl font-bold mb-4">Chapters: {comic.chapters.length}</h2>
             {comic.chapters.map((chapter, index) => (
                 <Link
                     key={index}
-                    href={`/comics/${comic.id}/${index}`}
+                    href={`/comics/${comic.comicId}/${index}`}
                     className="block mb-4"
                 >
                     <div className="p-4 border rounded hover:bg-gray-50 hover:-translate-y-0.5 transition-transform duration-150 cursor-pointer">

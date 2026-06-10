@@ -10,6 +10,7 @@ import {
     WritingChapterPanel,
     uploadImage,
 } from "./writingShared";
+import { backendGet } from "../../lib/backendApi";
 
 type WritingEditDraft = WritingDraft & { id: number };
 
@@ -20,7 +21,7 @@ function useWritingChapterHandlers(
     function addChapter() {
         setDraft((d) => ({
             ...d,
-            chapters: [...d.chapters, { id: crypto.randomUUID(), chapterTitle: "", blocks: [] }],
+            chapters: [...d.chapters, { id: crypto.randomUUID(), chapterTitle: "", writingContentBlock: [] }],
         }));
     }
 
@@ -48,7 +49,7 @@ function useWritingChapterHandlers(
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i === ci ? { ...c, blocks: [...c.blocks, newBlock] } : c
+                i === ci ? { ...c, writingContentBlock: [...c.writingContentBlock, newBlock] } : c
             ),
         }));
     }
@@ -57,7 +58,7 @@ function useWritingChapterHandlers(
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i === ci ? { ...c, blocks: c.blocks.filter((_, j) => j !== bi) } : c
+                i === ci ? { ...c, writingContentBlock: c.writingContentBlock.filter((_, j) => j !== bi) } : c
             ),
         }));
     }
@@ -66,11 +67,11 @@ function useWritingChapterHandlers(
         setDraft((d) => {
             const chapters = d.chapters.map((c, i) => {
                 if (i !== ci) return c;
-                const blocks = [...c.blocks];
+                const blocks = [...c.writingContentBlock];
                 const target = dir === "up" ? bi - 1 : bi + 1;
                 if (target < 0 || target >= blocks.length) return c;
                 [blocks[bi], blocks[target]] = [blocks[target], blocks[bi]];
-                return { ...c, blocks };
+                return { ...c, writingContentBlock: blocks };
             });
             return { ...d, chapters };
         });
@@ -80,7 +81,7 @@ function useWritingChapterHandlers(
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, text: v } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, text: v } : b)) }
             ),
         }));
     }
@@ -89,7 +90,7 @@ function useWritingChapterHandlers(
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, altText: v } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, altText: v } : b)) }
             ),
         }));
     }
@@ -98,7 +99,7 @@ function useWritingChapterHandlers(
         setDraft((d) => ({
             ...d,
             chapters: d.chapters.map((c, i) =>
-                i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, uploading: true, error: null } : b)) }
+                i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, uploading: true, error: null } : b)) }
             ),
         }));
         uploadImage(file)
@@ -106,7 +107,7 @@ function useWritingChapterHandlers(
                 setDraft((d) => ({
                     ...d,
                     chapters: d.chapters.map((c, i) =>
-                        i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, imageUrl: url, uploading: false } : b)) }
+                        i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, imageUrl: url, uploading: false } : b)) }
                     ),
                 }));
             })
@@ -115,7 +116,7 @@ function useWritingChapterHandlers(
                 setDraft((d) => ({
                     ...d,
                     chapters: d.chapters.map((c, i) =>
-                        i !== ci ? c : { ...c, blocks: c.blocks.map((b, j) => (j === bi ? { ...b, uploading: false, error: msg } : b)) }
+                        i !== ci ? c : { ...c, writingContentBlock: c.writingContentBlock.map((b, j) => (j === bi ? { ...b, uploading: false, error: msg } : b)) }
                     ),
                 }));
             });
@@ -128,7 +129,7 @@ function useWritingChapterHandlers(
     };
 }
 
-// ── List view ─────────────────────────────────────────────────────────────────
+
 
 function WritingListView({
     writings,
@@ -171,7 +172,6 @@ function WritingListView({
             setDeletingId(null);
         }
     }
-
     return (
         <div className="flex flex-col h-full bg-gray-50">
             <div className="flex items-center gap-3 px-6 py-3 bg-white border-b border-gray-200 shrink-0">
@@ -244,7 +244,7 @@ function WritingListView({
     );
 }
 
-// ── Edit form ─────────────────────────────────────────────────────────────────
+
 
 function WritingEditForm({
     draft,
@@ -293,7 +293,7 @@ function WritingEditForm({
 
     const anyUploading =
         draft.coverUploading ||
-        draft.chapters.some((c) => c.blocks.some((b) => b.uploading));
+        draft.chapters.some((c) => c.writingContentBlock.some((b) => b.uploading));
 
     async function handleSave() {
         if (!draft.title.trim()) { setSaveStatus("error"); setSaveError("Title is required."); return; }
@@ -308,7 +308,7 @@ function WritingEditForm({
             links: draft.links.filter((l) => l.trim()),
             chapters: draft.chapters.map((ch) => ({
                 chapterTitle: ch.chapterTitle,
-                content: ch.blocks.map((b, idx) => ({
+                content: ch.writingContentBlock.map((b, idx) => ({
                     contentPosition: idx,
                     contentType: b.contentType,
                     content:
@@ -413,8 +413,6 @@ function WritingEditForm({
     );
 }
 
-// ── Top-level controller ──────────────────────────────────────────────────────
-
 type Props = { onBack: () => void };
 
 export default function WritingEditBuilder({ onBack }: Props) {
@@ -426,9 +424,8 @@ export default function WritingEditBuilder({ onBack }: Props) {
     const [selectError, setSelectError] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:5266/Api/Writing/GetAll", { credentials: "include" })
-            .then((res) => { if (!res.ok) throw new Error("Failed to load writing."); return res.json(); })
-            .then((data: WritingApiDto[]) => setWritings(data))
+        backendGet<WritingApiDto[]>("/Api/Writing/GetAll", "Failed to load writing.")
+            .then(setWritings)
             .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : "Failed to load writing."))
             .finally(() => setLoading(false));
     }, []);
@@ -437,9 +434,7 @@ export default function WritingEditBuilder({ onBack }: Props) {
         setSelectingId(w.writingId);
         setSelectError("");
         try {
-            const res = await fetch(`http://localhost:5266/Api/Writing/GetById/${w.writingId}`, { credentials: "include" });
-            if (!res.ok) throw new Error(`Server returned ${res.status}`);
-            const dto: WritingApiDto = await res.json();
+            const dto = await backendGet<WritingApiDto>(`/Api/Writing/Get/${w.writingId}`);
             setEditDraft({ ...apiDtoToWritingDraft(dto), id: dto.writingId });
         } catch (err: unknown) {
             console.warn("GetById failed, falling back to list data:", err);

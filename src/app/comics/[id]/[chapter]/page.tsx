@@ -1,5 +1,5 @@
 import { comics } from "@/app/lib/comics";
-import { ComicInterface } from "@/app/lib/types/comic";
+import { ComicApiDto } from "@/app/lib/types/comic";
 import ComicReader from "@/app/components/comics/ComicReader";
 
 interface ChapterPageParams {
@@ -11,7 +11,7 @@ interface ChapterPageParams {
 
 export default async function ChapterPage({ params }: ChapterPageParams) {
     const { id, chapter } = await params;
-    const comic: ComicInterface | undefined = comics.find((c) => c.id === parseInt(id));
+    const comic: ComicApiDto | undefined = comics.find((c) => c.comicId === parseInt(id));
 
     if (!comic) {
         return <p className="p-8">Comic not found.</p>;

@@ -1,16 +1,7 @@
-export interface ArtItemProps {
-    id: number;
-    title: string;
-    description: string;
-    tags: string[];
-    imageUrl: string;
-    links: string[];
-    uploadedAt: string;
-    onClick?: () => void;
-}
+import { ArtApiDto } from "@/app/lib/types/art";
 
-export default function ArtItem(props: ArtItemProps) {
-    const {id,title,description,tags,imageUrl,links,uploadedAt,onClick} = props;
+export default function ArtItem(props: ArtApiDto & { onClick?: () => void }) {
+    const {artId,title,description,tags,imageUrl,links,uploadedAt,onClick} = props;
     return (
         <div onClick={onClick} className="bg-white shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 cursor-pointer flex flex-col">
             <img

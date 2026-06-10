@@ -1,8 +1,8 @@
-import { ArtInterface } from "./types/art";
+import { ArtApiDto } from "./types/art";
 
-export const art: ArtInterface[] = [
+export const art: ArtApiDto[] = [
     {
-        id: 1,
+        artId: 1,
         title: "Sunset Overdrive",
         description: "A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.",
         tags: ["sunset", "cityscape", "vibrant"],
@@ -11,7 +11,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 2,
+        artId: 2,
         title: "Serene Forest",
         description: "A tranquil scene of a dense forest with soft lighting filtering through the trees.",
         tags: ["forest", "serene", "nature"],
@@ -20,7 +20,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 3,
+        artId: 3,
         title: "Abstract Dreams",
         description: "An abstract piece featuring swirling colors and shapes that evoke a sense of mystery and wonder.",
         tags: ["abstract", "dreams", "colorful"],
@@ -29,7 +29,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 4,
+        artId: 4,
         title: "Sunset Overdrive",
         description: "A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.",
         tags: ["sunset", "cityscape", "vibrant"],
@@ -38,7 +38,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 5,
+        artId: 5,
         title: "Serene Forest",
         description: "A tranquil scene of a dense forest with soft lighting filtering through the trees.",
         tags: ["forest", "serene", "nature"],
@@ -47,7 +47,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 6,
+        artId: 6,
         title: "Abstract Dreams",
         description: "An abstract piece featuring swirling colors and shapes that evoke a sense of mystery and wonder.",
         tags: ["abstract", "dreams", "colorful"],
@@ -56,7 +56,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 7,
+        artId: 7,
         title: "Sunset Overdrive",
         description: "A vibrant depiction of a city skyline at sunset, with bold colors and dynamic brushstrokes.",
         tags: ["sunset", "cityscape", "vibrant"],
@@ -65,7 +65,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 8,
+        artId: 8,
         title: "Serene Forest",
         description: "A tranquil scene of a dense forest with soft lighting filtering through the trees.",
         tags: ["forest", "serene", "nature"],
@@ -74,7 +74,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },
     {
-        id: 9,
+        artId: 9,
         title: "Abstract Dreams",
         description: "An abstract piece featuring swirling colors and shapes that evoke a sense of mystery and wonder.",
         tags: ["abstract", "dreams", "colorful"],
@@ -83,7 +83,7 @@ export const art: ArtInterface[] = [
         uploadedAt:"6/16/2024"
     },   
     {
-        id: 10,
+        artId: 10,
         title: "Abstract Dreams",
         description: "An abstract piece featuring swirling colors and shapes that evoke a sense of mystery and wonder.",
         tags: ["abstract", "dreams", "colorful"],
