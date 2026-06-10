@@ -83,7 +83,7 @@ export default async function ComicPage({ params }: ComicPageParams) {
                         <Tab className="w-full" tabs={[
                             { title: "Chapters", content: <ComicChapterTab comic={comic} /> },
                             { title: "Details", content: <ComicDetailsTab comic={comic} /> },
-                            { title: "Comments", content: <ComicCommentsTab comic={comic} /> }
+                            // { title: "Comments", content: <ComicCommentsTab comic={comic} /> }
                         ]} />
                     </div>
                 </div>

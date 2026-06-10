@@ -10,7 +10,6 @@ import {
     WritingChapterPanel,
     uploadImage,
 } from "./writingShared";
-import { backendGet } from "../../lib/backendApi";
 
 type WritingEditDraft = WritingDraft & { id: number };
 
@@ -424,18 +423,27 @@ export default function WritingEditBuilder({ onBack }: Props) {
     const [selectError, setSelectError] = useState("");
 
     useEffect(() => {
-        backendGet<WritingApiDto[]>("/Api/Writing/GetAll", "Failed to load writing.")
-            .then(setWritings)
+        fetch("http://localhost:5266/Api/Writing/GetAll", { credentials: "include" })
+            .then((res) => { if (!res.ok) throw new Error("Failed to load writing."); return res.json(); })
+            .then((data: WritingApiDto[]) => {setWritings(data)
+                console.log(writings);
+            })
             .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : "Failed to load writing."))
             .finally(() => setLoading(false));
+            
     }, []);
 
     async function handleSelect(w: WritingApiDto) {
         setSelectingId(w.writingId);
         setSelectError("");
         try {
-            const dto = await backendGet<WritingApiDto>(`/Api/Writing/Get/${w.writingId}`);
+            const res = await fetch(`http://localhost:5266/Api/Writing/Get/${w.writingId}`, { credentials: "include" });
+            if (!res.ok) throw new Error(`Server returned ${res.status}`);
+            const dto: WritingApiDto = await res.json();
+            console.log(dto);
             setEditDraft({ ...apiDtoToWritingDraft(dto), id: dto.writingId });
+            
+            
         } catch (err: unknown) {
             console.warn("GetById failed, falling back to list data:", err);
             setEditDraft({ ...apiDtoToWritingDraft(w), id: w.writingId });

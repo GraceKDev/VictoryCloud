@@ -71,7 +71,7 @@ export default async function WritingPage({ params }: WritingPageParams) {
                     <Tab className="w-full" tabs={[
                         { title: "Chapters", content: <WritingChapterTab writing={writingItem} /> },
                         { title: "Details", content: <WritingDetailsTab writing={writingItem} /> },
-                        { title: "Comments", content: <WritingCommentsTab writing={writingItem} /> }
+                        // { title: "Comments", content: <WritingCommentsTab writing={writingItem} /> }
                     ]} />
                 </div>
             </div>
