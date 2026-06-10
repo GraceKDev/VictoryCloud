@@ -1,3 +1,4 @@
+import { WritingApiDto } from "@/app/components/admin/writingShared";
 import { writing } from "@/app/lib/writing";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,10 +13,20 @@ interface ChapterPageParams {
 
 export default async function ChapterPage({ params }: ChapterPageParams) {
     const { id, chapter } = await params;
-    const writingItem = writing.find((w) => w.writingId === parseInt(id));
-
-    if (!writingItem) notFound();
-
+    let writingItem: WritingApiDto | null = null;
+    try {
+        const res = await fetch(`http://localhost:5266/Api/Writing/Get/${id}`, {
+            cache: "no-store",
+        });
+        if(res.ok) {
+            writingItem = await res.json();
+        }
+    } catch (error) {
+        console.error("Error fetching writing by id:", error);
+    }
+    if(!writingItem) {
+        notFound();
+    }
     const chapterIndex = parseInt(chapter);
     const chapterData = writingItem.chapters[chapterIndex];
 
@@ -79,7 +90,7 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
                             href={`/writing/${id}/${prevIndex}`}
                             className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
                         >
-                            ← {writingItem.chapters[prevIndex].chapterTitle}
+                            ← {writingItem.chapters[prevIndex].writingChapterTitle}
                         </Link>
                     ) : <span />}
 
@@ -88,7 +99,7 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
                             href={`/writing/${id}/${nextIndex}`}
                             className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
                         >
-                            {writingItem.chapters[nextIndex].chapterTitle} →
+                            {writingItem.chapters[nextIndex].writingChapterTitle} →
                         </Link>
                     ) : <span />}
                 </div>

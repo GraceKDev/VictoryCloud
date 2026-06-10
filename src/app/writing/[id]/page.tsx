@@ -7,6 +7,7 @@ import Link from "next/link";
 import WritingChapterTab from "@/app/components/writing/WritingChapterTab";
 import WritingDetailsTab from "@/app/components/writing/WritingDetailsTab";
 import WritingCommentsTab from "@/app/components/writing/WritingCommentsTab";
+import { notFound } from "next/dist/client/components/navigation";
 
 interface WritingPageParams {
     params: {
@@ -16,13 +17,24 @@ interface WritingPageParams {
 
 export default async function WritingPage({ params }: WritingPageParams) {
     const { id } = await params;
-    const writingItem: WritingApiDto | undefined = writing.find((c) => c.writingId === parseInt(id));
+    let writingItem: WritingApiDto | null = null;
 
-    if (!writingItem) {
-        return <p>Writing not found</p>;
+    try {
+        const res = await fetch(`http://localhost:5266/Api/Writing/Get/${id}`, {
+            cache: "no-store",
+        });
+        if (res.ok) {
+            writingItem = await res.json();
+        }
+    } catch (error) {
+        console.error("Error fetching writing by id:", error);
     }
 
-    const { title, description, tags, coverUrl, links, uploadedAt, chapters, comments } = writingItem;
+    if (!writingItem) {
+        notFound();
+    }
+
+    const { title, description, tags, coverUrl} = writingItem;
 
     return (
         <section className="bg-white flex-1">
@@ -41,7 +53,7 @@ export default async function WritingPage({ params }: WritingPageParams) {
                     <div className="w-full mx-auto ml-8 overflow-hidden text-left flex flex-col ">
                         <h1 className="text-2xl font-bold mb-2">{title}</h1>
                         <p className="mb-2 line-clamp-8  text-ellipsis overflow-hidden">{description}</p>
-                         {tags && (
+                        {tags && (
                             <div className="flex flex-wrap gap-1 mb-4 mt-auto">
                                 {tags.map((tag, i) => (
                                     <span

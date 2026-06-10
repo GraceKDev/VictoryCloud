@@ -32,27 +32,18 @@ interface ComicPageParams {
 
 export default async function ComicPage({ params }: ComicPageParams) {
     const { id } = await params;
-    const comicId = Number(id);
-    if (!Number.isInteger(comicId) || comicId <= 0) {
-        notFound();
-    }
-
     let comic: ComicApiDto | null = null;
-
     try {
-        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${comicId}`, {
+        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${id}`, {
             cache: "no-store",
         });
 
         if (res.ok) {
-            
             comic = await res.json();
         }
     } catch (error) {
         console.error("Error fetching comic by id:", error);
     }
-
-   
     if (!comic) {
         notFound();
     }
