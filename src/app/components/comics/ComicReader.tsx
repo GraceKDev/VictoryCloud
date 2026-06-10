@@ -9,7 +9,7 @@ interface ComicReaderProps {
     chapterIndex: number;
 }
 
-// ─── End-page chapter comments ────────────────────────────────────────────────
+
 
 function ChapterEndComments({
     comic,
@@ -181,7 +181,7 @@ function ChapterEndComments({
     );
 }
 
-// ─── End Page ─────────────────────────────────────────────────────────────────
+
 
 interface EndPageProps {
     comic: ComicApiDto;
@@ -196,7 +196,7 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
 
     return (
         <div className="min-h-screen bg-gray-900 flex flex-col">
-            {/* Header */}
+           
             <div className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
                 <button
                     onClick={onPrevPage}
@@ -211,13 +211,13 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
                 <div className="w-28" />
             </div>
 
-            {/* Content */}
+        
             <div className="flex-1 overflow-y-auto">
                 <div className="max-w-2xl mx-auto px-6 py-10">
                     <h2 className="text-3xl font-bold text-white mb-2">{chapter.chapterTitle}</h2>
                     <p className="text-gray-400 mb-10">You&apos;ve reached the end of this chapter.</p>
 
-                    {/* Navigation buttons */}
+               
                     <div className="flex flex-wrap gap-3 mb-12">
                         <button
                             onClick={() => router.push(`/comics/${comic.comicId}`)}
@@ -241,7 +241,7 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
                         )}
                     </div>
 
-                    {/* Chapter comments */}
+         
                     <div className="bg-white rounded-xl p-6">
                         <h3 className="text-2xl font-bold mb-6">Chapter Comments</h3>
                         <ChapterEndComments comic={comic} chapterTitle={chapter.chapterTitle} />
@@ -252,7 +252,6 @@ function EndPage({ comic, chapter, chapterIndex, onPrevPage }: EndPageProps) {
     );
 }
 
-// ─── Comic Reader ──────────────────────────────────────────────────────────────
 
 export default function ComicReader({ comic, chapter, chapterIndex }: ComicReaderProps) {
     const router = useRouter();
@@ -266,7 +265,7 @@ export default function ComicReader({ comic, chapter, chapterIndex }: ComicReade
     const touchStartX = useRef<number | null>(null);
     const readerRef = useRef<HTMLDivElement | null>(null);
 
-    // Sync fullscreen state with browser API
+
     useEffect(() => {
         const handler = () => {
             setIsFullscreen(!!document.fullscreenElement);
@@ -336,7 +335,7 @@ export default function ComicReader({ comic, chapter, chapterIndex }: ComicReade
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Header */}
+   
             <div className="flex items-center justify-between px-4 py-3 bg-gray-800 text-white shrink-0">
                 <button
                     onClick={() => router.push(`/comics/${comic.comicId}`)}

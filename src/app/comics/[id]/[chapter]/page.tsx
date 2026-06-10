@@ -1,6 +1,7 @@
 import { comics } from "@/app/lib/comics";
 import { ComicApiDto } from "@/app/lib/types/comic";
 import ComicReader from "@/app/components/comics/ComicReader";
+import { notFound } from "next/dist/client/components/navigation";
 
 interface ChapterPageParams {
     params: {
@@ -11,10 +12,23 @@ interface ChapterPageParams {
 
 export default async function ChapterPage({ params }: ChapterPageParams) {
     const { id, chapter } = await params;
-    const comic: ComicApiDto | undefined = comics.find((c) => c.comicId === parseInt(id));
-
+    let comic: ComicApiDto | null = null
+    try {
+        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${id}`, {
+            cache: "no-store",
+        }).catch((error) => {
+            console.error("Error fetching comic:", error);
+            throw new Error("Failed to load comic.");
+        });
+        if(res.ok) {
+            comic = await res.json();
+        }
+    }
+    catch (error) {
+        console.error("Error fetching comic:", error);
+    }
     if (!comic) {
-        return <p className="p-8">Comic not found.</p>;
+       notFound();     
     }
 
     const chapterIndex = parseInt(chapter);
