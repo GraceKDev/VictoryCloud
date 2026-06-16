@@ -9,7 +9,7 @@ interface AboutCardProps {
 
 export default function AboutCard({ title = "Card Title", description = "", imageUrl = "/images/HomeCarousel/placeholder1.jpg", imageLink = "" }: AboutCardProps) {
     return (
-        <div style={{ backgroundColor: 'var(--cms-about-card-bg)' }} className="w-full border-pineTeal border-2 aspect-auto sm:aspect-square p-3 sm:p-4 rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl">
+        <div style={{ backgroundColor: "var(--cms-about-card-bg, #121619)" }} className="w-full border-pineTeal border-2 aspect-auto sm:aspect-square p-3 sm:p-4 rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl">
             <div className="relative w-full h-28 sm:h-1/2 shrink-0 border-2 border-pineTeal rounded-md overflow-hidden mb-3 sm:mb-4">
                 <Image src={imageUrl} alt={title} fill className="object-cover" unoptimized />
             </div>

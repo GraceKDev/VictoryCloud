@@ -53,6 +53,8 @@ export default function ArtBuilder({ onBack }: Props) {
             imageUrl: draft.imageUrl,
             tags: parsedTags,
             links: draft.links.filter((l) => l.trim()),
+            uploadedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
         };
 
         setSaving(true);

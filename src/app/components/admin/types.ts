@@ -44,12 +44,38 @@ export type ComicsConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
     paragraphTextColour: string;
+    tabActiveBackgroundColour: string;
+    tabInactiveBackgroundColour: string;
+    tabTextColour: string;
+    tabPanelBackgroundColour: string;
+    tabPanelBorderColour: string;
+    tabPanelTextColour: string;
+    cardBackgroundColour: string;
+    cardBorderColour: string;
+    tagBackgroundColour: string;
+    tagTextColour: string;
+    panelBackgroundColour: string;
+    panelAccentColour: string;
+    panelTextColour: string;
 };
 
 export type WritingConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
     paragraphTextColour: string;
+    tabActiveBackgroundColour: string;
+    tabInactiveBackgroundColour: string;
+    tabTextColour: string;
+    tabPanelBackgroundColour: string;
+    tabPanelBorderColour: string;
+    tabPanelTextColour: string;
+    cardBackgroundColour: string;
+    cardBorderColour: string;
+    tagBackgroundColour: string;
+    tagTextColour: string;
+    panelBackgroundColour: string;
+    panelAccentColour: string;
+    panelTextColour: string;
 };
 
 export type CommissionsConfig = {

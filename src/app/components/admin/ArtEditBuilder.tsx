@@ -179,6 +179,8 @@ function ArtEditForm({
             imageUrl: draft.imageUrl,
             tags: parsedTags,
             links: draft.links.filter((l) => l.trim()),
+            uploadedAt: draft.uploadedAt,
+            updatedAt: new Date().toISOString(),
         };
 
         setSaving(true);

@@ -16,6 +16,8 @@ export type ArtDraft = {
     imageUrl: string;
     tags: string;
     links: string[];
+    uploadedAt: string;
+    updatedAt: string;
     uploading: boolean;
     uploadError: string | null;
 };
@@ -27,6 +29,8 @@ export function artDraftToEmpty(): ArtDraft {
         imageUrl: "",
         tags: "",
         links: [],
+        uploadedAt: "",
+        updatedAt: "",
         uploading: false,
         uploadError: null,
     };
@@ -39,6 +43,8 @@ export function apiDtoToArtDraft(dto: ArtApiDto): ArtDraft {
         imageUrl: dto.imageUrl ?? "",
         tags: (dto.tags ?? []).join(", "),
         links: dto.links ?? [],
+        uploadedAt: dto.uploadedAt ?? "",
+        updatedAt: dto.updatedAt ?? "",
         uploading: false,
         uploadError: null,
     };

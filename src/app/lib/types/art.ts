@@ -6,4 +6,5 @@ export type ArtApiDto = {
     tags: string[];
     links: string[];
     uploadedAt: string;
+    updatedAt?: string;
 };

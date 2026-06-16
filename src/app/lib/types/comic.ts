@@ -15,6 +15,8 @@ export type ComicApiDto = {
     description: string;
     coverImageUrl: string;
     tags: string[];
+    uploadedAt?: string;
+    updatedAt?: string;
     details: {
         status: string;
         year: number;

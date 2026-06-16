@@ -16,10 +16,14 @@ export default function Tab({ tabs, className }: TabProps) {
     const [active, setActive] = useState(0);
     return (
         <div className={className}>
-            <div className="flex w-full">
+            <div className="flex w-full overflow-hidden rounded-t-2xl border-b border-ashGrey/20">
                 {tabs.map((tab, i) => (
                     <button
-                        className={`flex-1 min-w-0 p-2 ${active === i ? "bg-gray-800 text-white" : "bg-gray-600 text-gray-200"}`}
+                        className={`flex-1 min-w-0 p-2 ${active === i ? "" : ""}`}
+                        style={{
+                            backgroundColor: active === i ? "var(--cms-tab-active-bg, #121619)" : "var(--cms-tab-inactive-bg, #2d4739)",
+                            color: "var(--cms-tab-text, #f5f5f5)",
+                        }}
                         key={i}
                         onClick={() => setActive(i)}
                     >
@@ -27,7 +31,16 @@ export default function Tab({ tabs, className }: TabProps) {
                     </button>
                 ))}
             </div>
-            <div>{tabs[active].content}</div>
+            <div
+                className="border-x border-b rounded-b-2xl overflow-hidden"
+                style={{
+                    backgroundColor: "var(--cms-tab-panel-bg, #121619)",
+                    borderColor: "var(--cms-tab-panel-border, #b5cbb7)",
+                    color: "var(--cms-tab-panel-text, #f5f5f5)",
+                }}
+            >
+                {tabs[active].content}
+            </div>
         </div>
     );
 }

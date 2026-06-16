@@ -6,6 +6,7 @@ export const comics: ComicApiDto[] = [
         title: "Comic Title 1",
         description: "This is a description for Comic Title 1.",
         tags: ["Action", "Adventure"],
+        uploadedAt: "2024-06-18",
         details:{
             status: "Ongoing",
             year: 2023,
@@ -61,6 +62,7 @@ export const comics: ComicApiDto[] = [
         title: "Comic Title 2",
         description: "This is a description for Comic Title 2.",
         tags: ["Fantasy", "Drama"],
+        uploadedAt: "2024-05-20",
         details:{
             status: "Ongoing",
             year: 2023,
@@ -111,6 +113,7 @@ export const comics: ComicApiDto[] = [
         title: "Comic Title 3",
         description: "This is a description for Comic Title 3.",
         tags: ["Sci-Fi", "Thriller"],
+        uploadedAt: "2024-04-15",
         details:{   
             status: "Ongoing",
             year: 2023,
@@ -162,6 +165,7 @@ export const comics: ComicApiDto[] = [
         title: "Comic Title 4",
         description: "This is a description for Comic Title 4.",
         tags: ["Mystery", "Horror"],
+        uploadedAt: "2024-03-10",
         details:{
             status: "Ongoing",
             year: 2023,

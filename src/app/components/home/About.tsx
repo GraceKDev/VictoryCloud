@@ -29,7 +29,7 @@ async function getAboutCards(): Promise<CardConfig[]> {
 export default async function About() {
     const cards = await getAboutCards();
     return (
-        <section style={{ backgroundColor: 'var(--cms-about-bg)' }} className="min-h-[80vh] flex flex-col justify-center">
+        <section style={{ backgroundColor: 'var(--cms-about-bg, #b5cbb7)' }} className="min-h-[80vh] flex flex-col justify-center">
             <div className="w-full max-w-7xl mx-auto py-16 sm:py-20 px-4 sm:px-8">
                 <h2 style={{ color: 'var(--cms-about-heading)' }} className="mb-4 text-2xl sm:text-3xl lg:text-4xl leading-tight">About Victory Cloud</h2>
                 <hr className="mb-6 border-onyx border-t" />

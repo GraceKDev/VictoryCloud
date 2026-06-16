@@ -8,6 +8,7 @@ export type WritingApiDto = {
     tags: string[];
     links: string[];
     uploadedAt: string;
+    updatedAt?: string;
     chapters: {
         writingChapterId: number;
         writingId: number;

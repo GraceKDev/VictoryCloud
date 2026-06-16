@@ -32,6 +32,84 @@ export default function WritingEditor({ config, dispatch, onNewWriting, onEditWr
                         value={config.paragraphTextColour}
                         onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "paragraphTextColour", value: v })}
                     />
+                    <FieldGroup
+                        label="Tab Active Background Colour"
+                        type="color"
+                        value={config.tabActiveBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabActiveBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tab Inactive Background Colour"
+                        type="color"
+                        value={config.tabInactiveBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabInactiveBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tab Text Colour"
+                        type="color"
+                        value={config.tabTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabTextColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tab Panel Background Colour"
+                        type="color"
+                        value={config.tabPanelBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabPanelBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tab Panel Border Colour"
+                        type="color"
+                        value={config.tabPanelBorderColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabPanelBorderColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tab Panel Text Colour"
+                        type="color"
+                        value={config.tabPanelTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tabPanelTextColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Card Background Colour"
+                        type="color"
+                        value={config.cardBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "cardBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Card Border Colour"
+                        type="color"
+                        value={config.cardBorderColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "cardBorderColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tag Background Colour"
+                        type="color"
+                        value={config.tagBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tagBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Tag Text Colour"
+                        type="color"
+                        value={config.tagTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "tagTextColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Panel Background Colour"
+                        type="color"
+                        value={config.panelBackgroundColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "panelBackgroundColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Panel Accent Colour"
+                        type="color"
+                        value={config.panelAccentColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "panelAccentColour", value: v })}
+                    />
+                    <FieldGroup
+                        label="Panel Text Colour"
+                        type="color"
+                        value={config.panelTextColour}
+                        onChange={(v) => dispatch({ type: "UPDATE_WRITING", field: "panelTextColour", value: v })}
+                    />
                 </div>
             </section>
 
