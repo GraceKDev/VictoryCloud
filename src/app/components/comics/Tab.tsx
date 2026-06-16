@@ -32,9 +32,9 @@ export default function Tab({ tabs, className }: TabProps) {
                 ))}
             </div>
             <div
-                className="border-x border-b rounded-b-2xl overflow-hidden"
+                className="border-x border-b rounded-b-2xl p-4 overflow-hidden"
                 style={{
-                    backgroundColor: "var(--cms-tab-panel-bg, #121619)",
+                    backgroundColor: "var(--cms-tab-panel-bg, #2d4739)",
                     borderColor: "var(--cms-tab-panel-border, #b5cbb7)",
                     color: "var(--cms-tab-panel-text, #f5f5f5)",
                 }}

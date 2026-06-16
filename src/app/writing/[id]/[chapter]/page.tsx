@@ -123,8 +123,8 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
                     ) : (
                         <span />
                     )}
-                </div>
-            </div>
-        </section>
+                </div >
+            </div >
+        </section >
     );
 }

@@ -3,7 +3,7 @@ import { WritingApiDto } from "@/app/lib/types/writing";
 export default function WritingDetailsTab({ writing }: { writing: WritingApiDto }) {
     return (
         <section>
-            <h2 className="text-2xl font-bold mb-4">Details</h2>
+            <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--cms-writing-heading)" }}>Details</h2>
             <div className="flex flex-col gap-2">
                 <div>
                     <p>Uploaded: {writing.uploadedAt}</p>

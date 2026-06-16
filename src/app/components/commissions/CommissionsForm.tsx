@@ -6,7 +6,7 @@ export default function CommissionsForm() {
         >
             <div className="p-4 sm:p-6 lg:p-8">
                 <div>
-                    <form className="w-full rounded-2xl border border-ashGrey/20 bg-onyx/85 p-4 sm:p-6 shadow-md backdrop-blur-sm">
+                    <form className="w-full rounded-2xl  p-4 sm:p-6 ">
                         <h2 className="text-xl sm:text-2xl font-bold mb-2 text-offWhite">Commission Request Form</h2>
                         <p className="mb-6 text-sm sm:text-base text-offWhite/80 leading-relaxed">
                             Tell me what you need and I&apos;ll get back to you with the next steps.
