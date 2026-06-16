@@ -1,23 +1,39 @@
 import ArtGalleryClient from "./ArtGalleryClient";
 import { ArtApiDto } from "@/app/lib/types/art";
-
 export default async function ArtDisplayGrid() {
-    const res = await fetch(
-        "http://localhost:5266/Api/Art/GetAll",
-        {
-            cache: "no-store",
-        }).catch((error) => {
-            console.error("Error fetching arts:", error);
-            throw new Error("Failed to load arts.");
-        });
+    let arts: ArtApiDto[] = [];
 
-    if (!res.ok) {
-        console.error("Failed to load comics. Status:", res.status);
+    try {
+        const res = await fetch(
+            "http://localhost:5266/Api/Art/GetAll",
+            {
+                next: {
+                    revalidate: 60,
+                },
+            }
+        );
+        if (!res.ok) {
+            console.error(
+                "Failed to load arts. Status:",
+                res.status
+            );
+            arts = [];
+        } else {
+            arts = await res.json();
+        }
+    } catch (error) {
+        console.error("Error fetching arts:", error);
+        arts = [];
     }
-
-    const arts: ArtApiDto[] = await res.json();
-    if(arts.length === 0) {
-        return <p style={{ color: 'var(--cms-comics-text)' }} className="text-gray-600">No art found.</p>
+    if (arts.length === 0) {
+        return (
+            <p
+                style={{ color: "var(--cms-comics-text)" }}
+                className="text-gray-600"
+            >
+                No art found.
+            </p>
+        );
     }
     return <ArtGalleryClient art={arts} />;
 }

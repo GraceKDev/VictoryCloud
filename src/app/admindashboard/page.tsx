@@ -52,14 +52,14 @@ const defaultConfig: Config = {
         connectWithUsBackgroundColour: "#ffffff",
         connectWithUsParagraphTextColour: "#000000",
         aboutCards: [
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "" },
         ],
         latestNewsCards: [
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
-            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink: "" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink: "" },
+            { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink:"" },
         ],
         aboutCardsBackgroundColour: "#ffffff",
         latestNewsCardsBackgroundColour: "#ffffff",
@@ -68,6 +68,12 @@ const defaultConfig: Config = {
         headingTextColour: "#000000",
         headingBackgroundColour: "#ffffff",
         paragraphTextColour: "#000000",
+        modalBackgroundColour: "#121619",
+        modalTextColour: "#f5f5f5",
+        modalBorderColour: "#b5cbb7",
+        modalTagBackgroundColour: "#2d4739",
+        modalTagTextColour: "#f5f5f5",
+        modalLinkColour: "#b5cbb7",
 
     },
     comics: {
@@ -83,11 +89,18 @@ const defaultConfig: Config = {
     commissions: {
         formHeading: "Commission Request Form",
         buttonColor: "#3b82f6",
+        backgroundColor: "#ffffff",
         socials: [
             { label: "X / Twitter", url: "https://twitter.com/yourhandle", color: "#493DAF" },
             { label: "Instagram", url: "https://instagram.com/yourhandle", color: "#E1306C" },
             { label: "LinkedIn", url: "https://linkedin.com/in/yourhandle", color: "#0077B5" },
         ],
+    },
+    filter: {
+        filterCountTextColour: "#f5f5f5",
+        filterTextColour: "#f5f5f5",
+        filterInputBackgroundColour: "#2d4739",
+        filterSelectBackgroundColour: "#2d4739",
     },
 };
 
@@ -101,6 +114,7 @@ function reducer(state: Config, action: Action): Config {
                 comics: { ...defaultConfig.comics, ...loaded.comics },
                 writing: { ...defaultConfig.writing, ...loaded.writing },
                 commissions: { ...defaultConfig.commissions, ...loaded.commissions },
+                filter: { ...defaultConfig.filter, ...loaded.filter },
             };
         }
         case "UPDATE_HOME":
@@ -169,6 +183,12 @@ export default function AdminDashboard() {
             "--cms-art-bg": config.art.headingBackgroundColour,
             "--cms-art-heading": config.art.headingTextColour,
             "--cms-art-body": config.art.paragraphTextColour,
+            "--cms-art-modal-bg": config.art.modalBackgroundColour,
+            "--cms-art-modal-text": config.art.modalTextColour,
+            "--cms-art-modal-border": config.art.modalBorderColour,
+            "--cms-art-modal-tag-bg": config.art.modalTagBackgroundColour,
+            "--cms-art-modal-tag-text": config.art.modalTagTextColour,
+            "--cms-art-modal-link": config.art.modalLinkColour,
             "--cms-comics-bg": config.comics.headingBackgroundColour,
             "--cms-comics-heading": config.comics.headingTextColour,
             "--cms-comics-body": config.comics.paragraphTextColour,
@@ -176,6 +196,11 @@ export default function AdminDashboard() {
             "--cms-writing-heading": config.writing.headingTextColour,
             "--cms-writing-body": config.writing.paragraphTextColour,
             "--cms-commissions-button": config.commissions.buttonColor,
+            "--cms-commissions-bg": config.commissions.backgroundColor,
+            "--cms-filter-count-text": config.filter.filterCountTextColour,
+            "--cms-filter-text": config.filter.filterTextColour,
+            "--cms-filter-input-bg": config.filter.filterInputBackgroundColour,
+            "--cms-filter-select-bg": config.filter.filterSelectBackgroundColour,
         };
         iframeRef.current?.contentWindow?.postMessage({ type: "CMS_VARS", vars }, window.location.origin);
     }, [config]);
@@ -206,6 +231,7 @@ export default function AdminDashboard() {
                 comics: JSON.stringify(config.comics),
                 writing: JSON.stringify(config.writing),
                 commissions: JSON.stringify(config.commissions),
+                filter: JSON.stringify(config.filter),
             };
             const res = await fetch("http://localhost:5266/Api/Config/UpdateConfig", {
                 method: "PUT",
@@ -301,7 +327,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
-                    {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} onNewArt={() => setArtBuilderMode(true)} onEditArt={() => setArtEditMode(true)} />}
+                    {selectedPage === "art" && <ArtEditor config={config.art} filterConfig={config.filter} dispatch={dispatch} onNewArt={() => setArtBuilderMode(true)} onEditArt={() => setArtEditMode(true)} />}
                     {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} onEditComic={() => setComicEditMode(true)} />}
                     {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} onNewWriting={() => setWritingBuilderMode(true)} onEditWriting={() => setWritingEditMode(true)} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}

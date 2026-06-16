@@ -70,6 +70,12 @@ export default function HomeEditor({ config, dispatch }: Props) {
                             value={card.imageUrl}
                             onChange={(v) => dispatch({ type: "UPDATE_HOME_ABOUT_CARD", index: i, field: "imageUrl", value: v })}
                         />
+                        <FieldGroup
+                            label="Link URL"
+                            type="url"
+                            value={card.imageLink}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_ABOUT_CARD", index: i, field: "imageLink", value: v })}
+                        />
                     </div>
                 ))}
                 <FieldGroup
@@ -99,6 +105,7 @@ export default function HomeEditor({ config, dispatch }: Props) {
                     value={config.latestNewsParagraphTextColour}
                     onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "latestNewsParagraphTextColour", value: v })}
                 />
+                
                 <hr className="border-gray-300" />
                 <div>
                     <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Cards</h2>
@@ -122,6 +129,12 @@ export default function HomeEditor({ config, dispatch }: Props) {
                             type="url"
                             value={card.imageUrl}
                             onChange={(v) => dispatch({ type: "UPDATE_HOME_LATEST_NEWS_CARD", index: i, field: "imageUrl", value: v })}
+                        />
+                        <FieldGroup
+                            label="Link URL"
+                            type="url"
+                            value={card.imageLink}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_LATEST_NEWS_CARD", index: i, field: "imageLink", value: v })}
                         />
                     </div>
                 ))}

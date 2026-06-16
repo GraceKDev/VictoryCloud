@@ -18,39 +18,42 @@ export default function Filters({ numResults }: { numResults: number }) {
             case "/art":
                 return (
                     <select
-                        className="p-2 border border-gray-300 rounded"
+                        className="p-2 border border-ashGrey rounded"
+                        style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.artCategory}
                         onChange={(e) => dispatch({ type: "SET_ART_CATEGORY", payload: e.target.value })}
                     >
-                        <option value="">All Tags</option>
+                        <option value="" className="text-offWhite">All Tags</option>
                         {artTags.map((tag) => (
-                            <option key={tag} value={tag}>{tag}</option>
+                            <option key={tag} value={tag} className="text-offWhite">{tag}</option>
                         ))}
                     </select>
                 );
             case "/writing":
                 return (
                     <select
-                        className="p-2 border border-gray-300 rounded"
+                        className="p-2 border border-ashGrey rounded"
+                        style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.writingCategory}
                         onChange={(e) => dispatch({ type: "SET_WRITING_CATEGORY", payload: e.target.value })}
                     >
-                        <option value="">All Tags</option>
+                        <option value="" className="text-offWhite">All Tags</option>
                         {writingTags.map((tag) => (
-                            <option key={tag} value={tag}>{tag}</option>
+                            <option key={tag} value={tag} className="text-offWhite">{tag}</option>
                         ))}
                     </select>
                 );
             case "/comics":
                 return (
                     <select
-                        className="p-2 border border-gray-300 rounded"
+                        className="p-2 border border-ashGrey rounded"
+                        style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.comicCategory}
                         onChange={(e) => dispatch({ type: "SET_COMIC_CATEGORY", payload: e.target.value })}
                     >
-                        <option value="">All Tags</option>
+                        <option value="" className="text-offWhite">All Tags</option>
                         {comicTags.map((tag) => (
-                            <option key={tag} value={tag}>{tag}</option>
+                            <option key={tag} value={tag} className="text-offWhite">{tag}</option>
                         ))}
                     </select>
                 );
@@ -63,7 +66,7 @@ export default function Filters({ numResults }: { numResults: number }) {
         <section className="flex w-full mb-4">
             <div className="flex justify-between w-full gap-4">
                 <div className="">
-                    <p className="z-10 text-lg text-gray-500  bg-white/80 backdrop-blur-sm px-2 py-4  rounded">
+                    <p style={{ color: 'var(--cms-filter-count-text)' }} className="z-10 text-lg    px-2 py-4  rounded">
                         {numResults} result{numResults !== 1 ? "s" : ""}
                     </p>
                 </div>
@@ -74,7 +77,8 @@ export default function Filters({ numResults }: { numResults: number }) {
                         placeholder="Search..."
                         value={state.search}
                         onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
-                        className="p-2 border border-gray-300 rounded"
+                        className="p-2 border border-ashGrey rounded"
+                        style={{ backgroundColor: "var(--cms-filter-input-bg)", color: "var(--cms-filter-text)" }}
                     />
                 </div>
             </div>

@@ -1,14 +1,15 @@
-import { Action, ArtConfig } from "../types";
+import { Action, ArtConfig, FilterConfig } from "../types";
 import FieldGroup from "../FieldGroup";
 
 type Props = {
     config: ArtConfig;
+    filterConfig: FilterConfig;
     dispatch: (action: Action) => void;
     onNewArt: () => void;
     onEditArt: () => void;
 };
 
-export default function ArtEditor({ config, dispatch, onNewArt, onEditArt }: Props) {
+export default function ArtEditor({ config, filterConfig, dispatch, onNewArt, onEditArt }: Props) {
     return (
         <div className="flex flex-col gap-6">
             <section>
@@ -30,6 +31,66 @@ export default function ArtEditor({ config, dispatch, onNewArt, onEditArt }: Pro
                     type="color"
                     value={config.paragraphTextColour}
                     onChange={(v) => dispatch({ type: "UPDATE_ART", field: "paragraphTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Background Colour"
+                    type="color"
+                    value={config.modalBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Text Colour"
+                    type="color"
+                    value={config.modalTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Border Colour"
+                    type="color"
+                    value={config.modalBorderColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalBorderColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Tag Background Colour"
+                    type="color"
+                    value={config.modalTagBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalTagBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Tag Text Colour"
+                    type="color"
+                    value={config.modalTagTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalTagTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Modal Link Colour"
+                    type="color"
+                    value={config.modalLinkColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalLinkColour", value: v })}
+                />
+                <FieldGroup
+                    label="Filter Count Text Colour"
+                    type="color"
+                    value={filterConfig.filterCountTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterCountTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Filter Text Colour"
+                    type="color"
+                    value={filterConfig.filterTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Filter Input Background Colour"
+                    type="color"
+                    value={filterConfig.filterInputBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterInputBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Filter Select Background Colour"
+                    type="color"
+                    value={filterConfig.filterSelectBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterSelectBackgroundColour", value: v })}
                 />
             </section>
 

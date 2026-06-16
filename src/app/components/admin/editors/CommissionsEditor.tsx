@@ -25,6 +25,12 @@ export default function CommissionsEditor({ config, dispatch }: Props) {
                         value={config.buttonColor}
                         onChange={(v) => dispatch({ type: "UPDATE_COMMISSIONS", field: "buttonColor", value: v })}
                     />
+                    <FieldGroup
+                        label="Section Background Colour"
+                        type="color"
+                        value={config.backgroundColor}
+                        onChange={(v) => dispatch({ type: "UPDATE_COMMISSIONS", field: "backgroundColor", value: v })}
+                    />
                 </div>
             </section>
 

@@ -32,62 +32,66 @@ export default function Navigation() {
         router.push("/");
     };
     return (
-        <nav className="w-full bg-white shadow-md">
-            <div className="px-8 flex justify-between items-center py-4 h-full">
-                <div>
-                    <a onClick={() => navigate("/")}>
-                        <h1 className="text-2xl cursor-pointer font-bold text-black">VictoryCloudWorks</h1>
-                    </a>
-                </div>
+        <nav className="w-full sticky top-0 z-20 bg-pineTeal border-b-2 border-onyx shadow-md">
+            <div className="w-full max-w-7xl mx-auto">
+                <div className="px-4 sm:px-8 min-h-16 flex items-center justify-between gap-4">
+                    <div>
+                        <a onClick={() => navigate("/")}>
+                            <h1 className="cursor-pointer font-bold text-offWhite text-2xl sm:text-3xl lg:text-4xl leading-none">
+                                VictoryCloudWorks
+                            </h1>
+                        </a>
+                    </div>
 
-                <ul className="hidden md:flex text-black font-medium text-xl space-x-8 px-1">
-                    {navItems.map((item) => (
-                        <li key={item.name}>
-                            <a onClick={() => navigate(item.path)} className="cursor-pointer hover:text-gray-500 transition-colors">
-                                {item.name}
-                            </a>
-                        </li>
-                    ))}
-                    {isAdmin && (
-                        <li>
-                            <button onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-800 transition-colors font-medium">
-                                Logout
-                            </button>
-                        </li>
-                    )}
-                </ul>
-
-                <button
-                    onClick={() => setMenuOpen((o) => !o)}
-                    aria-label="Toggle menu"
-                    className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded focus:outline-none"
-                >
-                    <span className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-                    <span className={`block w-6 h-0.5 bg-black transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-                    <span className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-                </button>
-            </div>
-
-            {menuOpen && (
-                <div className="md:hidden border-t border-gray-100">
-                    <ul className="flex flex-col px-8 py-4 space-y-4 text-black font-medium text-sm">
+                    <ul className="hidden md:flex text-offWhite font-medium text-xl space-x-8 px-1">
                         {navItems.map((item) => (
                             <li key={item.name}>
-                                <a onClick={() => navigate(item.path)} className="cursor-pointer hover:text-gray-500 transition-colors block">
+                                <a onClick={() => navigate(item.path)} className="cursor-pointer hover:text-gray-500 transition-colors">
                                     {item.name}
                                 </a>
                             </li>
                         ))}
                         {isAdmin && (
-                            <li className="border-t border-gray-100 pt-4">
-                                <button onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-800 transition-colors w-full text-left">
+                            <li>
+                                <button onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-800 transition-colors font-medium">
                                     Logout
                                 </button>
                             </li>
                         )}
                     </ul>
+
+                    <button
+                        onClick={() => setMenuOpen((o) => !o)}
+                        aria-label="Toggle menu"
+                        className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded focus:outline-none shrink-0"
+                    >
+                        <span className={`block w-6 h-0.5 bg-offWhite transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+                        <span className={`block w-6 h-0.5 bg-offWhite transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+                        <span className={`block w-6 h-0.5 bg-offWhite transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+                    </button>
                 </div>
-            )}
+
+                {menuOpen && (
+                    <div className="md:hidden border-t border-ashGrey/30 bg-onyx/95 backdrop-blur-sm shadow-lg">
+                        <ul className="flex flex-col px-4 sm:px-8 py-4 space-y-4 text-offWhite font-medium text-sm">
+                            {navItems.map((item) => (
+                                <li key={item.name}>
+                                    <a onClick={() => navigate(item.path)} className="cursor-pointer hover:text-ashGrey transition-colors block">
+                                        {item.name}
+                                    </a>
+                                </li>
+                            ))}
+                            {isAdmin && (
+                                <li className="border-t border-ashGrey/20 pt-4">
+                                    <button onClick={handleLogout} className="cursor-pointer text-red-400 hover:text-red-300 transition-colors w-full text-left">
+                                        Logout
+                                    </button>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                )}
+            </div>
         </nav>
     );
 }

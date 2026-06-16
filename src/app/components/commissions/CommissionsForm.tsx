@@ -1,6 +1,6 @@
 export default function CommissionsForm() {
     return (
-        <section className=" bg-white">
+        <section style={{ backgroundColor: "var(--cms-commissions-bg)" }}>
             <div className=" p-4">
                 <div>
                     <form className="w-full bg-gray-100 p-4 rounded-lg shadow-md">

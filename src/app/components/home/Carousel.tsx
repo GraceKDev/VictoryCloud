@@ -37,7 +37,7 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
 
   return (
     <div
-      className="relative w-full h-[80vh] overflow-hidden"
+      className="relative w-full h-[25vh] overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}

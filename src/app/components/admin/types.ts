@@ -10,15 +10,28 @@ export type HomeConfig = {
     connectWithUsTextColour: string;
     connectWithUsParagraphTextColour: string;
     connectWithUsBackgroundColour: string;
-    aboutCards: { title: string; description: string; imageUrl: string }[];
-    latestNewsCards: { title: string; description: string; imageUrl: string }[];
+    aboutCards: { title: string; description: string; imageUrl: string, imageLink: string }[];
+    latestNewsCards: { title: string; description: string; imageUrl: string, imageLink: string }[];
 };
 
 export type ArtConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
     paragraphTextColour: string;
+    modalBackgroundColour: string;
+    modalTextColour: string;
+    modalBorderColour: string;
+    modalTagBackgroundColour: string;
+    modalTagTextColour: string;
+    modalLinkColour: string;
 };
+
+export type FilterConfig = {
+    filterCountTextColour: string;
+    filterTextColour: string;
+    filterInputBackgroundColour: string;
+    filterSelectBackgroundColour: string;
+}
 
 export type ArtUploadConfig  = {
     artTitle: string;
@@ -42,6 +55,7 @@ export type WritingConfig = {
 export type CommissionsConfig = {
     formHeading: string;
     buttonColor: string;
+    backgroundColor: string;
     socials: { label: string; url: string; color: string }[];
 };
 
@@ -51,6 +65,7 @@ export type Config = {
     comics: ComicsConfig;
     writing: WritingConfig;
     commissions: CommissionsConfig;
+    filter: FilterConfig;
 };
 
 export type Action =
@@ -59,6 +74,7 @@ export type Action =
     | { type: "UPDATE_HOME_ABOUT_CARD"; index: number; field: keyof HomeConfig["aboutCards"][0]; value: string }
     | { type: "UPDATE_HOME_LATEST_NEWS_CARD"; index: number; field: keyof HomeConfig["latestNewsCards"][0]; value: string }
     | { type: "UPDATE_ART"; field: keyof ArtConfig; value: string }
+    | { type: "UPDATE_FILTER"; field: keyof FilterConfig; value: string }
     | { type: "UPDATE_ART_UPLOAD"; field: keyof ArtUploadConfig; value: string | File[] | null }
     | { type: "UPDATE_COMICS"; field: keyof ComicsConfig; value: string }
     | { type: "UPDATE_WRITING"; field: keyof WritingConfig; value: string }

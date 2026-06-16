@@ -99,8 +99,8 @@ export default function WritingCommentsTab({ writing }: { writing: WritingApiDto
                 >
                     <option value="">Select Chapter</option>
                     {writing.chapters.map((ch, index) => (
-                        <option key={index} value={ch.chapterTitle}>
-                            {ch.chapterTitle}
+                        <option key={index} value={ch.writingChapterTitle}>
+                            {ch.writingChapterTitle}
                         </option>
                     ))}
                 </select>
