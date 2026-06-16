@@ -76,3 +76,7 @@ li > a {
   cursor: pointer;
   text-decoration: none;
 }
+
+.commissions-social-icon {
+  filter: brightness(0) invert(1);
+}
