@@ -24,8 +24,7 @@ export default function ConfigVarSetter() {
             .then((res) => (res.ok ? res.json() : null))
             .then((data) => {
                 if (!data) return;
-                const r = document.documentElement;
-                const { home, art, comics, writing, commissions, filter } = data;
+                const { home, art, global, comics, writing, commissions } = data;
                 applyVars({
                     "--cms-about-bg": home?.aboutBackgroundColour,
                     "--cms-about-heading": home?.aboutHeadingTextColour,
@@ -69,10 +68,10 @@ export default function ConfigVarSetter() {
                     "--cms-writing-panel-text": writing?.panelTextColour,
                     "--cms-commissions-button": commissions?.buttonColor,
                     "--cms-commissions-bg": commissions?.backgroundColor,
-                    "--cms-filter-count-text": filter?.filterCountTextColour,
-                    "--cms-filter-text": filter?.filterTextColour,
-                    "--cms-filter-input-bg": filter?.filterInputBackgroundColour,
-                    "--cms-filter-select-bg": filter?.filterSelectBackgroundColour,
+                    "--cms-filter-count-text": global?.filterCountTextColour,
+                    "--cms-filter-text": global?.filterTextColour,
+                    "--cms-filter-input-bg": global?.filterInputBackgroundColour,
+                    "--cms-filter-select-bg": global?.filterSelectBackgroundColour,
                 });
             })
             .catch(() => { /* silently fall back to CSS defaults */ });

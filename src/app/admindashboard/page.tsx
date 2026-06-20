@@ -8,6 +8,7 @@ import ArtEditor from "../components/admin/editors/ArtEditor";
 import ComicsEditor from "../components/admin/editors/ComicsEditor";
 import WritingEditor from "../components/admin/editors/WritingEditor";
 import CommissionsEditor from "../components/admin/editors/CommissionsEditor";
+import FieldGroup from "../components/admin/FieldGroup";
 import ComicBuilder from "../components/admin/ComicBuilder";
 import ComicEditBuilder from "../components/admin/ComicEditBuilder";
 import ArtBuilder from "../components/admin/ArtBuilder";
@@ -76,16 +77,22 @@ const defaultConfig: Config = {
         modalLinkColour: "#b5cbb7",
 
     },
+    global: {
+        tabActiveBackgroundColour: "#121619",
+        tabInactiveBackgroundColour: "#2d4739",
+        tabTextColour: "#f5f5f5",
+        tabPanelBackgroundColour: "#2d4739",
+        tabPanelBorderColour: "#b5cbb7",
+        tabPanelTextColour: "#f5f5f5",
+        filterCountTextColour: "#f5f5f5",
+        filterTextColour: "#f5f5f5",
+        filterInputBackgroundColour: "#2d4739",
+        filterSelectBackgroundColour: "#2d4739",
+    },
     comics: {
         headingTextColour: "#f5f5f5",
         headingBackgroundColour: "#121619",
         paragraphTextColour: "#f5f5f5",
-        tabActiveBackgroundColour: "#121619",
-        tabInactiveBackgroundColour: "#2d4739",
-        tabTextColour: "#f5f5f5",
-        tabPanelBackgroundColour: "#121619",
-        tabPanelBorderColour: "#b5cbb7",
-        tabPanelTextColour: "#f5f5f5",
         cardBackgroundColour: "#2d4739",
         cardBorderColour: "#b5cbb7",
         tagBackgroundColour: "#2d4739",
@@ -98,12 +105,6 @@ const defaultConfig: Config = {
         headingTextColour: "#f5f5f5",
         headingBackgroundColour: "#121619",
         paragraphTextColour: "#f5f5f5",
-        tabActiveBackgroundColour: "#121619",
-        tabInactiveBackgroundColour: "#2d4739",
-        tabTextColour: "#f5f5f5",
-        tabPanelBackgroundColour: "#121619",
-        tabPanelBorderColour: "#b5cbb7",
-        tabPanelTextColour: "#f5f5f5",
         cardBackgroundColour: "#2d4739",
         cardBorderColour: "#b5cbb7",
         tagBackgroundColour: "#2d4739",
@@ -139,6 +140,7 @@ function reducer(state: Config, action: Action): Config {
             return {
                 home: { ...defaultConfig.home, ...loaded.home },
                 art: { ...defaultConfig.art, ...loaded.art },
+                global: { ...defaultConfig.global, ...loaded.global },
                 comics: { ...defaultConfig.comics, ...loaded.comics },
                 writing: { ...defaultConfig.writing, ...loaded.writing },
                 commissions: { ...defaultConfig.commissions, ...loaded.commissions },
@@ -163,6 +165,8 @@ function reducer(state: Config, action: Action): Config {
             return { ...state, art: { ...state.art, [action.field]: action.value } };
         case "UPDATE_ART":
             return { ...state, art: { ...state.art, [action.field]: action.value } };
+        case "UPDATE_GLOBAL":
+            return { ...state, global: { ...state.global, [action.field]: action.value } };
         case "UPDATE_COMICS":
             return { ...state, comics: { ...state.comics, [action.field]: action.value } };
         case "UPDATE_WRITING":
@@ -220,12 +224,12 @@ export default function AdminDashboard() {
             "--cms-comics-bg": config.comics.headingBackgroundColour,
             "--cms-comics-heading": config.comics.headingTextColour,
             "--cms-comics-body": config.comics.paragraphTextColour,
-            "--cms-tab-active-bg": config.comics.tabActiveBackgroundColour,
-            "--cms-tab-inactive-bg": config.comics.tabInactiveBackgroundColour,
-            "--cms-tab-text": config.comics.tabTextColour,
-            "--cms-tab-panel-bg": config.comics.tabPanelBackgroundColour,
-            "--cms-tab-panel-border": config.comics.tabPanelBorderColour,
-            "--cms-tab-panel-text": config.comics.tabPanelTextColour,
+            "--cms-tab-active-bg": config.global.tabActiveBackgroundColour,
+            "--cms-tab-inactive-bg": config.global.tabInactiveBackgroundColour,
+            "--cms-tab-text": config.global.tabTextColour,
+            "--cms-tab-panel-bg": config.global.tabPanelBackgroundColour,
+            "--cms-tab-panel-border": config.global.tabPanelBorderColour,
+            "--cms-tab-panel-text": config.global.tabPanelTextColour,
             "--cms-comics-card-bg": config.comics.cardBackgroundColour,
             "--cms-comics-card-border": config.comics.cardBorderColour,
             "--cms-comics-tag-bg": config.comics.tagBackgroundColour,
@@ -236,12 +240,7 @@ export default function AdminDashboard() {
             "--cms-writing-bg": config.writing.headingBackgroundColour,
             "--cms-writing-heading": config.writing.headingTextColour,
             "--cms-writing-body": config.writing.paragraphTextColour,
-            "--cms-tab-active-bg": config.writing.tabActiveBackgroundColour,
-            "--cms-tab-inactive-bg": config.writing.tabInactiveBackgroundColour,
-            "--cms-tab-text": config.writing.tabTextColour,
-            "--cms-tab-panel-bg": config.writing.tabPanelBackgroundColour,
-            "--cms-tab-panel-border": config.writing.tabPanelBorderColour,
-            "--cms-tab-panel-text": config.writing.tabPanelTextColour,
+
             "--cms-writing-card-bg": config.writing.cardBackgroundColour,
             "--cms-writing-card-border": config.writing.cardBorderColour,
             "--cms-writing-tag-bg": config.writing.tagBackgroundColour,
@@ -251,10 +250,10 @@ export default function AdminDashboard() {
             "--cms-writing-panel-text": config.writing.panelTextColour,
             "--cms-commissions-button": config.commissions.buttonColor,
             "--cms-commissions-bg": config.commissions.backgroundColor,
-            "--cms-filter-count-text": config.filter.filterCountTextColour,
-            "--cms-filter-text": config.filter.filterTextColour,
-            "--cms-filter-input-bg": config.filter.filterInputBackgroundColour,
-            "--cms-filter-select-bg": config.filter.filterSelectBackgroundColour,
+            "--cms-filter-count-text": config.global.filterCountTextColour,
+            "--cms-filter-text": config.global.filterTextColour,
+            "--cms-filter-input-bg": config.global.filterInputBackgroundColour,
+            "--cms-filter-select-bg": config.global.filterSelectBackgroundColour,
         };
         iframeRef.current?.contentWindow?.postMessage({ type: "CMS_VARS", vars }, window.location.origin);
     }, [config]);
@@ -378,6 +377,71 @@ export default function AdminDashboard() {
                             <option key={p.value} value={p.value}>{p.label}</option>
                         ))}
                     </select>
+                </div>
+                <div className="p-6 border-b border-gray-100 shrink-0">
+                    <h3 className="text-base font-semibold text-gray-800 mb-4">Global Theme</h3>
+                    <div className="flex flex-col gap-4">
+                        <FieldGroup
+                            label="Tab Active Background Colour"
+                            type="color"
+                            value={config.global.tabActiveBackgroundColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabActiveBackgroundColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Tab Inactive Background Colour"
+                            type="color"
+                            value={config.global.tabInactiveBackgroundColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabInactiveBackgroundColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Tab Text Colour"
+                            type="color"
+                            value={config.global.tabTextColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabTextColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Tab Panel Background Colour"
+                            type="color"
+                            value={config.global.tabPanelBackgroundColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabPanelBackgroundColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Tab Panel Border Colour"
+                            type="color"
+                            value={config.global.tabPanelBorderColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabPanelBorderColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Tab Panel Text Colour"
+                            type="color"
+                            value={config.global.tabPanelTextColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "tabPanelTextColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Filter Count Text Colour"
+                            type="color"
+                            value={config.global.filterCountTextColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "filterCountTextColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Filter Text Colour"
+                            type="color"
+                            value={config.global.filterTextColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "filterTextColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Filter Input Background Colour"
+                            type="color"
+                            value={config.global.filterInputBackgroundColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "filterInputBackgroundColour", value: v })}
+                        />
+                        <FieldGroup
+                            label="Filter Select Background Colour"
+                            type="color"
+                            value={config.global.filterSelectBackgroundColour}
+                            onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "filterSelectBackgroundColour", value: v })}
+                        />
+                    </div>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}

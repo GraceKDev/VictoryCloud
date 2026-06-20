@@ -33,6 +33,19 @@ export type FilterConfig = {
     filterSelectBackgroundColour: string;
 }
 
+export type GlobalConfig = {
+    tabActiveBackgroundColour: string;
+    tabInactiveBackgroundColour: string;
+    tabTextColour: string;
+    tabPanelBackgroundColour: string;
+    tabPanelBorderColour: string;
+    tabPanelTextColour: string;
+    filterCountTextColour: string;
+    filterTextColour: string;
+    filterInputBackgroundColour: string;
+    filterSelectBackgroundColour: string;
+};
+
 export type ArtUploadConfig  = {
     artTitle: string;
     artDescription: string;
@@ -63,12 +76,6 @@ export type WritingConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
     paragraphTextColour: string;
-    tabActiveBackgroundColour: string;
-    tabInactiveBackgroundColour: string;
-    tabTextColour: string;
-    tabPanelBackgroundColour: string;
-    tabPanelBorderColour: string;
-    tabPanelTextColour: string;
     cardBackgroundColour: string;
     cardBorderColour: string;
     tagBackgroundColour: string;
@@ -90,6 +97,7 @@ export type CommissionsConfig = {
 export type Config = {
     home: HomeConfig;
     art: ArtConfig;
+    global: GlobalConfig;
     comics: ComicsConfig;
     writing: WritingConfig;
     commissions: CommissionsConfig;
@@ -103,6 +111,7 @@ export type Action =
     | { type: "UPDATE_HOME_LATEST_NEWS_CARD"; index: number; field: keyof HomeConfig["latestNewsCards"][0]; value: string }
     | { type: "UPDATE_ART"; field: keyof ArtConfig; value: string }
     | { type: "UPDATE_FILTER"; field: keyof FilterConfig; value: string }
+    | { type: "UPDATE_GLOBAL"; field: keyof GlobalConfig; value: string }
     | { type: "UPDATE_ART_UPLOAD"; field: keyof ArtUploadConfig; value: string | File[] | null }
     | { type: "UPDATE_COMICS"; field: keyof ComicsConfig; value: string }
     | { type: "UPDATE_WRITING"; field: keyof WritingConfig; value: string }
