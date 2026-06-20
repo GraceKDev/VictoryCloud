@@ -1,15 +1,14 @@
-import { Action, ArtConfig, FilterConfig } from "../types";
+import { Action, ArtConfig } from "../types";
 import FieldGroup from "../FieldGroup";
 
 type Props = {
     config: ArtConfig;
-    filterConfig: FilterConfig;
     dispatch: (action: Action) => void;
     onNewArt: () => void;
     onEditArt: () => void;
 };
 
-export default function ArtEditor({ config, filterConfig, dispatch, onNewArt, onEditArt }: Props) {
+export default function ArtEditor({ config, dispatch, onNewArt, onEditArt }: Props) {
     return (
         <div className="flex flex-col gap-6">
             <section>
@@ -67,30 +66,6 @@ export default function ArtEditor({ config, filterConfig, dispatch, onNewArt, on
                     type="color"
                     value={config.modalLinkColour}
                     onChange={(v) => dispatch({ type: "UPDATE_ART", field: "modalLinkColour", value: v })}
-                />
-                <FieldGroup
-                    label="Filter Count Text Colour"
-                    type="color"
-                    value={filterConfig.filterCountTextColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterCountTextColour", value: v })}
-                />
-                <FieldGroup
-                    label="Filter Text Colour"
-                    type="color"
-                    value={filterConfig.filterTextColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterTextColour", value: v })}
-                />
-                <FieldGroup
-                    label="Filter Input Background Colour"
-                    type="color"
-                    value={filterConfig.filterInputBackgroundColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterInputBackgroundColour", value: v })}
-                />
-                <FieldGroup
-                    label="Filter Select Background Colour"
-                    type="color"
-                    value={filterConfig.filterSelectBackgroundColour}
-                    onChange={(v) => dispatch({ type: "UPDATE_FILTER", field: "filterSelectBackgroundColour", value: v })}
                 />
             </section>
 

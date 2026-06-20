@@ -18,7 +18,7 @@ export default function Filters({ numResults }: { numResults: number }) {
             case "/art":
                 return (
                     <select
-                        className="p-2 border border-ashGrey rounded"
+                        className="w-full rounded border border-ashGrey p-2 sm:w-48"
                         style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.artCategory}
                         onChange={(e) => dispatch({ type: "SET_ART_CATEGORY", payload: e.target.value })}
@@ -32,7 +32,7 @@ export default function Filters({ numResults }: { numResults: number }) {
             case "/writing":
                 return (
                     <select
-                        className="p-2 border border-ashGrey rounded"
+                        className="w-full rounded border border-ashGrey p-2 sm:w-48"
                         style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.writingCategory}
                         onChange={(e) => dispatch({ type: "SET_WRITING_CATEGORY", payload: e.target.value })}
@@ -46,7 +46,7 @@ export default function Filters({ numResults }: { numResults: number }) {
             case "/comics":
                 return (
                     <select
-                        className="p-2 border border-ashGrey rounded"
+                        className="w-full rounded border border-ashGrey p-2 sm:w-48"
                         style={{ backgroundColor: "var(--cms-filter-select-bg)", color: "var(--cms-filter-text)" }}
                         value={state.comicCategory}
                         onChange={(e) => dispatch({ type: "SET_COMIC_CATEGORY", payload: e.target.value })}
@@ -63,21 +63,22 @@ export default function Filters({ numResults }: { numResults: number }) {
     };
 
     return (
-        <section className="flex w-full mb-4">
-            <div className="flex justify-between w-full gap-4">
-                <div className="">
-                    <p style={{ color: 'var(--cms-filter-count-text)' }} className="z-10 text-lg    px-2 py-4  rounded">
-                        {numResults} result{numResults !== 1 ? "s" : ""}
-                    </p>
-                </div>
-                <div className="flex gap-4">
+        <section className="sticky top-16 z-10 mb-4 w-full">
+            <div
+                className="flex w-full flex-col gap-3 rounded-2xl border p-3 shadow-lg backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between"
+                style={{ backgroundColor: "rgba(18, 22, 25, 0.92)", borderColor: "var(--cms-filter-select-bg)" }}
+            >
+                <p style={{ color: "var(--cms-filter-count-text)" }} className="text-sm sm:text-lg rounded">
+                    {numResults} result{numResults !== 1 ? "s" : ""}
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     {category()}
                     <input
                         type="text"
                         placeholder="Search..."
                         value={state.search}
                         onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
-                        className="p-2 border border-ashGrey rounded"
+                        className="w-full rounded border border-ashGrey p-2 sm:w-56"
                         style={{ backgroundColor: "var(--cms-filter-input-bg)", color: "var(--cms-filter-text)" }}
                     />
                 </div>

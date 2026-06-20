@@ -2,6 +2,7 @@
 
 export const dynamic = "force-dynamic";
 import { useEffect, useReducer, useRef, useState } from "react";
+import Link from "next/link";
 import { Config, Action } from "../components/admin/types";
 import HomeEditor from "../components/admin/editors/HomeEditor";
 import ArtEditor from "../components/admin/editors/ArtEditor";
@@ -355,7 +356,23 @@ export default function AdminDashboard() {
         }
     }
     return (
-        <main className="flex flex-1 overflow-hidden bg-gray-50" style={{ height: "calc(100vh - 64px)" }}>
+        <>
+            <main className="flex min-h-[calc(100vh-64px)] flex-1 items-center justify-center bg-gray-50 px-4 py-8 md:hidden">
+                <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xl">
+                    <h1 className="text-2xl font-bold text-gray-800">Desktop only</h1>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                        The admin dashboard is best used on a desktop device.
+                    </p>
+                    <Link
+                        href="/"
+                        className="mt-6 inline-flex items-center justify-center rounded-md bg-gray-900 px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                    >
+                        Back to home
+                    </Link>
+                </div>
+            </main>
+
+            <main className="hidden flex-1 overflow-hidden bg-gray-50 md:flex" style={{ height: "calc(100vh - 64px)" }}>
             <aside className="w-96 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
                 <div className="p-6 border-b border-gray-100 shrink-0">
                     <h2 className="text-lg font-bold text-gray-800 mb-4">Control Panel</h2>
@@ -445,7 +462,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}
-                    {selectedPage === "art" && <ArtEditor config={config.art} filterConfig={config.filter} dispatch={dispatch} onNewArt={() => setArtBuilderMode(true)} onEditArt={() => setArtEditMode(true)} />}
+                    {selectedPage === "art" && <ArtEditor config={config.art} dispatch={dispatch} onNewArt={() => setArtBuilderMode(true)} onEditArt={() => setArtEditMode(true)} />}
                     {selectedPage === "comics" && <ComicsEditor config={config.comics} dispatch={dispatch} onNewComic={() => setComicBuilderMode(true)} onEditComic={() => setComicEditMode(true)} />}
                     {selectedPage === "writing" && <WritingEditor config={config.writing} dispatch={dispatch} onNewWriting={() => setWritingBuilderMode(true)} onEditWriting={() => setWritingEditMode(true)} />}
                     {selectedPage === "commissions" && <CommissionsEditor config={config.commissions} dispatch={dispatch} />}
@@ -477,5 +494,6 @@ export default function AdminDashboard() {
             </section>
 
         </main>
+        </>
     );
 }

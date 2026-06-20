@@ -57,12 +57,7 @@ export type ComicsConfig = {
     headingTextColour: string;
     headingBackgroundColour: string;
     paragraphTextColour: string;
-    tabActiveBackgroundColour: string;
-    tabInactiveBackgroundColour: string;
-    tabTextColour: string;
-    tabPanelBackgroundColour: string;
-    tabPanelBorderColour: string;
-    tabPanelTextColour: string;
+
     cardBackgroundColour: string;
     cardBorderColour: string;
     tagBackgroundColour: string;
