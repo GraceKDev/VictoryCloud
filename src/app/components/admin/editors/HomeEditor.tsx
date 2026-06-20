@@ -7,7 +7,7 @@ type Props = {
     dispatch: (action: Action) => void;
 };
 
-function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
+export function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
     return (
         <section className="border border-gray-200 rounded-lg overflow-hidden">

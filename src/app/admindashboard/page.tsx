@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 import { useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { Config, Action } from "../components/admin/types";
-import HomeEditor from "../components/admin/editors/HomeEditor";
+import HomeEditor, { Accordion } from "../components/admin/editors/HomeEditor";
 import ArtEditor from "../components/admin/editors/ArtEditor";
 import ComicsEditor from "../components/admin/editors/ComicsEditor";
 import WritingEditor from "../components/admin/editors/WritingEditor";
@@ -397,7 +397,9 @@ export default function AdminDashboard() {
                 </div>
                 <div className="p-6 border-b border-gray-100 shrink-0">
                     <h3 className="text-base font-semibold text-gray-800 mb-4">Global Theme</h3>
+                    <Accordion title="Global Vars">
                     <div className="flex flex-col gap-4">
+                        
                         <FieldGroup
                             label="Tab Active Background Colour"
                             type="color"
@@ -459,6 +461,7 @@ export default function AdminDashboard() {
                             onChange={(v) => dispatch({ type: "UPDATE_GLOBAL", field: "filterSelectBackgroundColour", value: v })}
                         />
                     </div>
+                    </Accordion>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6">
                     {selectedPage === "home" && <HomeEditor config={config.home} dispatch={dispatch} />}

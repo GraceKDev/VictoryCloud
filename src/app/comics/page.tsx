@@ -6,7 +6,9 @@ export default async function Comics() {
     let comics: ComicApiDto[] = [];
     try {
         const res = await fetch("http://localhost:5266/Api/Comic/GetAll", {
-            cache: "no-store",
+            next: {
+                revalidate: 60,
+            },
         });
         if (!res.ok) {
             console.error("Failed to load comics. Status:", res.status);
