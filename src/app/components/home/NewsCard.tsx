@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getSafeImageSrc } from "@/app/lib/utils/image";
 
 export type NewsCardProps = {
     title: string;
@@ -9,13 +10,15 @@ export type NewsCardProps = {
 };
 
 export default function NewsCard({ title, description, imageUrl, dateLabel, accentLabel }: NewsCardProps) {
+    const safeImageUrl = getSafeImageSrc(imageUrl);
+
     return (
         <article
             style={{ backgroundColor: "var(--cms-news-card-bg, #2d4739)" }}
             className="w-full border-ashGrey border-2 aspect-auto sm:aspect-square p-3 sm:p-4 rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl"
         >
             <div className="relative w-full h-28 sm:h-1/2 shrink-0 border-ashGrey border-2 rounded-md overflow-hidden mb-3 sm:mb-4">
-                <Image src={imageUrl} alt={title} fill className="object-cover" />
+                <Image src={safeImageUrl} alt={title} fill className="object-cover" />
             </div>
             <div className="flex-1 min-h-0 p-1 sm:p-2 flex flex-col overflow-hidden">
                 <div className="flex items-center justify-between gap-3 mb-2">

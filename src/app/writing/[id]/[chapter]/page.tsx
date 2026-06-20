@@ -2,6 +2,7 @@ import { WritingApiDto } from "@/app/lib/types/writing";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getSafeImageSrc, hasUsableImageSrc } from "@/app/lib/utils/image";
 
 interface ChapterPageParams {
     params: {
@@ -70,11 +71,12 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
                         if (block.writingContentType === "Image") {
                             const imageUrl = contentBlock?.writingContentBlockImageUrl;
                             const altText = contentBlock?.writingContentBlockAltText ?? "Chapter image";
+                            const safeImageUrl = getSafeImageSrc(imageUrl);
                             return (
                                 <div key={i} className="flex justify-center">
-                                    {imageUrl ? (
+                                    {hasUsableImageSrc(imageUrl) ? (
                                         <Image
-                                            src={imageUrl}
+                                            src={safeImageUrl}
                                             alt={altText}
                                             width={300}
                                             height={200}

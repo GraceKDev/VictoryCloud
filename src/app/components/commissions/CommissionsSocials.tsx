@@ -2,7 +2,7 @@ import Image from 'next/image';
 import SocialsBubble from '../global/SocialsBubble';
 export default function CommissionsSocials() {
     return (
-        <section className="rounded-2xl border border-ashGrey/30 bg-pineTeal/40 shadow-2xl">
+        <section className="rounded-2xl border border-ashGrey bg-pineTeal shadow-2xl">
             <div className="flex flex-col p-4 sm:p-6 lg:p-8">
                 <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-offWhite">Connect with Me</h1>
                 <p className="text-sm sm:text-base text-offWhite/80 mb-8 leading-relaxed">

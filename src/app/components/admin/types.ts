@@ -82,6 +82,8 @@ export type CommissionsConfig = {
     formHeading: string;
     buttonColor: string;
     backgroundColor: string;
+    showAvailabilityBanner: boolean;
+    commissionsAvailable: boolean;
     socials: { label: string; url: string; color: string }[];
 };
 
@@ -104,5 +106,5 @@ export type Action =
     | { type: "UPDATE_ART_UPLOAD"; field: keyof ArtUploadConfig; value: string | File[] | null }
     | { type: "UPDATE_COMICS"; field: keyof ComicsConfig; value: string }
     | { type: "UPDATE_WRITING"; field: keyof WritingConfig; value: string }
-    | { type: "UPDATE_COMMISSIONS"; field: keyof Omit<CommissionsConfig, "socials">; value: string }
+    | { type: "UPDATE_COMMISSIONS"; field: keyof Omit<CommissionsConfig, "socials">; value: string | boolean }
     | { type: "UPDATE_COMMISSIONS_SOCIAL"; index: number; field: keyof CommissionsConfig["socials"][0]; value: string };

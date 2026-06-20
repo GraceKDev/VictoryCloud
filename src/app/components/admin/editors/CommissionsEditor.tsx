@@ -31,6 +31,34 @@ export default function CommissionsEditor({ config, dispatch }: Props) {
                         value={config.backgroundColor}
                         onChange={(v) => dispatch({ type: "UPDATE_COMMISSIONS", field: "backgroundColor", value: v })}
                     />
+                    <label className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                        <input
+                            type="checkbox"
+                            checked={config.showAvailabilityBanner}
+                            onChange={(e) =>
+                                dispatch({
+                                    type: "UPDATE_COMMISSIONS",
+                                    field: "showAvailabilityBanner",
+                                    value: e.target.checked,
+                                })
+                            }
+                        />
+                        Show availability banner
+                    </label>
+                    <label className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                        <input
+                            type="checkbox"
+                            checked={config.commissionsAvailable}
+                            onChange={(e) =>
+                                dispatch({
+                                    type: "UPDATE_COMMISSIONS",
+                                    field: "commissionsAvailable",
+                                    value: e.target.checked,
+                                })
+                            }
+                        />
+                        Commissions available
+                    </label>
                 </div>
             </section>
 

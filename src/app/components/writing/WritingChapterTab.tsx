@@ -27,7 +27,7 @@ export default function WritingChapterTab({ writing }: { writing: WritingApiDto 
                         }}
                     >
                         <div className="flex items-center gap-4">
-                            <span>Chapter {index + 1} |</span>
+                            <span>Chapter {index + 1} </span>
                             <span className="font-semibold">
                                 {chapter.writingChapterTitle}
                             </span>

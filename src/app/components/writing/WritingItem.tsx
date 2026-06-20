@@ -1,18 +1,20 @@
 "use client"
 import { WritingApiDto } from "@/app/lib/types/writing";
 import router from "next/router";
+import { getSafeImageSrc, hasUsableImageSrc } from "@/app/lib/utils/image";
 
 
 export default function WritingItem(props:WritingApiDto) {
     const { writingId,title, description, tags, coverUrl, links, uploadedAt, chapters, comments } = props;
+    const safeCoverUrl = getSafeImageSrc(coverUrl);
 
 
     return (
         <div onClick={() => router.push(`/writing/${writingId}`)}
             className="bg-white shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 cursor-pointer flex flex-col">
-            {coverUrl ? (
+            {hasUsableImageSrc(coverUrl) ? (
                 <img
-                    src={coverUrl}
+                    src={safeCoverUrl}
                     alt={title}
                     className="w-full aspect-2/3 object-cover mb-2"
                 />

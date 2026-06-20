@@ -1,4 +1,8 @@
 import NewsCard from "./NewsCard";
+import { ArtApiDto } from "@/app/lib/types/art";
+import { ComicApiDto } from "@/app/lib/types/comic";
+import { WritingApiDto } from "@/app/lib/types/writing";
+import { getSafeImageSrc } from "@/app/lib/utils/image";
 
 type LatestNewsItem = {
     source: "art" | "comics" | "writing";
@@ -20,12 +24,58 @@ function formatDate(value: string) {
 
 async function getLatestNews(): Promise<LatestNewsItem[]> {
     try {
-        const res = await fetch("http://localhost:3000/api/latest-news", {
-            next: { revalidate: 60 },
-        });
-        if (!res.ok) return [];
-        const data = await res.json();
-        return data?.items ?? [];
+        const [artResponse, comicsResponse, writingResponse] = await Promise.all([
+            fetch("http://localhost:5266/Api/Art/GetAll", { cache: "no-store" }),
+            fetch("http://localhost:5266/Api/Comic/GetAll", { cache: "no-store" }),
+            fetch("http://localhost:5266/Api/Writing/GetAll", { cache: "no-store" }),
+        ]);
+
+        const artItems: LatestNewsItem[] = artResponse.ok
+            ? ((await artResponse.json()) as ArtApiDto[]).map((item) => ({
+                  source: "art",
+                  id: item.artId,
+                  title: item.title,
+                  description: item.description,
+                  imageUrl: getSafeImageSrc(item.imageUrl),
+                  uploadedAt: item.uploadedAt,
+                  newsLabel: "Art",
+                  newsSummary: item.description,
+              }))
+            : [];
+
+        const comicItems: LatestNewsItem[] = comicsResponse.ok
+            ? ((await comicsResponse.json()) as ComicApiDto[]).map((item) => ({
+                  source: "comics",
+                  id: item.comicId,
+                  title: item.title,
+                  description: item.description,
+                  imageUrl: getSafeImageSrc(item.coverImageUrl),
+                  uploadedAt: item.updatedAt ?? item.uploadedAt ?? `${item.details.year}-01-01`,
+                  newsLabel: item.updatedAt ? "Updated Comic" : "New Comic",
+                  newsSummary: item.updatedAt ? "A new update is available." : "A new comic is available.",
+              }))
+            : [];
+
+        const writingItems: LatestNewsItem[] = writingResponse.ok
+            ? ((await writingResponse.json()) as WritingApiDto[]).map((item) => ({
+                  source: "writing",
+                  id: item.writingId,
+                  title: item.title,
+                  description: item.description,
+                  imageUrl: getSafeImageSrc(item.coverUrl),
+                  uploadedAt: item.updatedAt ?? item.uploadedAt,
+                  newsLabel: item.updatedAt ? "Updated Writing" : "New Writing",
+                  newsSummary: item.updatedAt ? "A new update is available." : "A new writing piece is available.",
+              }))
+            : [];
+
+        return [...artItems, ...comicItems, ...writingItems]
+            .sort((left, right) => {
+                const rightDate = new Date(right.uploadedAt).getTime();
+                const leftDate = new Date(left.uploadedAt).getTime();
+                return rightDate - leftDate;
+            })
+            .slice(0, 6);
     } catch {
         return [];
     }

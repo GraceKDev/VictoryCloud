@@ -1,7 +1,7 @@
 export default function CommissionsForm() {
     return (
         <section
-            className="rounded-2xl border border-ashGrey/30 shadow-2xl"
+            className="rounded-2xl border border-ashGrey shadow-2xl"
             style={{ backgroundColor: "var(--cms-commissions-bg)" }}
         >
             <div className="p-4 sm:p-6 lg:p-8">

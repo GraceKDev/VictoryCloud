@@ -5,6 +5,7 @@ import { WritingApiDto } from "@/app/lib/types/writing";
 import Tab from "@/app/components/comics/Tab";
 import WritingChapterTab from "@/app/components/writing/WritingChapterTab";
 import WritingDetailsTab from "@/app/components/writing/WritingDetailsTab";
+import { getSafeImageSrc, hasUsableImageSrc } from "@/app/lib/utils/image";
 
 interface WritingPageParams {
     params: { id: string };
@@ -22,7 +23,8 @@ export default async function WritingPage({ params }: WritingPageParams) {
     }
 
     if (!writingItem) notFound();
-    const hasCoverImage = Boolean(writingItem.coverUrl && writingItem.coverUrl.trim());
+    const hasCoverImage = hasUsableImageSrc(writingItem.coverUrl);
+    const safeCoverUrl = getSafeImageSrc(writingItem.coverUrl);
 
     return (
         <main style={{ backgroundColor: "var(--cms-writing-bg)" }} className="flex-1 text-offWhite">
@@ -40,11 +42,11 @@ export default async function WritingPage({ params }: WritingPageParams) {
                         }}
                     >
                         {hasCoverImage ? (
-                            <div className="relative aspect-[2/3] w-full">
-                                <Image src={writingItem.coverUrl} alt={writingItem.title} fill className="object-cover" />
+                            <div className="relative aspect-2/3 w-full">
+                                <Image src={safeCoverUrl} alt={writingItem.title} fill className="object-cover" />
                             </div>
                         ) : (
-                            <div className="flex aspect-[2/3] w-full items-center justify-center px-4 text-center text-sm text-offWhite/70">
+                            <div className="flex aspect-2/3 w-full items-center justify-center px-4 text-center text-sm text-offWhite/70">
                                 No image available
                             </div>
                         )}

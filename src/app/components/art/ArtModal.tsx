@@ -1,8 +1,10 @@
 import { ArtApiDto } from "@/app/lib/types/art";
+import { getSafeImageSrc } from "@/app/lib/utils/image";
 
 type ArtModalProps = ArtApiDto & { onClose: () => void };
 
 export default function ArtModal(props: ArtModalProps) {
+    const safeImageUrl = getSafeImageSrc(props.imageUrl);
     return (
         <div onClick={props.onClose} className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div
@@ -16,7 +18,7 @@ export default function ArtModal(props: ArtModalProps) {
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-4">
                     <div className="w-full lg:w-3/5">
                         <img
-                            src={props.imageUrl}
+                            src={safeImageUrl}
                             alt={props.title}
                             className="w-full aspect-[4/3] lg:aspect-square object-cover"
                         />
