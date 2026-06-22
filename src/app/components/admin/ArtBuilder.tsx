@@ -60,7 +60,7 @@ export default function ArtBuilder({ onBack }: Props) {
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Art/Create", {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/Create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

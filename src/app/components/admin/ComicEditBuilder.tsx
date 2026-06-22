@@ -81,7 +81,7 @@ function ComicListView({
         setDeletingId(comic.comicId);
 
         try {
-            const res = await fetch(`http://localhost:5266/Api/Comic/Delete/${comic.comicId}`, {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/Delete/${comic.comicId}`, {
                 method: "DELETE",
                 credentials: "include",
             });
@@ -315,7 +315,7 @@ function ComicEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Comic/Update", {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/Update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -417,7 +417,7 @@ export default function ComicEditBuilder({ onBack }: Props) {
     const [selectError, setSelectError] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:5266/Api/Comic/GetAll", { credentials: "include" })
+        fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/GetAll`, { credentials: "include" })
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to load comics.");
                 return res.json();
@@ -433,7 +433,7 @@ export default function ComicEditBuilder({ onBack }: Props) {
         setSelectError("");
         try {
             const res = await fetch(
-                `http://localhost:5266/Api/Comic/Get/${comic.comicId}`,
+                `${process.env.BACKEND_URL_DEV}/Api/Comic/Get/${comic.comicId}`,
                 { credentials: "include" }
             );
             if (!res.ok) throw new Error(`Server returned ${res.status}`);

@@ -10,7 +10,7 @@ type ConfigResponse = {
 
 async function getConfig(): Promise<ConfigResponse | null> {
     try {
-        const response = await fetch("http://localhost:5266/Api/Config/GetConfig", { cache: "no-store" });
+        const response = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { cache: "no-store" });
         if (!response.ok) return null;
         return (await response.json()) as ConfigResponse;
     } catch {

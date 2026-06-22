@@ -176,7 +176,7 @@ export default function ComicBuilder({ onBack }: Props) {
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Comic/Create", {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/Create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

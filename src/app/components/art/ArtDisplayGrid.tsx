@@ -5,7 +5,7 @@ export default async function ArtDisplayGrid() {
 
     try {
         const res = await fetch(
-            "http://localhost:5266/Api/Art/GetAll",
+            "${process.env.BACKEND_URL_DEV}/Api/Art/GetAll",
             {
                 next: {
                     revalidate: 60,

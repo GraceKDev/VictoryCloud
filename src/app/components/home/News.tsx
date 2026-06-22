@@ -25,9 +25,9 @@ function formatDate(value: string) {
 async function getLatestNews(): Promise<LatestNewsItem[]> {
     try {
         const [artResponse, comicsResponse, writingResponse] = await Promise.all([
-            fetch("http://localhost:5266/Api/Art/GetAll", { cache: "no-store" }),
-            fetch("http://localhost:5266/Api/Comic/GetAll", { cache: "no-store" }),
-            fetch("http://localhost:5266/Api/Writing/GetAll", { cache: "no-store" }),
+            fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/GetAll`, { cache: "no-store" }),
+            fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/GetAll`, { cache: "no-store" }),
+            fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/GetAll`, { cache: "no-store" }),
         ]);
 
         const artItems: LatestNewsItem[] = artResponse.ok

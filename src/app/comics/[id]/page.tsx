@@ -29,7 +29,7 @@ export default async function ComicPage({ params }: ComicPageParams) {
     let comic: ComicApiDto | null = null;
 
     try {
-        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${id}`, { cache: "no-store" });
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/Get/${id}`, { cache: "no-store" });
         if (res.ok) comic = await res.json();
     } catch (error) {
         console.error("Error fetching comic by id:", error);

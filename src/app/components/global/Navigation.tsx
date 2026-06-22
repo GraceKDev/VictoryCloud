@@ -20,7 +20,7 @@ export default function Navigation() {
         setMenuOpen(false);
     };
     const handleLogout = async () => {
-        const res = await fetch("http://localhost:5266/Api/Auth/Logout", {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Auth/Logout`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

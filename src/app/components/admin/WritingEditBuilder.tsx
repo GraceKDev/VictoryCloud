@@ -155,7 +155,7 @@ function WritingListView({
         if (!confirm(`Are you sure you want to delete "${w.title}"? This cannot be undone.`)) return;
         setDeletingId(w.writingId);
         try {
-            const res = await fetch(`http://localhost:5266/Api/Writing/Delete/${w.writingId}`, {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/Delete/${w.writingId}`, {
                 method: "DELETE",
                 credentials: "include",
             });
@@ -322,7 +322,7 @@ function WritingEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch("http://localhost:5266/Api/Writing/Update", {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/Update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -423,7 +423,7 @@ export default function WritingEditBuilder({ onBack }: Props) {
     const [selectError, setSelectError] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:5266/Api/Writing/GetAll", { credentials: "include" })
+        fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/GetAll`, { credentials: "include" })
             .then((res) => { if (!res.ok) throw new Error("Failed to load writing."); return res.json(); })
             .then((data: WritingApiDto[]) => {setWritings(data)
                 console.log(writings);
@@ -437,7 +437,7 @@ export default function WritingEditBuilder({ onBack }: Props) {
         setSelectingId(w.writingId);
         setSelectError("");
         try {
-            const res = await fetch(`http://localhost:5266/Api/Writing/Get/${w.writingId}`, { credentials: "include" });
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/Get/${w.writingId}`, { credentials: "include" });
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const dto: WritingApiDto = await res.json();
             console.log(dto);

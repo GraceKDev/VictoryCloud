@@ -14,7 +14,7 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
     const { id, chapter } = await params;
     let comic: ComicApiDto | null = null
     try {
-        const res = await fetch(`http://localhost:5266/Api/Comic/Get/${id}`, {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/Get/${id}`, {
             cache: "no-store",
         }).catch((error) => {
             console.error("Error fetching comic:", error);

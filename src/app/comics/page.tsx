@@ -5,7 +5,7 @@ import { ComicApiDto } from "../lib/types/comic";
 export default async function Comics() {
     let comics: ComicApiDto[] = [];
     try {
-        const res = await fetch("http://localhost:5266/Api/Comic/GetAll", {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Comic/GetAll`, {
             next: {
                 revalidate: 60,
             },

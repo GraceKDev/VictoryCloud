@@ -9,31 +9,27 @@ export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const cookie = request.cookies.get(COOKIE_NAME);
 
-    // const isAuthenticated = async () => {
-    //     if (!cookie?.value) return false;
-    //     try {
-    //         await jwtVerify(cookie.value, JWT_SECRET, {
-    //             issuer: "VictoryCloudApi",
-    //             audience: "VictoryCloudApiUsers",
-    //         });
-    //         return true;
-    //     } catch {
-    //         return false;
-    //     }
-    // };
-
-
-    // if (pathname.startsWith("/adminlogin")) {
-    //     if (await isAuthenticated()) {
-    //         return NextResponse.redirect(new URL("/admindashboard", request.url));
-    //     }
-    //     return NextResponse.next();
-    // }
-
-
-    // if (!await isAuthenticated()) {
-    //     return NextResponse.redirect(new URL("/", request.url));
-    // }
+    const isAuthenticated = async () => {
+        if (!cookie?.value) return false;
+        try {
+            await jwtVerify(cookie.value, JWT_SECRET, {
+                issuer: "VictoryCloudApi",
+                audience: "VictoryCloudApiUsers",
+            });
+            return true;
+        } catch {
+            return false;
+        }
+    };
+    if (pathname.startsWith("/adminlogin")) {
+        if (await isAuthenticated()) {
+            return NextResponse.redirect(new URL("/admindashboard", request.url));
+        }
+        return NextResponse.next();
+    }
+    if (!await isAuthenticated()) {
+        return NextResponse.redirect(new URL("/", request.url));
+    }
 
     return NextResponse.next();
 }

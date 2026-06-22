@@ -260,9 +260,9 @@ export default function AdminDashboard() {
     }, [config]);
 
     useEffect(() => {
-        fetch("http://localhost:5266/Api/Config/GetConfig", { credentials: "include" })
+        fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { credentials: "include" })
             .then((res) => (res.ok ? res.json() : null))
-            .then((data) => {
+            .then((data) => {   
                 if (data) {
                     dispatch({ type: "LOAD_CONFIG", payload: data });
                 }
@@ -287,7 +287,7 @@ export default function AdminDashboard() {
                 commissions: JSON.stringify(config.commissions),
                 filter: JSON.stringify(config.filter),
             };
-            const res = await fetch("http://localhost:5266/Api/Config/UpdateConfig", {
+            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/UpdateConfig`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -298,7 +298,6 @@ export default function AdminDashboard() {
                 iframeRef.current?.contentWindow?.location.reload();
             } else {
                 const errorData = await res.json().catch(() => null);
-                console.error("Save failed:", errorData);
                 setSaveStatus("error");
             }
         } catch (e) {

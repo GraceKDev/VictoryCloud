@@ -16,7 +16,7 @@ export default async function WritingPage({ params }: WritingPageParams) {
     let writingItem: WritingApiDto | null = null;
 
     try {
-        const res = await fetch(`http://localhost:5266/Api/Writing/Get/${id}`, { cache: "no-store" });
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/Get/${id}`, { cache: "no-store" });
         if (res.ok) writingItem = await res.json();
     } catch (error) {
         console.error("Error fetching writing by id:", error);

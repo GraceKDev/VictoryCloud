@@ -16,7 +16,7 @@ export default async function ChapterPage({ params }: ChapterPageParams) {
     let writingItem: WritingApiDto | null = null;
 
     try {
-        const res = await fetch(`http://localhost:5266/Api/Writing/Get/${id}`, {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/Get/${id}`, {
             cache: "no-store",
         });
         if (res.ok) {
