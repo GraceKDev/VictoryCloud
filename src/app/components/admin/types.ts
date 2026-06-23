@@ -10,8 +10,14 @@ export type HomeConfig = {
     connectWithUsTextColour: string;
     connectWithUsParagraphTextColour: string;
     connectWithUsBackgroundColour: string;
+    faqHeadingTextColour: string;
+    faqParagraphTextColour: string;
+    faqBackgroundColour: string;
+    faqCardsBackgroundColour: string;
+    bannerImages: string[];
     aboutCards: { title: string; description: string; imageUrl: string, imageLink: string }[];
     latestNewsCards: { title: string; description: string; imageUrl: string, imageLink: string }[];
+    faqCards: { title: string; description: string }[];
 };
 
 export type ArtConfig = {
@@ -101,9 +107,11 @@ export type Config = {
 
 export type Action =
     | { type: "LOAD_CONFIG"; payload: Config }
-    | { type: "UPDATE_HOME"; field: keyof Omit<HomeConfig, "aboutCards" | "latestNewsCards">; value: string }
+    | { type: "UPDATE_HOME"; field: keyof Omit<HomeConfig, "aboutCards" | "latestNewsCards" | "faqCards" | "bannerImages">; value: string }
     | { type: "UPDATE_HOME_ABOUT_CARD"; index: number; field: keyof HomeConfig["aboutCards"][0]; value: string }
     | { type: "UPDATE_HOME_LATEST_NEWS_CARD"; index: number; field: keyof HomeConfig["latestNewsCards"][0]; value: string }
+    | { type: "UPDATE_HOME_FAQ_CARD"; index: number; field: keyof HomeConfig["faqCards"][0]; value: string }
+    | { type: "UPDATE_HOME_BANNER_IMAGE"; index: number; value: string }
     | { type: "UPDATE_ART"; field: keyof ArtConfig; value: string }
     | { type: "UPDATE_FILTER"; field: keyof FilterConfig; value: string }
     | { type: "UPDATE_GLOBAL"; field: keyof GlobalConfig; value: string }

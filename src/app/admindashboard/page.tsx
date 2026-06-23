@@ -50,9 +50,18 @@ const defaultConfig: Config = {
         latestNewsBackgroundColour: "#121619",
         latestNewsHeadingTextColour: "#f5f5f5",
         latestNewsParagraphTextColour: "#f5f5f5",
-        connectWithUsTextColour: "#121619",
-        connectWithUsBackgroundColour: "#b5cbb7",
-        connectWithUsParagraphTextColour: "#121619",
+        connectWithUsTextColour: "#f5f5f5",
+        connectWithUsBackgroundColour: "#121619",
+        connectWithUsParagraphTextColour: "#f5f5f5",
+        faqHeadingTextColour: "#121619",
+        faqParagraphTextColour: "#121619",
+        faqBackgroundColour: "#b5cbb7",
+        faqCardsBackgroundColour: "#121619",
+        bannerImages: [
+            "/images/HomeCarousel/placeholder1.jpg",
+            "/images/HomeCarousel/placeholder2.jpg",
+            "/images/HomeCarousel/placeholder3.jpg",
+        ],
         aboutCards: [
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "" },
@@ -62,6 +71,11 @@ const defaultConfig: Config = {
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink: "" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink: "" },
             { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg",imageLink:"" },
+        ],
+        faqCards: [
+            { title: "Question Title", description: "Answer goes here." },
+            { title: "Question Title", description: "Answer goes here." },
+            { title: "Question Title", description: "Answer goes here." },
         ],
         aboutCardsBackgroundColour: "#121619",
         latestNewsCardsBackgroundColour: "#2d4739",
@@ -162,6 +176,18 @@ function reducer(state: Config, action: Action): Config {
             );
             return { ...state, home: { ...state.home, latestNewsCards } };
         }
+        case "UPDATE_HOME_FAQ_CARD": {
+            const faqCards = state.home.faqCards.map((c, i) =>
+                i === action.index ? { ...c, [action.field]: action.value } : c
+            );
+            return { ...state, home: { ...state.home, faqCards } };
+        }
+        case "UPDATE_HOME_BANNER_IMAGE": {
+            const bannerImages = state.home.bannerImages.map((image, i) =>
+                i === action.index ? action.value : image
+            );
+            return { ...state, home: { ...state.home, bannerImages } };
+        }
         case "UPDATE_ART_UPLOAD":
             return { ...state, art: { ...state.art, [action.field]: action.value } };
         case "UPDATE_ART":
@@ -213,6 +239,10 @@ export default function AdminDashboard() {
             "--cms-socials-bg": config.home.connectWithUsBackgroundColour,
             "--cms-socials-heading": config.home.connectWithUsTextColour,
             "--cms-socials-body": config.home.connectWithUsParagraphTextColour,
+            "--cms-faq-bg": config.home.faqBackgroundColour,
+            "--cms-faq-heading": config.home.faqHeadingTextColour,
+            "--cms-faq-body": config.home.faqParagraphTextColour,
+            "--cms-faq-card-bg": config.home.faqCardsBackgroundColour,
             "--cms-art-bg": config.art.headingBackgroundColour,
             "--cms-art-heading": config.art.headingTextColour,
             "--cms-art-body": config.art.paragraphTextColour,
@@ -297,7 +327,7 @@ export default function AdminDashboard() {
                 setSaveStatus("success");
                 iframeRef.current?.contentWindow?.location.reload();
             } else {
-                const errorData = await res.json().catch(() => null);
+                await res.json().catch(() => null);
                 setSaveStatus("error");
             }
         } catch (e) {

@@ -86,6 +86,68 @@ export default function HomeEditor({ config, dispatch }: Props) {
                 />
             </Accordion>
 
+            <Accordion title="Banner Images">
+                <p className="text-sm text-gray-500">
+                    These images control the homepage carousel at the top of the site.
+                </p>
+                {config.bannerImages.map((imageUrl, i) => (
+                    <FieldGroup
+                        key={i}
+                        label={`Banner Image ${i + 1}`}
+                        type="url"
+                        value={imageUrl}
+                        onChange={(v) => dispatch({ type: "UPDATE_HOME_BANNER_IMAGE", index: i, value: v })}
+                    />
+                ))}
+            </Accordion>
+
+            <Accordion title="FAQ Section">
+                <FieldGroup
+                    label="Section Background Colour"
+                    type="color"
+                    value={config.faqBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "faqBackgroundColour", value: v })}
+                />
+                <FieldGroup
+                    label="Heading Text Colour"
+                    type="color"
+                    value={config.faqHeadingTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "faqHeadingTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Paragraph Text Colour"
+                    type="color"
+                    value={config.faqParagraphTextColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "faqParagraphTextColour", value: v })}
+                />
+                <FieldGroup
+                    label="Cards Background Colour"
+                    type="color"
+                    value={config.faqCardsBackgroundColour}
+                    onChange={(v) => dispatch({ type: "UPDATE_HOME", field: "faqCardsBackgroundColour", value: v })}
+                />
+                <hr className="border-gray-300" />
+                <div>
+                    <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Cards</h2>
+                </div>
+                {config.faqCards.map((card, i) => (
+                    <div key={i} className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3 bg-gray-50">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Card {i + 1}</p>
+                        <FieldGroup
+                            label="Question"
+                            value={card.title}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_FAQ_CARD", index: i, field: "title", value: v })}
+                        />
+                        <FieldGroup
+                            label="Answer"
+                            type="textarea"
+                            value={card.description}
+                            onChange={(v) => dispatch({ type: "UPDATE_HOME_FAQ_CARD", index: i, field: "description", value: v })}
+                        />
+                    </div>
+                ))}
+            </Accordion>
+
             <Accordion title="News Section">
                 <FieldGroup
                     label="Section Background Colour"

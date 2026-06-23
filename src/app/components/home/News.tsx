@@ -83,7 +83,7 @@ async function getLatestNews(): Promise<LatestNewsItem[]> {
 
 export default async function News() {
     const items = await getLatestNews();
-
+    
     return (
         <section style={{ backgroundColor: "var(--cms-news-bg, #121619)" }} className="w-full min-h-[95vh] flex flex-col justify-center">
             <div className="max-w-7xl mx-auto py-16 sm:py-20 px-4 sm:px-8">
