@@ -38,7 +38,7 @@ function ArtListView({
         if (!confirm(`Are you sure you want to delete "${art.title}"? This cannot be undone.`)) return;
         setDeletingId(art.artId);
         try {
-            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/Delete/${art.artId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Art/Delete/${art.artId}`, {
                 method: "DELETE",
                 credentials: "include",
             });
@@ -186,7 +186,7 @@ function ArtEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/Update/${payload.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Art/Update/${payload.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -277,7 +277,7 @@ export default function ArtEditBuilder({ onBack }: Props) {
     const [selectError, setSelectError] = useState("");
 
     useEffect(() => {
-        fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/GetAll`, { credentials: "include" })
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Art/GetAll`, { credentials: "include" })
             .then((res) => { if (!res.ok) throw new Error("Failed to load art."); return res.json(); })
             .then((data: ArtApiDto[]) => setArts(data))
             .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : "Failed to load art."))
@@ -289,7 +289,7 @@ export default function ArtEditBuilder({ onBack }: Props) {
         setSelectingId(art.artId);
         setSelectError("");
         try {
-            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Art/Get/${art.artId}`, { credentials: "include" });
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Art/Get/${art.artId}`, { credentials: "include" });
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const dto: ArtApiDto = await res.json();
             setEditDraft({ ...apiDtoToArtDraft(dto), id: dto.artId });

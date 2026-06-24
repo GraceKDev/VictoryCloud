@@ -14,7 +14,7 @@ async function getAboutCards(): Promise<CardConfig[]> {
         { title: "Card Title", description: "", imageUrl: "/images/HomeCarousel/placeholder1.jpg", imageLink: "/writing" },
     ];
     try {
-        const res = await fetch("${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig", {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, {
             credentials: "include",
             next: { revalidate: 60 },
         });

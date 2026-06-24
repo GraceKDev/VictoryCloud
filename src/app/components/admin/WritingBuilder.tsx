@@ -182,7 +182,7 @@ export default function WritingBuilder({ onBack }: Props) {
         
         try {
             console.log(payload);
-            const res = await fetch("${process.env.BACKEND_URL_DEV}/Api/Writing/Create", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Writing/Create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

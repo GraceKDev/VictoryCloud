@@ -7,10 +7,10 @@ import Socials from "./components/home/Socials";
 type HomeConfig = {
   bannerImages?: string[];
 };
-
+console.log(process.env.BACKEND_URL_DEV);
 async function getHomeConfig(): Promise<HomeConfig | null> {
   try {
-    const res = await fetch("http://localhost:5266/Api/Config/GetConfig", { cache: "no-store" });
+    const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { cache: "no-store" });
     if (!res.ok) return null;
     return (await res.json()) as HomeConfig;
   } catch {

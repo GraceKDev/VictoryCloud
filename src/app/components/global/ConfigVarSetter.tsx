@@ -20,7 +20,7 @@ export default function ConfigVarSetter() {
     }, []);
 
     useEffect(() => {
-        fetch("${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig", { credentials: "include" })
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Config/GetConfig`, { credentials: "include" })
             .then((res) => (res.ok ? res.json() : null))
             .then((data) => {
                 if (!data) return;

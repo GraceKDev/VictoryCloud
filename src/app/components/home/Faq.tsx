@@ -14,7 +14,7 @@ async function getFaqCards(): Promise<FaqCard[]> {
     ];
 
     try {
-        const res = await fetch("http://localhost:5266/Api/Config/GetConfig", {
+        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, {
             cache: "no-store",
         });
         if (!res.ok) return fallback;

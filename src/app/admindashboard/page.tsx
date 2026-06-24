@@ -290,7 +290,7 @@ export default function AdminDashboard() {
     }, [config]);
 
     useEffect(() => {
-        fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { credentials: "include" })
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Config/GetConfig`, { credentials: "include" })
             .then((res) => (res.ok ? res.json() : null))
             .then((data) => {   
                 if (data) {
@@ -317,7 +317,7 @@ export default function AdminDashboard() {
                 commissions: JSON.stringify(config.commissions),
                 filter: JSON.stringify(config.filter),
             };
-            const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/UpdateConfig`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Config/UpdateConfig`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
