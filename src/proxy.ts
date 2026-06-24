@@ -7,8 +7,10 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    console.log("URL:", request.nextUrl.href);
+    console.log("Cookie:", request.cookies.get("auth")?.value);
     const cookie = request.cookies.get(COOKIE_NAME);
-
+    console.log(cookie);
     const isAuthenticated = async () => {
         if (!cookie?.value) return false;
         try {
