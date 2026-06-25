@@ -322,7 +322,7 @@ function WritingEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Writing/Update`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Writing/Update/${draft.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
