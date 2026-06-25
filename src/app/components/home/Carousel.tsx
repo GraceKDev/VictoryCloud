@@ -43,7 +43,7 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Slides */}
+
       <div
         className="flex h-full transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
@@ -61,7 +61,6 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
         ))}
       </div>
 
-      {/* Prev button */}
       <button
         onClick={prevSlide}
         aria-label="Previous slide"
@@ -72,7 +71,7 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
         </svg>
       </button>
 
-      {/* Next button */}
+
       <button
         onClick={nextSlide}
         aria-label="Next slide"
@@ -83,7 +82,6 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
         </svg>
       </button>
 
-      {/* Dot indicators */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button

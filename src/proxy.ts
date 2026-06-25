@@ -9,7 +9,6 @@ export async function proxy(request: NextRequest) {
     console.log("URL:", request.nextUrl.href);
     console.log("Cookie:", request.cookies.get("auth")?.value);
     const cookie = request.cookies.get("auth")?.value ?? "auth";
-    console.log(cookie);
     const isAuthenticated = async () => {
         try {
             await jwtVerify(cookie, JWT_SECRET, {

@@ -12,17 +12,8 @@ async function getFaqCards(): Promise<FaqCard[]> {
         { title: "Do you take commissions?", description: "Sometimes, make sure to check to the ‘Commissions’ tab or my art socials (found on the ‘contact me’ page. I would primarily be doing single pictures, character designs, sketches, thumbnailing/storyboarding, short comics, and short animations. Rates to come when I sort it out. Even if commissions are closed it may be worth sending me your commission suggestion as I may like it enough to put it at the front of the queue when commissions are open." },
         { title: "Can I get any of your works physically?", description: "Currently, no. Hopefully in future we can provide something physical! 🙂" },
     ];
-
-    try {
-        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, {
-            cache: "no-store",
-        });
-        if (!res.ok) return fallback;
-        const data = await res.json();
-        return data?.home?.faqCards ?? fallback;
-    } catch {
-        return fallback;
-    }
+    return fallback;
+    
 }
 
 export default async function Faq() {
