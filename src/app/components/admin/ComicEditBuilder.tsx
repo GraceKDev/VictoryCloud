@@ -315,7 +315,7 @@ function ComicEditForm({
         setSaving(true);
         setSaveStatus("idle");
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Comic/Update`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Comic/Update/${draft.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
