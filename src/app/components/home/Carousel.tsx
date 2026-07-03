@@ -34,7 +34,7 @@ export default function Carousel({ images = [], interval = 4000 }: CarouselProps
   };
 
   if (!images.length) return null;
-
+  console.log(images.length);
   return (
     <div
       className="relative w-full h-[25vh] overflow-hidden"

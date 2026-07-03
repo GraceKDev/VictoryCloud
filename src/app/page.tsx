@@ -22,20 +22,26 @@ async function getHomeConfig(): Promise<HomeConfig | null> {
 export default async function Home() {
   const config = await getHomeConfig();
 
-  const bannerImages = config?.bannerImages?.filter(Boolean) ?? [
-    "/images/HomeCarousel/placeholder1.jpg",
-    "/images/HomeCarousel/placeholder2.jpg",
-    "/images/HomeCarousel/placeholder3.jpg",
-  ];
-  console.log(config?.bannerImages);
+  let bannerImages;
+
+  if (config && config.bannerImages) {
+    bannerImages = config.bannerImages.filter(image => Boolean(image));
+  } else {
+    bannerImages = [
+      "/images/HomeCarousel/placeholder1.jpg",
+      "/images/HomeCarousel/placeholder2.jpg",
+      "/images/HomeCarousel/placeholder3.jpg",
+    ];
+  }
+
 
   return (
     <main>
       <Carousel images={bannerImages} />
-      <About/>
-      <News/>
-      <Faq/>
-      <Socials/>
+      <About />
+      <News />
+      <Faq />
+      <Socials />
     </main>
   );
 }
