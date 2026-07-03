@@ -28,7 +28,6 @@ export default function ComicItem({ comic }: { comic: ComicApiDto }) {
                         </span>
                     ))}
                 </div>
-                <p className="text-xs text-gray-600 text-center line-clamp-2">{description}</p>
             </div>
         </div>
 
