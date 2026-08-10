@@ -5,10 +5,10 @@ import News from "./components/home/News";
 import Socials from "./components/home/Socials";
 
 type HomeConfig = {
-  bannerImages?: string[];
+  bannerImages?: string[] | null;
 };
-console.log(process.env.BACKEND_URL_DEV);
-async function getHomeConfig(): Promise<HomeConfig | null> {
+
+export async function getHomeConfig(): Promise<HomeConfig | null> {
   try {
     const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { cache: "no-store" });
     if (!res.ok) return null;
@@ -19,20 +19,21 @@ async function getHomeConfig(): Promise<HomeConfig | null> {
   }
 }
 
+export function getBannerImages(config: HomeConfig | null) {
+  if (config?.bannerImages) {
+    return config.bannerImages.filter((image) => Boolean(image));
+  }
+
+  return [
+    "/images/HomeCarousel/placeholder1.jpg",
+    "/images/HomeCarousel/placeholder2.jpg",
+    "/images/HomeCarousel/placeholder3.jpg",
+  ];
+}
+
 export default async function Home() {
   const config = await getHomeConfig();
-
-  let bannerImages;
-
-  if (config && config.bannerImages) {
-    bannerImages = config.bannerImages.filter(image => Boolean(image));
-  } else {
-    bannerImages = [
-      "/images/HomeCarousel/placeholder1.jpg",
-      "/images/HomeCarousel/placeholder2.jpg",
-      "/images/HomeCarousel/placeholder3.jpg",
-    ];
-  }
+  const bannerImages = getBannerImages(config);
 
 
   return (

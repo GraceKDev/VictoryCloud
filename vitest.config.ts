@@ -3,6 +3,9 @@ import path from "node:path";
 
 export default defineConfig({
     test: {
+        coverage: {
+            provider: 'v8' // or 'istanbul'
+        },
         environment: "node",
         include: ["test/**/*.test.ts", "test/**/*.test.tsx"],
     },

@@ -90,7 +90,7 @@ export function apiDtoToWritingDraft(dto: WritingApiDto): WritingDraft {
         coverUploading: false,
         coverUploadError: null,
     };
-    console.log(value);
+    
     return value;
 }
 

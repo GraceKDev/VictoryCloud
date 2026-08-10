@@ -5,38 +5,17 @@ import {
     type ImageDraft,
     type ChapterDraft,
     type ComicDetails,
+    type ComicDraft,
     uploadImage,
     ComicFormSidebar,
     ComicChapterPanel,
+    comicDraftToEmpty,
 } from "./comicShared";
-
-type ComicDraft = {
-    title: string;
-    description: string;
-    coverImageUrl: string;
-    tags: string;
-    details: ComicDetails;
-    chapters: ChapterDraft[];
-};
-
-const emptyDraft = (): ComicDraft => ({
-    title: "",
-    description: "",
-    coverImageUrl: "",
-    tags: "",
-    details: {
-        status: "Ongoing",
-        year: String(new Date().getFullYear()),
-        originalLanguage: "English",
-        contentRating: "Everyone",
-    },
-    chapters: [],
-});
 
 type Props = { onBack: () => void };
 
 export default function ComicBuilder({ onBack }: Props) {
-    const [draft, setDraft] = useState<ComicDraft>(emptyDraft);
+    const [draft, setDraft] = useState<ComicDraft>(comicDraftToEmpty);
     const [tagInput, setTagInput] = useState("");
     const [saving, setSaving] = useState(false);
     const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">("idle");
@@ -184,7 +163,7 @@ export default function ComicBuilder({ onBack }: Props) {
             });
             if (res.ok) {
                 setSaveStatus("success");
-                setDraft(emptyDraft());
+                setDraft(comicDraftToEmpty());
                 setTagInput("");
             } else {
                 const err = await res.json().catch(() => null);

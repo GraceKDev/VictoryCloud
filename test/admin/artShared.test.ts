@@ -11,6 +11,8 @@ describe("artShared helpers", () => {
             tags: "",
             links: [],
             uploading: false,
+            updatedAt:"",
+            uploadedAt: "",
             uploadError: null,
         });
     });
@@ -23,6 +25,7 @@ describe("artShared helpers", () => {
             imageUrl: "https://example.com/skyline.png",
             tags: ["city", "dusk"],
             links: ["https://example.com"],
+            updatedAt:"2026-06-11",
             uploadedAt: "2026-06-10",
         };
 
@@ -33,6 +36,8 @@ describe("artShared helpers", () => {
             tags: "city, dusk",
             links: ["https://example.com"],
             uploading: false,
+            updatedAt:"2026-06-11",
+            uploadedAt: "2026-06-10",
             uploadError: null,
         });
     });
@@ -43,7 +48,9 @@ describe("artShared helpers", () => {
             title: "Untitled",
             description: "",
             imageUrl: "",
+            updatedAt:"",
             uploadedAt: "",
+           
         } as ArtApiDto;
 
         expect(apiDtoToArtDraft(dto)).toEqual({
@@ -53,6 +60,8 @@ describe("artShared helpers", () => {
             tags: "",
             links: [],
             uploading: false,
+            updatedAt:"",
+            uploadedAt: "",
             uploadError: null,
         });
     });

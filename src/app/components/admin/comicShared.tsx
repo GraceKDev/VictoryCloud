@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import type { ComicApiDto } from "@/app/lib/types/comic";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -26,6 +27,62 @@ export type ComicDetails = {
     contentRating: string;
 };
 
+export type ComicDraft = {
+    title: string;
+    description: string;
+    coverImageUrl: string;
+    tags: string;
+    details: ComicDetails;
+    chapters: ChapterDraft[];
+};
+
+export type ComicEditDraft = ComicDraft & {
+    id: number;
+};
+
+export function comicDraftToEmpty(): ComicDraft {
+    return {
+        title: "",
+        description: "",
+        coverImageUrl: "",
+        tags: "",
+        details: {
+            status: "Ongoing",
+            year: String(new Date().getFullYear()),
+            originalLanguage: "English",
+            contentRating: "Everyone",
+        },
+        chapters: [],
+    };
+}
+
+export function apiDtoToDraft(dto: ComicApiDto): ComicEditDraft {
+    return {
+        id: dto.comicId,
+        title: dto.title ?? "",
+        description: dto.description ?? "",
+        coverImageUrl: dto.coverImageUrl ?? "",
+        tags: (dto.tags ?? []).join(", "),
+        details: {
+            status: dto.details?.status ?? "Ongoing",
+            year: String(dto.details?.year ?? new Date().getFullYear()),
+            originalLanguage: dto.details?.originalLanguage ?? "English",
+            contentRating: dto.details?.contentRating ?? "Everyone",
+        },
+        chapters: (dto.chapters ?? []).map((ch) => ({
+            id: crypto.randomUUID(),
+            chapterTitle: ch.chapterTitle ?? "",
+            images: (ch.images ?? []).map((url) => ({
+                id: crypto.randomUUID(),
+                file: null,
+                previewUrl: url,
+                s3Url: url,
+                uploading: false,
+                error: null,
+            })),
+        })),
+    };
+}
 
 export async function uploadImage(file: File): Promise<string> {
     const res = await fetch("/api/upload", {

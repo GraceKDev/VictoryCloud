@@ -6,6 +6,7 @@ import Footer from "./components/global/Footer";
 import ConfigVarSetter from "./components/global/ConfigVarSetter";
 import { FilterProvider } from "./lib/filters/FilterContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { flags } from "./lib/flags";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default function RootLayout({
       >
         <body className="min-h-full flex flex-col">
           <ConfigVarSetter />
-          <Navigation />
+          {!flags.maintenance && (
+            <Navigation />
+          )}
           {children}
           <Footer />
           <SpeedInsights />
