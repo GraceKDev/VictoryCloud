@@ -25,24 +25,46 @@ export default function ImageManager({ onBack }: { onBack?: () => void }) {
     const [successMsg, setSuccessMsg] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const loadImages = useCallback(async () => {
+        const res = await fetch("/api/images");
+        if (!res.ok) throw new Error("Failed to fetch images");
+        const data = await res.json();
+        return data.images ?? [];
+    }, []);
+
     const fetchImages = useCallback(async () => {
-        setLoading(true);
-        setError(null);
         try {
-            const res = await fetch("/api/images");
-            if (!res.ok) throw new Error("Failed to fetch images");
-            const data = await res.json();
-            setImages(data.images ?? []);
+            const imageList = await loadImages();
+            setError(null);
+            setImages(imageList);
         } catch {
             setError("Could not load images from S3.");
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [loadImages]);
 
     useEffect(() => {
-        fetchImages();
-    }, [fetchImages]);
+        let active = true;
+
+        loadImages()
+            .then((imageList) => {
+                if (active) {
+                    setError(null);
+                    setImages(imageList);
+                }
+            })
+            .catch(() => {
+                if (active) setError("Could not load images from S3.");
+            })
+            .finally(() => {
+                if (active) setLoading(false);
+            });
+
+        return () => {
+            active = false;
+        };
+    }, [loadImages]);
 
     const handleUpload = async (files: FileList | null) => {
         if (!files || files.length === 0) return;
@@ -126,7 +148,10 @@ export default function ImageManager({ onBack }: { onBack?: () => void }) {
                         </button>
                     )}
                     <button
-                        onClick={fetchImages}
+                        onClick={() => {
+                            setLoading(true);
+                            void fetchImages();
+                        }}
                         disabled={loading}
                         className="text-sm text-blue-600 hover:text-blue-800 transition-colors disabled:opacity-40"
                     >

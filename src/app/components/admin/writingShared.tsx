@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { uploadImage, Field, TagChips, inputCls } from "./comicShared";
 import { WritingApiDto } from "@/app/lib/types/writing";
 
-// Re-export shared utilities so consumers only need one import
+
 export { uploadImage, Field, TagChips, inputCls };
 export type { WritingApiDto };
 
@@ -53,7 +53,7 @@ export function writingDraftToEmpty(): WritingDraft {
 export function apiDtoToWritingDraft(dto: WritingApiDto): WritingDraft {
     console.log("Converting API DTO to draft:", dto);
     console.log(dto);
-    var value = {
+    const value = {
         title: dto.title ?? "",
         description: dto.description ?? "",
         coverUrl: dto.coverUrl ?? "",
