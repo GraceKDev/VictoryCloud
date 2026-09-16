@@ -10,7 +10,7 @@ type HomeConfig = {
 
 export async function getHomeConfig(): Promise<HomeConfig | null> {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Config/GetConfig`, { cache: "no-store" });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Config/GetConfig`, { cache: "no-store" });
     if (!res.ok) return null;
     const value = await res.json();
     return value.home as HomeConfig;

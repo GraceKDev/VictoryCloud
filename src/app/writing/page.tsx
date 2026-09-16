@@ -6,7 +6,7 @@ import WritingDisplayGrid from "../components/writing/WritingDisplayGrid";
 export default async function Writing() {
     let writings: WritingApiDto[] = [];
     try {
-        const res = await fetch(`${process.env.BACKEND_URL_DEV}/Api/Writing/GetAll`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/Api/Writing/GetAll`, {
             next: {
                 revalidate: 60,
             }
