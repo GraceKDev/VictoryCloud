@@ -16,7 +16,7 @@ function getSafeImageSrc(src: string | null | undefined): string {
     } catch {
         return "/placeholder.png";
     }
-
+ 
     return "/placeholder.png";
 }
 
