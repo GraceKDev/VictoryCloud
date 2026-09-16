@@ -27,8 +27,11 @@ jobs:
 
       - name: Test
         run: npm test
-
+      - name: Check API URL
+        run: echo "API URL is $NEXT_PUBLIC_API_URL"
+        env:
+          NEXT_PUBLIC_BACKEND_URL_DEV: ${{ vars.NEXT_PUBLIC_BACKEND_URL_DEV }}
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BACKEND_URL_DEV: ${{ secrets.NEXT_PUBLIC_BACKEND_URL_DEV }}
+          NEXT_PUBLIC_BACKEND_URL_DEV: ${{ vars.NEXT_PUBLIC_BACKEND_URL_DEV }}
