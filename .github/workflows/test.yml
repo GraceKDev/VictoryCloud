@@ -31,4 +31,4 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BACKEND_URL_DEV: ${{ secrets.BACKEND_URL_DEV }}
+          NEXT_PUBLIC_BACKEND_URL_DEV: ${{ secrets.NEXT_PUBLIC_BACKEND_URL_DEV }}
